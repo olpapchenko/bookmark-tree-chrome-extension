@@ -48,3 +48,12 @@ header .header {
 .pointer {
     cursor: pointer;
 }
+
+.col-4 {
+    float: left;
+    width: 33%;
+}
+
+.edit-icons {
+    font-size: 30px;
+}

@@ -3,39 +3,99 @@
 	<title></title>
 	<link rel="stylesheet" href="/js/vendor/bootstrap/dist/css/bootstrap.css"/>
 	<link rel="stylesheet" href="/css/style.css"/>
+
+	<script src="/js/vendor/jquery/dist/jquery.min.js"></script>
+	<script src="/js/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body  style="width: 300px;">
 <header class="panel-body">
 	<span class="header">Bookmark <span class="accent">Tree</span></span>
 </header>
-<div class="container media">
-	<div class="panel panel-default">
-		<div class="panel-heading">Latest notifications</div>
-		<div class="restrict-height-notifications">
-			<div class="panel-body border-bottom"> Notification </div>
-			<div class="panel-body border-bottom"> Panel content </div>
-			<div class="panel-body border-bottom"> Panel content </div>
-		</div>
-	</div>
 
-	<div class="panel panel-default">
-		<div class="panel-heading">Friends</div>
-		<div class="restrict-height-friends">
-			<div class="input-group">
+<ul class="nav nav-tabs">
+	<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+	<li><a data-toggle="tab" href="#edit">Edit</a></li>
+	<li><a data-toggle="tab" href="#settings">Settings</a></li>
+</ul>
+
+<div class="tab-content media container">
+	<div id="home" class="tab-pane fade in active">
+		<div class="panel panel-default">
+			<div class="panel-heading">Latest notifications</div>
+			<div class="restrict-height-notifications">
+				<div class="panel-body border-bottom"> Notification </div>
+				<div class="panel-body border-bottom"> Panel content </div>
+				<div class="panel-body border-bottom"> Panel content </div>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Friends</div>
+			<div class="restrict-height-friends">
+				<div class="input-group">
 				<span class="input-group-addon" id="basic-addon1">
 					<span class="glyphicon glyphicon-search"></span>
 				</span>
-				<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+					<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+				</div>
+				<div class="panel-body border-bottom">
+					<span>Panel content</span>
+					<span title="Share" class="glyphicon glyphicon-share-alt pull-right pointer" aria-hidden="true"></span>
+				</div>
+				<div class="panel-body border-bottom"> Panel content </div>
+				<div class="panel-body border-bottom"> Panel content </div>
+				<div class="panel-body border-bottom"> Panel content </div>
 			</div>
-			<div class="panel-body border-bottom">
-				<span>Panel content</span>
-				<span title="Share" class="glyphicon glyphicon-share-alt pull-right pointer" aria-hidden="true"></span>
+		</div>
+		<button style="width: 100%; margin-bottom: 20px;" class="btn btn-primary">View bookmarks</button>
+
+	</div>
+
+	<div id="edit" class="tab-pane fade">
+		<div class="panel panel-default">
+			<div class="panel-heading">Edit</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-4 text-center">
+						<span class="glyphicon glyphicon-pencil edit-icons pointer" title="Mark text"></span>
+					</div>
+					<div class="col-4 text-center">
+						<span class="glyphicon glyphicon-comment edit-icons pointer" titile="Create comment"></span>
+					</div>
+					<div class="col-4 text-center">
+						<span class="glyphicon glyphicon-pushpin edit-icons pointer" titile="Make link with other bookmark"></span>
+					</div>
+				</div>
+
+				<div class="row">
+					<div style="margin-top: 20px; margin-bottom: 20px;">
+						<select name="" id="">
+							<option value="1">Default</option>
+							<option value="1">New bookmark</option>
+						</select>
+					</div>
+					<button style="width: 100%;" class="btn btn-primary">Save bookmark</button>
+				</div>
 			</div>
-			<div class="panel-body border-bottom"> Panel content </div>
-			<div class="panel-body border-bottom"> Panel content </div>
-			<div class="panel-body border-bottom"> Panel content </div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Comments</div>
+			<div class="panel-body">
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">Bookmark links</div>
+			<div class="panel-body">
+			</div>
 		</div>
 	</div>
+
+	<div id="settings" class="tab-pane fade">
+		settings
+	</div>
 </div>
+
 </body>
 </html>
