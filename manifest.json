@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Bookmark Tree",
+  "description": "Bookmark Tree is a bookmark manager. All bookmarks are stored in cloud, so you can access them from any 
+  browser. Also oyou can write comments and links to another bookmarks. You also can share them with you friends",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon":  {
+      "19": "images/icon19.png", 
+      "38": "images/icon38.png"
+    },
+    "default_popup": "html/index.html",
+    "default_title": "Bookmark tree"
+  },
+  "permissions": [
+    "activeTab",
+    "bookmarks",
+    "contextMenus",
+    "http://localhost:3000"
+  ]
+}
