@@ -14,10 +14,12 @@
 		<script src="/js/directives/edit.js"></script>
 		<script src="/js/directives/comments.js"></script>
 		<script src="/js/directives/bookmarks.js"></script>
+		<script src="/js/directives/login.js"></script>
 	</head>
 	<body  style="width: 300px;"  ng-controller="appController">
 		<header class="panel-body">
 			<span class="header">Bookmark <span class="accent">Tree</span></span>
+			<login class="pull-right" style="color: white; margin-right: 10px;"></login>
 		</header>
 
 		<ul class="nav nav-tabs">
@@ -31,14 +33,12 @@
 				<ng-include src="'/html/pages/home.html'"></ng-include>
 			</div>
 
-
 			<div id="edit" class="tab-pane fade">
 				<ng-include src="'/html/pages/edit.html'"></ng-include>
 			</div>
 
 			<div id="settings" class="tab-pane fade">
 				<ng-include src="'/html/pages/settings.html'"></ng-include>
-
 			</div>
 		</div>
 
