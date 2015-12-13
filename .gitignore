@@ -40,3 +40,4 @@ sessions
 uploads
 
 public/assets/*
+js/vendor
