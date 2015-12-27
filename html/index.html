@@ -16,7 +16,7 @@
 		<script src="/js/directives/bookmarks.js"></script>
 		<script src="/js/directives/login.js"></script>
 	</head>
-	<body  style="width: 300px;"  ng-controller="appController">
+	<body  style="width: 450px;"  ng-controller="appController">
 		<header class="panel-body">
 			<span class="header">Bookmark <span class="accent">Tree</span></span>
 			<login class="pull-right" style="color: white; margin-right: 10px;"></login>
@@ -24,7 +24,9 @@
 
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-			<li><a data-toggle="tab" href="#edit">Edit</a></li>
+			<li><a data-toggle="tab" href="#structure">Structure</a></li>
+			<li><a data-toggle="tab" href="#friends">Friends</a></li>
+			<li><a data-toggle="tab" href="#notifications">Notifications</a></li>
 			<li><a data-toggle="tab" href="#settings">Settings</a></li>
 		</ul>
 
@@ -33,8 +35,16 @@
 				<ng-include src="'/html/pages/home.html'"></ng-include>
 			</div>
 
-			<div id="edit" class="tab-pane fade">
-				<ng-include src="'/html/pages/edit.html'"></ng-include>
+			<div id="structure" class="tab-pane fade in">
+				<ng-include src="'/html/pages/structure.html'"></ng-include>
+			</div>
+
+			<div id="friends" class="tab-pane fade">
+				<ng-include src="'/html/pages/friends.html'"></ng-include>
+			</div>
+
+			<div id="notifications" class="tab-pane fade">
+				<ng-include src="'/html/pages/notifications.html'"></ng-include>
 			</div>
 
 			<div id="settings" class="tab-pane fade">

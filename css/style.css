@@ -17,13 +17,16 @@ header .header {
     border-bottom: 1px solid #ddd;
 }
 
-.restrict-height-notifications {
-
+.fixed-height-structure, .restrict-height {
+    overflow: auto;
 }
 
-.restrict-height-friends {
-    max-height: 135px;
-    overflow: auto;
+.restrict-height {
+    max-height: 400px;
+}
+
+.fixed-height-structure {
+    max-height: 150px;
 }
 
 ::-webkit-scrollbar{ width:10px; }
