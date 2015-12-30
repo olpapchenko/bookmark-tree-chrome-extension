@@ -2,8 +2,7 @@
   "manifest_version": 2,
 
   "name": "Bookmark Tree",
-  "description": "Bookmark Tree is a bookmark manager. All bookmarks are stored in cloud, so you can access them from any
-  browser. Also oyou can write comments and links to another bookmarks. You also can share them with you friends",
+  "description": "Bookmark Tree is a bookmark manager. All bookmarks are stored in cloud, so you can access them from anybrowser. Also oyou can write comments and links to another bookmarks. You also can share them with you friends",
   "version": "1.0",
 
   "browser_action": {
@@ -16,16 +15,18 @@
   },
 
   "background": {
-    "scripts": ["/js/shared/messageTypes.js",
+    "scripts": [
+                "/js/shared/messageTypes.js",
                 "/js/background/background.js",
                 "/js/vendor/bluebird/js/browser/bluebird.js"]
   },
 
-  "content_script"  : {
+  "content_scripts"  : [{
+    "matches": ["http://*/*"],
     "js" : [
       "/js/shared/messageTypes.js",
-      "/content/content.js"]
-  },
+      "/js/content/content.js"]
+  }],
 
   "permissions": [
     "activeTab",
