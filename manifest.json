@@ -24,6 +24,7 @@
   "content_scripts"  : [{
     "matches": ["http://*/*"],
     "js" : [
+      "/js/vendor/jquery/dist/jquery.min.js",
       "/js/shared/messageTypes.js",
       "/js/content/content.js"]
   }],

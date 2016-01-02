@@ -1,7 +1,9 @@
 var START_TERMINATOR = '$',
-    END_TERMINATOR = '^';
+    END_TERMINATOR = '^',
+    START_MARK_UP = "<span style='color: red !important; background-color: #ffff00'>",
+    END_MARK_UP = "</span>";
 
-var markModeEnabled = false;
+var markModeEnabled = true;
 
 function insertAtPosition(idx, string, insertString) {
     return string.slice(0, idx) + insertString + string.slice(idx);
@@ -11,21 +13,99 @@ function enable(flag) {
     markModeEnabled = flag;
 }
 
-function markText (range) {
-    var startPosition = range.startOffset,
-        endPosition = range.endOffset;
+function filterTextNodes(node) {
+    var node = $(node);
+    if(node[0].nodeType == 3) {
+        return node;
+    }
+    return node.contents().filter(function () {return this.nodeType == 3});
+}
 
+function forEachTextChildNode(node, callback) {
+    $(node).find("*").each(function (idx, child) {
+        filterTextNodes(child).each(callback);
+    });
+
+    filterTextNodes(node).each(callback);
+}
+
+function wrapTextNodes(node, wrapTemplate) {
+    forEachTextChildNode(node, function (idx, textNode) {
+        $(textNode).wrap(wrapTemplate);
+    });
+}
+
+function getAllTextNodes(node) {
+    var nodes = [];
+
+    forEachTextChildNode(node, function (idx, node) {
+        nodes.push(node);
+    });
+    return nodes;
+}
+
+function getLastOfTextType(node) {
+    var nodes = getAllTextNodes(node);
+    return $(nodes[nodes.length-1]);
+}
+
+function getFirstOfTextType(node) {
+    var nodes = getAllTextNodes(node);
+    return $(nodes[0]);
+}
+
+function markText (range) {
+    var startContainer = getFirstOfTextType(range.startContainer),
+        endContainer =  getLastOfTextType(range.endContainer),
+        startPosition = range.startContainer.nodeType == 3 ? range.startOffset : 0,
+        endPosition = range.startContainer.nodeType == 3 ? range.endOffset : endContainer.length - 1,
+        commonAncestorContainer = $(range.commonAncestorContainer);
+
+    endPosition++;
     if(range.startContainer == range.endContainer) {
-        if(endPosition - startPosition == 0 ) {
+        if(endPosition - startPosition == 0) {
             return;
         }
-        endPosition++;
+    } else {
+        endContainer[0].textContent =  insertAtPosition(0, endContainer.text(), '^');
+        startContainer[0].textContent = insertAtPosition(startContainer.text().length, startContainer.text(), '$');
     }
 
-    range.startContainer.textContent = insertAtPosition(startPosition, range.startContainer.textContent, '^');
-    range.endContainer.textContent = insertAtPosition(endPosition, range.endContainer.textContent, '$');
-    var html = document.body.innerHTML;
-    document.body.innerHTML = html.replace("^", "<marker style='color: red'>").replace("$", "</marker>");
+    startContainer[0].textContent =  insertAtPosition(startPosition, startContainer.text(), '^');
+    endContainer[0].textContent =  insertAtPosition(endPosition, endContainer.text(), '$');
+
+
+    console.log("start container " + startContainer[0].textContent );
+    console.log("end container " + endContainer[0].textContent );
+    var baseNodeFound = false;
+
+    console.log(commonAncestorContainer[0]);
+    console.log(startContainer[0]);
+    commonAncestorContainer.children().each(function (idx, node) {
+        if(node.textContent.length == 0) {
+            return;
+        }
+        if(baseNodeFound) {
+            console.log(node);
+            wrapTextNodes(node, START_MARK_UP + END_MARK_UP);
+        }
+        console.log(node == startContainer[0]);
+        if($.contains(node, startContainer[0]) || node == startContainer[0]) {
+            console.log("found node");
+            wrapTextNodes(node, START_MARK_UP + END_MARK_UP);
+            baseNodeFound = true;
+        }
+
+        if($.contains(node, endContainer[0]) || node == endContainer[0]) {
+            baseNodeFound = false;
+            console.log("found end;");
+        }
+
+
+    });
+
+    startContainer.replaceWith(startContainer.text().replace("^", START_MARK_UP).replace("$", END_MARK_UP));
+    endContainer.replaceWith(endContainer.text().replace("^", START_MARK_UP).replace("$", END_MARK_UP));
 }
 
 document.body.addEventListener('mouseup', function () {
