@@ -22,11 +22,17 @@ function filterTextNodes(node) {
 }
 
 function forEachTextChildNode(node, callback) {
-    $(node).find("*").each(function (idx, child) {
-        filterTextNodes(child).each(callback);
-    });
+    var node = $(node);
 
-    filterTextNodes(node).each(callback);
+
+    if(node[0].nodeType == 3) {
+        callback(0, node);
+        return;
+    }
+
+    node.contents().each(function (idx, child) {
+        forEachTextChildNode(child, callback);
+    });
 }
 
 function wrapTextNodes(node, wrapTemplate) {
@@ -71,32 +77,37 @@ function markText (range) {
         startContainer[0].textContent = insertAtPosition(startContainer.text().length, startContainer.text(), '$');
     }
 
+    console.log("start container " + startContainer[0].textContent );
+    console.log("end container " + endContainer[0].textContent );
     startContainer[0].textContent =  insertAtPosition(startPosition, startContainer.text(), '^');
     endContainer[0].textContent =  insertAtPosition(endPosition, endContainer.text(), '$');
 
-
-    console.log("start container " + startContainer[0].textContent );
-    console.log("end container " + endContainer[0].textContent );
     var baseNodeFound = false;
 
     console.log(commonAncestorContainer[0]);
     console.log(startContainer[0]);
-    commonAncestorContainer.children().each(function (idx, node) {
+    forEachTextChildNode(commonAncestorContainer, function (idx, node) {
+
+        if(startContainer[0] == endContainer[0]) {
+            return;
+        }
+
+        var node = $(node)[0];
+        console.log(node);
+
         if(node.textContent.length == 0) {
             return;
         }
         if(baseNodeFound) {
-            console.log(node);
             wrapTextNodes(node, START_MARK_UP + END_MARK_UP);
         }
-        console.log(node == startContainer[0]);
-        if($.contains(node, startContainer[0]) || node == startContainer[0]) {
+
+        if(node == startContainer[0]) {
             console.log("found node");
-            wrapTextNodes(node, START_MARK_UP + END_MARK_UP);
             baseNodeFound = true;
         }
 
-        if($.contains(node, endContainer[0]) || node == endContainer[0]) {
+        if(node == endContainer[0]) {
             baseNodeFound = false;
             console.log("found end;");
         }
