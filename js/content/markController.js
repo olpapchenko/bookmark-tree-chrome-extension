@@ -87,17 +87,12 @@ function markText (range) {
     console.log(commonAncestorContainer[0]);
     console.log(startContainer[0]);
     forEachTextChildNode(commonAncestorContainer, function (idx, node) {
-
-        if(startContainer[0] == endContainer[0]) {
-            return;
-        }
-
         var node = $(node)[0];
-        console.log(node);
 
-        if(node.textContent.length == 0) {
+        if(startContainer[0] == endContainer[0] || /^\s+$/.test(node.textContent) || node.textContent.length == 0) {
             return;
         }
+
         if(baseNodeFound) {
             wrapTextNodes(node, START_MARK_UP + END_MARK_UP);
         }
