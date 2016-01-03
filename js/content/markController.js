@@ -1,13 +1,13 @@
 var START_MARK_UP = "<span style='color: red !important; background-color: #ffff00'>",
     END_MARK_UP = "</span>";
 
-var markModeEnabled = true;
+var markModeEnabled = false;
 
 String.prototype.insertAtPosition =  function insertAtPosition(idx, insertString) {
     return this.slice(0, idx) + insertString + this.slice(idx);
 }
 
-function enable(flag) {
+function enableMarker(flag) {
     markModeEnabled = flag;
 }
 
