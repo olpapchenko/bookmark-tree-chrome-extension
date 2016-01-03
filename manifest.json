@@ -26,6 +26,8 @@
     "js" : [
       "/js/vendor/jquery/dist/jquery.min.js",
       "/js/shared/messageTypes.js",
+      "/js/shared/DOMUtils.js",
+      "/js/content/markController.js",
       "/js/content/content.js"]
   }],
 
@@ -34,5 +36,9 @@
     "bookmarks",
     "contextMenus",
     "http://localhost:3000"
+  ],
+
+  "web_accessible_resources": [
+    "images/*"
   ]
 }
