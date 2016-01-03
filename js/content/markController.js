@@ -1,16 +1,22 @@
-var START_TERMINATOR = '$',
-    END_TERMINATOR = '^',
-    START_MARK_UP = "<span style='color: red !important; background-color: #ffff00'>",
+var START_MARK_UP = "<span style='color: red !important; background-color: #ffff00'>",
     END_MARK_UP = "</span>";
 
 var markModeEnabled = true;
 
-function insertAtPosition(idx, string, insertString) {
-    return string.slice(0, idx) + insertString + string.slice(idx);
+String.prototype.insertAtPosition =  function insertAtPosition(idx, insertString) {
+    return this.slice(0, idx) + insertString + this.slice(idx);
 }
 
 function enable(flag) {
     markModeEnabled = flag;
+}
+
+function markTextBySelector (selectorObject) {
+    markText({ startContainer: $(selectorObject.startContainer)[0],
+               endContainer: $(selectorObject.endContainer)[0],
+               startOffset: selectorObject.startOffset,
+               endOffset: selectorObject.endOffset
+    });
 }
 
 function markText (range) {
@@ -20,28 +26,16 @@ function markText (range) {
         endPosition = range.startContainer.nodeType == 3 ? range.endOffset : endContainer.length - 1,
         commonAncestorContainer = $(range.commonAncestorContainer);
 
-    endPosition++;
-    if(range.startContainer == range.endContainer) {
-        if(endPosition - startPosition == 0) {
-            return;
-        }
-    } else {
-        endContainer[0].textContent =  insertAtPosition(0, endContainer.text(), '^');
-        startContainer[0].textContent = insertAtPosition(startContainer.text().length, startContainer.text(), '$');
-    }
+    endPosition += START_MARK_UP.length;
 
-    console.log("start container " + startContainer[0].textContent );
-    console.log("end container " + endContainer[0].textContent );
-    startContainer[0].textContent =  insertAtPosition(startPosition, startContainer.text(), '^');
-    endContainer[0].textContent =  insertAtPosition(endPosition, endContainer.text(), '$');
+    var startPositionStartContainer = startPosition;
 
     var baseNodeFound = false;
 
-    console.log(commonAncestorContainer[0]);
-    console.log(startContainer[0]);
     forEachTextChildNode(commonAncestorContainer, function (idx, node) {
         var node = $(node)[0];
 
+        console.log(node);
         if(startContainer[0] == endContainer[0] || /^\s+$/.test(node.textContent) || node.textContent.length == 0) {
             return;
         }
@@ -51,20 +45,31 @@ function markText (range) {
         }
 
         if(node == startContainer[0]) {
-            console.log("found node");
             baseNodeFound = true;
         }
 
         if(node == endContainer[0]) {
             baseNodeFound = false;
-            console.log("found end;");
         }
-
-
     });
 
-    startContainer.replaceWith(startContainer.text().replace("^", START_MARK_UP).replace("$", END_MARK_UP));
-    endContainer.replaceWith(endContainer.text().replace("^", START_MARK_UP).replace("$", END_MARK_UP));
+    if(range.startContainer == range.endContainer) {
+        if(endPosition - startPosition == 0) {
+            return;
+        }
+        var endPositionStartContainer = endPosition;
+    } else {
+        endPositionStartContainer = startContainer.text().length + START_MARK_UP.length;
+
+        var textEnd = endContainer.text().insertAtPosition(0, START_MARK_UP)
+            .insertAtPosition(endPosition, END_MARK_UP);
+        endContainer.replaceWith(textEnd);
+    }
+
+    var textStart = startContainer.text().insertAtPosition(startPositionStartContainer, START_MARK_UP)
+        .insertAtPosition(endPositionStartContainer, END_MARK_UP);
+
+    startContainer.replaceWith(textStart);
 }
 
 document.body.addEventListener('mouseup', function () {
