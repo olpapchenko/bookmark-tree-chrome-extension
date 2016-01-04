@@ -22,13 +22,17 @@
   },
 
   "content_scripts"  : [{
-    "matches": ["http://*/*"],
+    "matches": ["http://*/*", "https://*/*"],
     "js" : [
       "/js/vendor/jquery/dist/jquery.min.js",
       "/js/shared/messageTypes.js",
       "/js/shared/DOMUtils.js",
+      "/js/vendor/node-uuid/uuid.js",
+      "/js/content/bookmarkStore.js",
+      "/js/vendor/css-selector-generator/build/css-selector-generator.min.js",
       "/js/content/markController.js",
-      "/js/content/content.js"]
+      "/js/content/content.js"],
+    "css" : ["/css/content.css"]
   }],
 
   "permissions": [
