@@ -8,12 +8,12 @@ String.prototype.insertAtPosition =  function insertAtPosition(idx, insertString
     return this.slice(0, idx) + insertString + this.slice(idx);
 }
 
-function getMarkId(markterId) {
+function getMarkClass(markterId) {
     return "bookmarkTreeMarkId"  + markterId;
 }
 
 function getMarkerStartMarkUp (markerId) {
-    return "<span style='color: red !important; background-color: #ffff00' id = '" + getMarkId(markerId) + "'>"
+    return "<span style='color: red !important; background-color: #ffff00' class = '" + getMarkClass(markerId) + "'>"
 }
 
 function getEndMarkUp() {
@@ -37,7 +37,7 @@ function removeMarkerFromUI(markerId) {
 }
 
 function addRemoveListener (markerId) {
-    $("#" + getMarkId(markerId)).hover(function () {
+    $("." + getMarkClass(markerId)).hover(function () {
         $("#" + markerId).fadeIn();
         console.log("show marker");
     }, function () {
