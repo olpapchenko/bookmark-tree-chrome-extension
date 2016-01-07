@@ -1,3 +1,7 @@
+String.prototype.insertAtPosition =  function insertAtPosition(idx, insertString) {
+    return this.slice(0, idx) + insertString + this.slice(idx);
+}
+
 function filterTextNodes(node) {
     var node = $(node);
     if(node[0].nodeType == 3) {

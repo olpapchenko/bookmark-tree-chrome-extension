@@ -1,9 +1,6 @@
 var markModeEnabled = false,
     selectorGenerator = new CssSelectorGenerator();
 
-String.prototype.insertAtPosition =  function insertAtPosition(idx, insertString) {
-    return this.slice(0, idx) + insertString + this.slice(idx);
-}
 
 function getMarkClass(markterId) {
     return "bookmarkTreeMarkId"  + markterId;
@@ -31,41 +28,6 @@ function markTextBySelector (selectorObject) {
 
 function removeMarkerFromUI(markerId) {
     removeMarker(markerId);
-}
-
-function addRemoveListener (markerId) {
-    $("." + getMarkClass(markerId)).hover(function () {
-        $("#" + markerId).fadeIn();
-    }, function () {
-        setTimeout(function () {
-            if(!$("#" + markerId).is(":hover")) {
-                $("#" + markerId).fadeOut();
-            }
-        }, 1000);
-    });
-}
-
-function createRemoveSign(contextContainer, entityId) {
-    var node = $(contextContainer);
-
-    var removeContainer = document.createElement("div");
-    removeContainer.className = "removeContainer";
-
-    removeContainer.id = entityId;
-    removeContainer.style.background = "url('" + chrome.extension.getURL("/images/cross.png") +"') no-repeat";
-    removeContainer.style.top = getElementDistance(node[0], true) - 20 + "px";
-    removeContainer.style.left = getElementDistance(node[0], false) - 20  + "px";
-
-    $(removeContainer).hover(function () {
-    }, function () {
-        $("#" + entityId).fadeOut();
-    });
-
-    $(removeContainer).on("click", function () {
-        removeMarkerFromUI(entityId);
-    });
-
-    document.body.appendChild(removeContainer);
 }
 
 function markText (range, markerId) {
@@ -123,9 +85,11 @@ function markText (range, markerId) {
 
     var newStartContainer = $("<span>" + textStart + "</span>");
     startContainer.replaceWith(newStartContainer);
-    addRemoveListener(markerId);
+    addRemoveListener(markerId, getMarkClass(markerId));
 
-    createRemoveSign(newStartContainer.find("." + getMarkClass(markerId))[0], markerId);
+    createRemoveSign(newStartContainer.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function () {
+        removeMarkerFromUI(entityClass);
+    });
 }
 
 document.body.addEventListener('mouseup', function () {
