@@ -26,23 +26,30 @@ function markTextBySelector (selectorObject) {
     });
 }
 
-function removeMarkerFromUI(markerId) {
-    removeMarker(markerId);
+function removeMarkerFromUI(markerClass) {
+    $("." + markerClass).each(function () {
+        console.log(this);
+        $(this).replaceWith(escapeText(this.textContent));
+    });
+    removeMarker(markerClass);
 }
 
 function markText (range, markerId) {
     var startContainer = getFirstOfTextType(range.startContainer),
         endContainer =  getLastOfTextType(range.endContainer),
+        startContainerEscaped = escapeText(startContainer.text()),
+        endContainerEscaped = escapeText(endContainer.text()),
         startPosition = range.startContainer.nodeType == 3 ? range.startOffset : 0,
         endPosition = range.startContainer.nodeType == 3 ? range.endOffset : endContainer.length - 1,
         commonAncestorContainer = $(range.commonAncestorContainer);
 
     endPosition += getMarkerStartMarkUp(markerId).length;
 
-    var startPositionStartContainer = startPosition;
+    var startPositionStartContainer = startPosition,
+        baseNodeFound = false;
 
-    var baseNodeFound = false;
-
+    console.log(startContainer[0]);
+    console.log(endContainer[0]);
     forEachTextChildNode(commonAncestorContainer, function (idx, node) {
         var node = $(node)[0];
 
@@ -63,31 +70,29 @@ function markText (range, markerId) {
         }
     });
 
-
-
     if(range.startContainer == range.endContainer) {
         if(endPosition - startPosition == 0) {
             return;
         }
         var endPositionStartContainer = endPosition;
     } else {
-        endPositionStartContainer = startContainer.text().length + getMarkerStartMarkUp(markerId).length;
+        endPositionStartContainer = startContainerEscaped.length + getMarkerStartMarkUp(markerId).length;
 
-        var textEnd = endContainer.text().insertAtPosition(0, getMarkerStartMarkUp(markerId))
+        var textEnd = endContainerEscaped.insertAtPosition(0, getMarkerStartMarkUp(markerId))
             .insertAtPosition(endPosition, getEndMarkUp());
-
+        console.log("text end: " + endContainerEscaped);
         endContainer.replaceWith(textEnd);
-
     }
 
-    var textStart = startContainer.text().insertAtPosition(startPositionStartContainer, getMarkerStartMarkUp(markerId))
+    var textStart = startContainerEscaped.insertAtPosition(startPositionStartContainer, getMarkerStartMarkUp(markerId))
         .insertAtPosition(endPositionStartContainer, getEndMarkUp());
 
     var newStartContainer = $("<span>" + textStart + "</span>");
     startContainer.replaceWith(newStartContainer);
+    console.log("textStart: "  + textStart);
     addRemoveListener(markerId, getMarkClass(markerId));
 
-    createRemoveSign(newStartContainer.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function () {
+    createRemoveSign(newStartContainer.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
         removeMarkerFromUI(entityClass);
     });
 }

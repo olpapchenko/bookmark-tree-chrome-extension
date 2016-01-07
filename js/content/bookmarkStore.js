@@ -18,8 +18,8 @@ function addMarker(marker) {
     bookmark.markers.push(marker);
 }
 
-function removeMarker(markerId) {
-    removeById(bookmark.markers, markerId);
+function removeMarker(markerClass) {
+    removeById(bookmark.markers, markerClass);
 }
 
 function addBookmarkFef(bookmark) {

@@ -26,7 +26,7 @@ function createRemoveSign(contextContainer, removeSignId, entityClass, removeCal
         $("#" + removeSignId).fadeOut();
     });
 
-    $(removeContainer).on("click", removeCallback);
+    $(removeContainer).on("click", function () {removeCallback(entityClass)});
 
     document.body.appendChild(removeContainer);
 }
