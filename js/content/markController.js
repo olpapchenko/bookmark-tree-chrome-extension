@@ -28,7 +28,6 @@ function markTextBySelector (selectorObject) {
 
 function removeMarkerFromUI(markerClass) {
     $("." + markerClass).each(function () {
-        console.log(this);
         $(this).replaceWith(escapeText(this.textContent));
     });
     removeMarker(markerClass);
@@ -62,6 +61,7 @@ function markText (range, markerId) {
         }
 
         if(node == startContainer[0]) {
+            console.log("found base node");
             baseNodeFound = true;
         }
 
@@ -80,7 +80,6 @@ function markText (range, markerId) {
 
         var textEnd = endContainerEscaped.insertAtPosition(0, getMarkerStartMarkUp(markerId))
             .insertAtPosition(endPosition, getEndMarkUp());
-        console.log("text end: " + endContainerEscaped);
         endContainer.replaceWith(textEnd);
     }
 
@@ -89,7 +88,6 @@ function markText (range, markerId) {
 
     var newStartContainer = $("<span>" + textStart + "</span>");
     startContainer.replaceWith(newStartContainer);
-    console.log("textStart: "  + textStart);
     addRemoveListener(markerId, getMarkClass(markerId));
 
     createRemoveSign(newStartContainer.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
@@ -117,4 +115,5 @@ document.body.addEventListener('mouseup', function () {
     addMarker(marker);
 
     markText(range, marker.id);
+    selection.empty();
 });
