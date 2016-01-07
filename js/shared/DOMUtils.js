@@ -45,3 +45,15 @@ function getFirstOfTextType(node) {
     return $(nodes[0]);
 }
 
+function getElementDistance (elem, top) {
+    var location = 0;
+    if (elem.offsetParent) {
+        do {
+            location += top ? elem.offsetTop : elem.offsetLeft;
+            elem = elem.offsetParent;
+        } while (elem);
+    }
+    return location >= 0 ? location : 0;
+};
+
+

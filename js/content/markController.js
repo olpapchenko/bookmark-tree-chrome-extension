@@ -1,6 +1,3 @@
-var START_MARK_UP = "<span style='color: red !important; background-color: #ffff00'>",
-    END_MARK_UP = "</span>";
-
 var markModeEnabled = false,
     selectorGenerator = new CssSelectorGenerator();
 
@@ -39,29 +36,34 @@ function removeMarkerFromUI(markerId) {
 function addRemoveListener (markerId) {
     $("." + getMarkClass(markerId)).hover(function () {
         $("#" + markerId).fadeIn();
-        console.log("show marker");
     }, function () {
         setTimeout(function () {
-            $("#" + markerId).fadeOut();
-            console.log("hide marker");
+            if(!$("#" + markerId).is(":hover")) {
+                $("#" + markerId).fadeOut();
+            }
         }, 1000);
     });
 }
 
-function createRemoveSign(node, markerId) {
-    var node = $(node);
+function createRemoveSign(contextContainer, entityId) {
+    var node = $(contextContainer);
 
     var removeContainer = document.createElement("div");
     removeContainer.className = "removeContainer";
 
-    removeContainer.id = markerId;
+    removeContainer.id = entityId;
     removeContainer.style.background = "url('" + chrome.extension.getURL("/images/cross.png") +"') no-repeat";
-    removeContainer.style.top = node[0].offsetTop - 30;
-    removeContainer.style.left = node[0].offsetLeft - 30;
+    removeContainer.style.top = getElementDistance(node[0], true) - 20 + "px";
+    removeContainer.style.left = getElementDistance(node[0], false) - 20  + "px";
+
+    $(removeContainer).hover(function () {
+    }, function () {
+        $("#" + entityId).fadeOut();
+    });
 
     $(removeContainer).on("click", function () {
-        removeMarkerFromUI(markerId);
-    })
+        removeMarkerFromUI(entityId);
+    });
 
     document.body.appendChild(removeContainer);
 }
@@ -119,10 +121,11 @@ function markText (range, markerId) {
     var textStart = startContainer.text().insertAtPosition(startPositionStartContainer, getMarkerStartMarkUp(markerId))
         .insertAtPosition(endPositionStartContainer, getEndMarkUp());
 
-    startContainer.replaceWith(textStart);
+    var newStartContainer = $("<span>" + textStart + "</span>");
+    startContainer.replaceWith(newStartContainer);
     addRemoveListener(markerId);
 
-    createRemoveSign(startContainer, markerId);
+    createRemoveSign(newStartContainer.find("." + getMarkClass(markerId))[0], markerId);
 }
 
 document.body.addEventListener('mouseup', function () {
