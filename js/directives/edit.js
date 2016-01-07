@@ -3,9 +3,6 @@ angular.module("app").directive("edit", function () {
         restrict: "E",
         templateUrl: "/html/templates/edit.html",
         link: function (scope, attrs, element) {
-            var getActiveTab = function (callback) {
-              chrome.tabs.query({active: true}, callback);
-            };
 
             var switchMode = function (activeMode) {
                 getActiveTab(function (tab) {

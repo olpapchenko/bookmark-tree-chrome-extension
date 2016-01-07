@@ -62,5 +62,14 @@ preferencesService = {
         notificationService.getNewNotificationsCount().then(function (count) {
             chrome.browserAction.setBadgeText(count);
         })
-    }, preferencesService.get(preferencesService.NOTIFICATION_INTERVAL));
+    }, 10000);//preferencesService.get(preferencesService.NOTIFICATION_INTERVAL));
 }) ();
+
+chrome.contextMenus.create({"title": "Mark Text", "contexts":["selection"],
+    "onclick": function() {
+        getActiveTab(function (tab) {
+            chrome.tabs.sendMessage(tab[0].id, {type: MESSAGE_TYPES.MARK_SELECTION});
+        })
+}});
+
+

@@ -95,14 +95,21 @@ function markText (range, markerId) {
     });
 }
 
-document.body.addEventListener('mouseup', function () {
-    var selection = document.getSelection(),
-        range = selection.getRangeAt(0);
+function markCurrentSelection () {
+    markModeEnabled = true;
+    markSelection();
+    markModeEnabled = false;
+}
 
-    if(!markModeEnabled || !selection || selection.collapsed) {
+
+function markSelection( ) {
+    var selection = document.getSelection();
+
+    if(!markModeEnabled || !selection || selection.collapsed || selection.rangeCount == 0) {
         return;
     }
 
+    var   range = selection.getRangeAt(0);
     var marker = {
         startContainerSelector: selectorGenerator.getSelector(range.startContainer),
         endContainerSelector: selectorGenerator.getSelector(range.endContainer),
@@ -116,4 +123,7 @@ document.body.addEventListener('mouseup', function () {
 
     markText(range, marker.id);
     selection.empty();
-});
+}
+
+document.body.addEventListener('mouseup', markSelection);
+

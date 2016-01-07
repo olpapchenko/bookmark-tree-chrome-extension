@@ -16,9 +16,12 @@
 
   "background": {
     "scripts": [
+                "/js/vendor/bluebird/js/browser/bluebird.js",
+                "/js/shared/Utils.js",
+                "/js/vendor/jquery/dist/jquery.min.js",
                 "/js/shared/messageTypes.js",
-                "/js/background/background.js",
-                "/js/vendor/bluebird/js/browser/bluebird.js"]
+                "/js/background/background.js"
+                ]
   },
 
   "content_scripts"  : [{
@@ -28,6 +31,7 @@
       "/js/vendor/node-uuid/uuid.js",
       "/js/vendor/css-selector-generator/build/css-selector-generator.min.js",
 
+      "/js/shared/Utils.js",
       "/js/content/bookmarkStore.js",
       "/js/shared/messageTypes.js",
       "/js/shared/DOMUtils.js",
