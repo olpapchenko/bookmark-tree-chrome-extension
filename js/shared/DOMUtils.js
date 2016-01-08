@@ -40,6 +40,23 @@ function wrapTextNodes(node, wrapTemplate) {
     });
 }
 
+function wrapWordUnderIdx(text, wrapTextStart, wrapTextEnd, idx) {
+    var startIdx = idx,
+        endIdx = idx;
+
+    while(startIdx != 0 && !/\s/.test(text[startIdx])) {
+        console.log(startIdx)
+        startIdx--;
+    }
+
+    while(!/\s/.test(text[endIdx]) && endIdx == text.length) {
+        console.log(endIdx)
+        endIdx++;
+    }
+
+    return  text.insertAtPosition(endIdx, wrapTextEnd).insertAtPosition(startIdx, wrapTextStart);
+}
+
 function getAllTextNodes(node) {
     var nodes = [];
 
