@@ -36,6 +36,7 @@
       "/js/shared/messageTypes.js",
       "/js/shared/DOMUtils.js",
       "/js/content/removeController.js",
+      "/js/content/commentController.js",
       "/js/content/markController.js",
       "/js/content/content.js"],
     "css" : ["/css/content.css"]

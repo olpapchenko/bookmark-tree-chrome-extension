@@ -7,3 +7,85 @@
     display: none;
     cursor: pointer;
 }
+
+.commentContainer
+{
+    position: absolute;
+    z-index: 10000;
+    opacity: 0.7;
+    width: 240px;
+    height: 120px;
+    padding: 0px;
+    background: #D1FFFF;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    border: #7F7F7F solid 1px;
+}
+
+.commentContainer:after
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 15px 12px 0;
+    border-color: #D1FFFF transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    bottom: -15px;
+    left: 14px;
+}
+
+.commentContainer:before
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 15px 12px 0;
+    border-color: #7F7F7F transparent;
+    display: block;
+    width: 0;
+    z-index: 0;
+    bottom: -16px;
+    left: 14px;
+}
+
+.commentContainer textarea {
+    background: #D1FFFF;
+    margin-left: 2px;
+    margin-top: 5px;
+    border: none;
+    overflow: auto;
+    resize: none;
+}
+
+.commentContainer textarea:focus {
+    border: none;
+    outline: none !important;
+}
+
+.commentContainer:hover {
+    box-shadow: 0 0 10px #719ECE;
+    opacity: 1;
+}
+
+.commentContainer textarea::-webkit-scrollbar{ width: 10px; }
+
+.commentContainer textarea::-webkit-scrollbar-track{ background-color: #D1FFFF;}
+
+.commentContainer textarea::-webkit-scrollbar-thumb{
+    background-color:rgba(0,0,0,0.5);
+    border:3px solid transparent;
+    border-radius:6px;
+    background-clip:content-box;
+    box-shadow:inset 0px 0px 0px 1px rgba(9, 3, 42, 0.25);
+}
+
+.commentContainer textarea::-webkit-scrollbar-thumb:window-inactive{
+    background-color:rgba(102,102,102,0.5);
+    border:3px solid transparent;
+    border-radius:6px;
+    background-clip:content-box;
+    box-shadow:inset 0px 0px 0px 1px rgba(192,192,192,0.5);
+}

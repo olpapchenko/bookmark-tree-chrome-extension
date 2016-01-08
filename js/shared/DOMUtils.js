@@ -2,6 +2,12 @@ String.prototype.insertAtPosition =  function insertAtPosition(idx, insertString
     return this.slice(0, idx) + insertString + this.slice(idx);
 }
 
+String.prototype.escapeTextRange = function (start, end) {
+    console.log("text before escape " + this);
+
+    return this.slice(0, start) + escapeText(this.slice(start, end)) + this.slice(end);
+}
+
 function escapeText(text) {
     return $("<div></div>").text(text).html();
 }
