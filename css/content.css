@@ -8,19 +8,39 @@
     cursor: pointer;
 }
 
+.commentWrapper  {
+    position: absolute;
+    width: 240px;
+    height: 120px;
+}
+
 .commentContainer
 {
+    top: 75%;
+    height: 25%;
+    width: 70px;
+    transition: all 0.3s ease-out 0.5s;
     position: absolute;
     z-index: 10000;
     opacity: 0.7;
-    width: 240px;
-    height: 120px;
     padding: 0px;
-    background: #D1FFFF;
+    background: rgba(255,209,235,1);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(255,209,235,1)), color-stop(0%, rgba(209,255,255,1)), color-stop(93%, rgba(188,224,238,1)), color-stop(100%, rgba(188,224,238,1)));
+    background: -webkit-linear-gradient(45deg, rgba(255,209,235,1) 0%, rgba(209,255,255,1) 0%, rgba(188,224,238,1) 93%, rgba(188,224,238,1) 100%);
+    background: linear-gradient(45deg, rgba(255,209,235,1) 0%, rgba(209,255,255,1) 0%, rgba(188,224,238,1) 93%, rgba(188,224,238,1) 100%);
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
-    border-radius: 12px;
+    border-radius: 6px;
     border: #7F7F7F solid 1px;
+}
+
+.commentContainer:hover {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    box-shadow: 0 0 10px #719ECE;
+    border-radius: 12px;
+    opacity: 1;
 }
 
 .commentContainer:after
@@ -52,12 +72,15 @@
 }
 
 .commentContainer textarea {
-    background: #D1FFFF;
+    font-size: 15px;
+    background: transparent;
     margin-left: 2px;
     margin-top: 5px;
     border: none;
     overflow: auto;
     resize: none;
+    width: 90%;
+    height: 75%;
 }
 
 .commentContainer textarea:focus {
@@ -65,14 +88,9 @@
     outline: none !important;
 }
 
-.commentContainer:hover {
-    box-shadow: 0 0 10px #719ECE;
-    opacity: 1;
-}
+.commentContainer textarea::-webkit-scrollbar{ width: 10px;}
 
-.commentContainer textarea::-webkit-scrollbar{ width: 10px; }
-
-.commentContainer textarea::-webkit-scrollbar-track{ background-color: #D1FFFF;}
+.commentContainer textarea::-webkit-scrollbar-track{ background-color: transparent;}
 
 .commentContainer textarea::-webkit-scrollbar-thumb{
     background-color:rgba(0,0,0,0.5);

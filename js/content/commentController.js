@@ -1,4 +1,4 @@
-var COMMENT_MARK_UP = "<div><textarea name='' id='' cols='27' rows='5'></textarea> </div>";
+var COMMENT_MARK_UP = "<div class='commentWrapper'><div class='commentContainer'><textarea name='' id=''  ></textarea> </div></div>";
 
 var  isCommentModeEnabled = false,
      selectorGenerator = new CssSelectorGenerator();
@@ -26,7 +26,6 @@ function createCommentContainer(contextNode, commentId) {
 
     var commentElement = $(COMMENT_MARK_UP)[0];
 
-    commentElement.className = "commentContainer";
     commentElement.id = commentId;
 
     console.log(getElementDistance(contextNode, true));
