@@ -98,7 +98,7 @@ function markText (range, markerId) {
 
     var startContainerMarked = $("<span>" + startElementHTML + "</span>");
     startContainer.replaceWith(startContainerMarked);
-    addRemoveListener(markerId, getMarkClass(markerId));
+    addRemoveListener(markerId, $("." + getMarkClass(markerId)));
 
     createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
         removeMarkerFromUI(entityClass);

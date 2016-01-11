@@ -18,7 +18,7 @@
 {
     top: 75%;
     height: 25%;
-    width: 70px;
+    width: 65px;
     transition: all 0.3s ease-out 0.5s;
     position: absolute;
     z-index: 10000;
@@ -35,6 +35,8 @@
 }
 
 .commentContainer:hover {
+    padding: 5px;
+    position: absolute;
     width: 100%;
     height: 100%;
     top: 0px;
@@ -72,14 +74,22 @@
 }
 
 .commentContainer textarea {
+    padding: 0px;
+    margin: 0px;
+    display: none;
+    overflow: auto;
+}
+
+.commentContainer:hover textarea {
+    display: block;
     font-size: 15px;
     background: transparent;
     margin-left: 2px;
     margin-top: 5px;
     border: none;
-    overflow: auto;
+    overflow: hidden;
     resize: none;
-    width: 90%;
+    width: 98%;
     height: 75%;
 }
 

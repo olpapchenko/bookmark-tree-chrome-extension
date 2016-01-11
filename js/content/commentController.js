@@ -17,18 +17,20 @@ function getContextWrapHTMLEnd() {
 }
 
 function getContextNodeId(id) {
-    return "bookmarkTreeComment" + id;
+    return "bookmarkTreeCommentContextNode" + id;
+}
+
+function getCommentContainerId(id) {
+    return "bookmarkTreeCommentContainer" + id;
 }
 
 function createCommentContainer(contextNode, commentId) {
-    var COMMENT_POSITION_OFFSET_TOP = 133,
+    var COMMENT_POSITION_OFFSET_TOP = 136,
         COMMENT_POSITION_OFFSET_LEFT = 0;
 
     var commentElement = $(COMMENT_MARK_UP)[0];
 
     commentElement.id = commentId;
-
-    console.log(getElementDistance(contextNode, true));
 
     commentElement.style.top = getElementDistance(contextNode, true) - COMMENT_POSITION_OFFSET_TOP + "px";
     commentElement.style.left = getElementDistance(contextNode, false) + COMMENT_POSITION_OFFSET_LEFT + "px";
@@ -46,15 +48,11 @@ document.body.addEventListener("click", function (event) {
     var commentId = uuid.v1(),
         range = selection.getRangeAt(0);
 
-    console.log(range.startContainer.nodeType);
-    console.log(range.startContainer);
     if(range.startContainer.nodeType != 3) {
-        console.log("returns");
         return;
     }
 
     var contextContainerHTML = wrapWordUnderIdx(range.startContainer.textContent, getContextWrapHTMLStart(getContextNodeId(commentId)), getContextWrapHTMLEnd(), range.startOffset);
-    console.log("contest " + contextContainerHTML);
     $(range.startContainer).replaceWith(contextContainerHTML);
 
     var comment = {
@@ -62,6 +60,12 @@ document.body.addEventListener("click", function (event) {
         id: commentId
     };
 
-    createCommentContainer($("#" + getContextNodeId(commentId))[0], commentId);
+    createCommentContainer($("#" + getContextNodeId(commentId))[0], getCommentContainerId(commentId));
+    addRemoveListener(commentId, $("#" + getCommentContainerId(commentId)));
+    createRemoveSign($("#" + getCommentContainerId(commentId)), commentId,  getCommentContainerId(commentId), function () {
+        $("#" + getCommentContainerId(commentId)).remove();
+        var contextNode = $("#" + getContextNodeId(commentId));
+        contextNode.replaceWith(contextNode.text());
+    });
 
 });

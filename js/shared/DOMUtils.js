@@ -45,12 +45,10 @@ function wrapWordUnderIdx(text, wrapTextStart, wrapTextEnd, idx) {
         endIdx = idx;
 
     while(startIdx != 0 && !/\s/.test(text[startIdx])) {
-        console.log(startIdx)
         startIdx--;
     }
 
     while(!/\s/.test(text[endIdx]) && endIdx == text.length) {
-        console.log(endIdx)
         endIdx++;
     }
 

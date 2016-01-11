@@ -1,5 +1,5 @@
-function addRemoveListener (removeSignId, entityClass) {
-    $("." + entityClass).hover(function () {
+function addRemoveListener (removeSignId, entityElements) {
+    entityElements.hover(function () {
         $("#" + removeSignId).fadeIn();
     }, function () {
         setTimeout(function () {
@@ -12,6 +12,10 @@ function addRemoveListener (removeSignId, entityClass) {
 
 function createRemoveSign(contextContainer, removeSignId, entityClass, removeCallback) {
     var node = $(contextContainer);
+
+    if(!node) {
+        return;
+    }
 
     var removeContainer = document.createElement("div");
     removeContainer.className = "removeContainer";
@@ -26,7 +30,10 @@ function createRemoveSign(contextContainer, removeSignId, entityClass, removeCal
         $("#" + removeSignId).fadeOut();
     });
 
-    $(removeContainer).on("click", function () {removeCallback(entityClass)});
+    $(removeContainer).on("click", function () {
+        removeCallback(entityClass);
+        $("#" + removeSignId).remove();
+    });
 
     document.body.appendChild(removeContainer);
 }
