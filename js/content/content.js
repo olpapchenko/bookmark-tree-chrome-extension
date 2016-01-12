@@ -31,7 +31,7 @@ chrome.runtime.onMessage.addListener(function (message) {
 
     if(message.type == MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_START) {
         linkController.enable(true);
-        document.body.style.cursor = "default";
+        document.body.style.cursor = "url(" +  chrome.extension.getURL('/images/bookmark.png') + ") 0 26, auto";
     }
 
     if(message.type == MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_END) {

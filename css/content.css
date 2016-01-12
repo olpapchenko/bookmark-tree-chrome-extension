@@ -14,6 +14,17 @@
     height: 120px;
 }
 
+.linkWrapper {
+    position: absolute;
+    width: 230px;
+    height: 50px;
+}
+
+.linkWrapper .commentContainer {
+    height: 40%;
+    width: 25%;
+}
+
 .commentContainer
 {
     top: 75%;
@@ -56,7 +67,7 @@
     width: 0;
     z-index: 1;
     bottom: -15px;
-    left: 14px;
+    left: 10px;
 }
 
 .commentContainer:before
@@ -74,6 +85,7 @@
 }
 
 .commentContainer textarea {
+    color: #000000;
     padding: 0px;
     margin: 0px;
     display: none;

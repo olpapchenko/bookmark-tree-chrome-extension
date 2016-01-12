@@ -20,9 +20,7 @@ var commentProto = {
     },
 
     createCommentContainer: function createCommentContainer(contextNode, commentId) {
-        var COMMENT_POSITION_OFFSET_TOP = 136,
-            COMMENT_POSITION_OFFSET_LEFT = 0,
-            _this = this;
+        var _this = this;
 
         console.log(_this.getBodyMarkUp.toString());
 
@@ -30,8 +28,8 @@ var commentProto = {
 
         commentElement.id = commentId;
 
-        commentElement.style.top = getElementDistance(contextNode, true) - COMMENT_POSITION_OFFSET_TOP + "px";
-        commentElement.style.left = getElementDistance(contextNode, false) + COMMENT_POSITION_OFFSET_LEFT + "px";
+        commentElement.style.top = getElementDistance(contextNode, true) - this.getCommentOffsetTop()  + "px";
+        commentElement.style.left = getElementDistance(contextNode, false) + this.getCommentOffsetLeft() + "px";
 
         document.body.appendChild(commentElement);
     }
