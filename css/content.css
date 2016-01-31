@@ -1,3 +1,9 @@
+.extensionText {
+    font-family: Arial;
+    font-weight: normal;
+    font-size: 13px;
+}
+
 .removeContainer {
     position: absolute;
     height: 25px;
@@ -128,4 +134,32 @@
     border-radius:6px;
     background-clip:content-box;
     box-shadow:inset 0px 0px 0px 1px rgba(192,192,192,0.5);
+}
+
+#bookmark_tree_instructions {
+    transition: all 0.3s ease-out 0.5s;
+    z-index: 10000;
+    position: fixed;
+    margin-left: 30%;
+    text-align: center;
+    top: 20px;
+    width: 40%;
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+#bookmark_tree_instructions .removeContainer {
+    top: 10px;
+    right: 10px;
+    height: 10px;
+    width: 10px;
+    display: block;
+}
+
+.transperent {
+    opacity: 0;
 }
