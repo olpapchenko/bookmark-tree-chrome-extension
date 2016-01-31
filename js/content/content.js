@@ -3,7 +3,7 @@ var commentController = new CommentController(),
     EDIT_MODE_POPUP_HTML  = "<div class='bookmark_tree_instructions' class='extensionText'>You are at the edit mode, to exit press ESC.</div>";
 
 function createEditModeInstructionPopup() {
-    var HIDE_POPUP_TIMEOUT = 400000;
+    var HIDE_POPUP_TIMEOUT = 4000;
     function hidePopup() {
         var popups = Array.prototype.slice.apply(document.getElementsByClassName("bookmark_tree_instructions"));
         popups.forEach(function (popup) {
