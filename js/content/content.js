@@ -16,8 +16,8 @@ chrome.runtime.onMessage.addListener(function (message) {
         enableMarker(false);
     }
 
-    if(message.type == MESSAGE_TYPES.COMMENT_CONTEXT) {
-        createCommentContainer(message.context);
+    if(message.type == MESSAGE_TYPES.COMMENT_SELECTION) {
+        commentController.processSelection();
     }
 
     if(message.type == MESSAGE_TYPES.COMMENT_MODE_START) {
@@ -29,6 +29,10 @@ chrome.runtime.onMessage.addListener(function (message) {
         commentController.enable(false);
     }
 
+    if(message.type == MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_SELECTION) {
+        linkController.processSelection();
+    }
+
     if(message.type == MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_START) {
         linkController.enable(true);
         document.body.style.cursor = "url(" +  chrome.extension.getURL('/images/bookmark.png') + ") 0 26, auto";
@@ -38,3 +42,7 @@ chrome.runtime.onMessage.addListener(function (message) {
         linkController.enable(false);
     }
 });
+
+document.body.addEventListener("", function () {
+    
+})

@@ -20,11 +20,8 @@ var commentProto = {
     },
 
     createCommentContainer: function createCommentContainer(contextNode, commentId) {
-        var _this = this;
-
-        console.log(_this.getBodyMarkUp.toString());
-
-        var commentElement = $(_this.getBodyMarkUp())[0];
+        var _this = this,
+            commentElement = $(_this.getBodyMarkUp())[0];
 
         commentElement.id = commentId;
 
@@ -32,19 +29,13 @@ var commentProto = {
         commentElement.style.left = getElementDistance(contextNode, false) + this.getCommentOffsetLeft() + "px";
 
         document.body.appendChild(commentElement);
-    }
-}
+    },
 
-function CommentControllerBase() {
-    this.isCommentModeEnabled = false;
-    this.selectorGenerator = new CssSelectorGenerator();
+    processSelection: function () {
+        var selection = document.getSelection(),
+            _this = this;
 
-    var _this = this;
-
-    document.body.addEventListener("click", function (event) {
-        var selection = document.getSelection();
-
-        if(!_this.isCommentModeEnabled || !event.target || !selection) {
+        if(!selection) {
             return;
         }
 
@@ -70,6 +61,21 @@ function CommentControllerBase() {
             var contextNode = $("#" + _this.getContextNodeId(commentId));
             contextNode.replaceWith(contextNode.text());
         });
+    }
+}
 
+function CommentControllerBase() {
+    this.isCommentModeEnabled = false;
+    this.selectorGenerator = new CssSelectorGenerator();
+
+    var _this = this;
+
+    document.body.addEventListener("click", function (event) {
+
+        if(!_this.isCommentModeEnabled || !event.target) {
+            return;
+        }
+
+        _this.processSelection();
     });
 }

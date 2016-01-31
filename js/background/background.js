@@ -72,4 +72,18 @@ chrome.contextMenus.create({"title": "Mark Text", "contexts":["selection"],
         })
 }});
 
+chrome.contextMenus.create({"title": "Create comment", "contexts":["selection"],
+    "onclick": function() {
+        getActiveTab(function (tab) {
+            chrome.tabs.sendMessage(tab[0].id, {type: MESSAGE_TYPES.COMMENT_SELECTION});
+        })
+}});
+
+chrome.contextMenus.create({"title": "Create link", "contexts":["selection"],
+    "onclick": function() {
+        getActiveTab(function (tab) {
+            chrome.tabs.sendMessage(tab[0].id, {type: MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_SELECTION});
+        })
+}});
+
 

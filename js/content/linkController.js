@@ -12,6 +12,10 @@ function LinkController() {
     this.getCommentOffsetLeft = function () {
         return 0;
     }
+    
+    this.linkSelection = function () {
+        
+    }
 }
 
 LinkController.prototype = commentProto;
