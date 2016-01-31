@@ -1,12 +1,14 @@
 var commentController = new CommentController(),
     linkController = new LinkController(),
-    EDIT_MODE_POPUP_HTML  = "<div id='bookmark_tree_instructions' class='extensionText'>You are at the edit mode, to exit press ESC.</div>";
+    EDIT_MODE_POPUP_HTML  = "<div class='bookmark_tree_instructions' class='extensionText'>You are at the edit mode, to exit press ESC.</div>";
 
 function createEditModeInstructionPopup() {
     var HIDE_POPUP_TIMEOUT = 400000;
     function hidePopup() {
-        console.log(document.querySelector("#bookmark_tree_instructions"));
-        document.querySelector("#bookmark_tree_instructions").className = " transperent";
+        var popups = Array.prototype.slice.apply(document.getElementsByClassName("bookmark_tree_instructions"));
+        popups.forEach(function (popup) {
+            popup.className += " transperent";
+        });
     }
 
     var element = document.createElement("div");

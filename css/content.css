@@ -136,7 +136,7 @@
     box-shadow:inset 0px 0px 0px 1px rgba(192,192,192,0.5);
 }
 
-#bookmark_tree_instructions {
+.bookmark_tree_instructions {
     transition: all 0.3s ease-out 0.5s;
     z-index: 10000;
     position: fixed;
@@ -152,7 +152,7 @@
     border-color: #faebcc;
 }
 
-#bookmark_tree_instructions .removeContainer {
+.bookmark_tree_instructions .removeContainer {
     top: 10px;
     right: 10px;
     height: 10px;
