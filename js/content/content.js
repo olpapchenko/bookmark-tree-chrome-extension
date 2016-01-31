@@ -43,6 +43,9 @@ chrome.runtime.onMessage.addListener(function (message) {
     }
 });
 
-document.body.addEventListener("", function () {
-    
+document.body.addEventListener("keyup", function (e) {
+    document.body.style.cursor = "auto";
+    linkController.enable(false);
+    commentController.enable(false);
+    enableMarker(false);
 })
