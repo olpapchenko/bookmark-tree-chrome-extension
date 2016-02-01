@@ -19,6 +19,7 @@
                 "/js/vendor/bluebird/js/browser/bluebird.js",
                 "/js/shared/Utils.js",
                 "/js/vendor/jquery/dist/jquery.min.js",
+                "/js/background/storageService.js",
                 "/js/shared/messageTypes.js",
                 "/js/background/background.js"
                 ]
@@ -45,6 +46,8 @@
   }],
 
   "permissions": [
+    "storage",
+    "unlimitedStorage",
     "activeTab",
     "bookmarks",
     "contextMenus",
@@ -53,5 +56,7 @@
 
   "web_accessible_resources": [
     "images/*"
-  ]
+  ],
+
+  "endpointUrl": "localhost:3000"
 }
