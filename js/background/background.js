@@ -14,7 +14,7 @@ notificationService = {
 
 persistanceService = {
     PERSIST_URL: "/bookmarks",
-    
+
     save: function (bookmarkData) {
         Promise.resolve($.post(this.PERSIST_URL, bookmarkData)).then(function (success) {
             chrome.tabs.query({active: true}, function (tabs) {
@@ -25,39 +25,9 @@ persistanceService = {
             })
         });
     }
-} 
-
-preferencesService = {
-    PREFERENCES_URL: "/preferences",
-    cache: {},
-
-    preferencesTypes: {
-        NOTIFICATION_INTERVAL: 1,
-        EXTENSION_ENABLED: 2,
-        BOOKMARK_ENABLED: 3,
-        MARKS_ENABLED: 4,
-        COMMENTS_ENABLED: 5,
-        NOTIFICATIONS_ENABLED: 6
-    },
-
-    get: function (key, cache) {
-        if(cache && cache[key]) {
-            return cache[key];
-        }
-
-        return Promise.resolve($.get(this.PREFERENCES_URL)).then(function (value) {
-            if(cache) {
-                this.cache[key] = value;
-            }
-        });
-    },
-
-    set: function (preferenceKey, preferenceValue) {
-        return Promise.resolve($.post(this.PREFERENCES_URL, {key: preferenceKey, value: preferenceValue}));
-    }
 };
 
-(function controller () {
+(function () {
     setInterval(function () {
         notificationService.getNewNotificationsCount().then(function (count) {
             chrome.browserAction.setBadgeText(count);

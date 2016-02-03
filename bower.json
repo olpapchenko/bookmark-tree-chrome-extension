@@ -1,0 +1,33 @@
+{
+  "name": "bookmark-tree-chrome-extension",
+  "authors": [
+    "Oleksandr <rocketmannot@gmail.com>"
+  ],
+  "description": "chrome extension for storing bookmarks",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "chrome",
+    "extension",
+    "bookmarks"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "js/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "bootstrap": "~3.3.6",
+    "css-selector-generator": "~1.0.2",
+    "underscore": "~1.8.3",
+    "node-uuid": "~1.4.7",
+    "bluebird": "~3.1.1"
+  }
+}

@@ -17,8 +17,10 @@
   "background": {
     "scripts": [
                 "/js/vendor/bluebird/js/browser/bluebird.js",
-                "/js/shared/Utils.js",
                 "/js/vendor/jquery/dist/jquery.min.js",
+                "/js/vendor/underscore/underscore.js",
+                "/js/shared/Utils.js",
+                "/js/background/preferencesService.js",
                 "/js/background/storageService.js",
                 "/js/shared/messageTypes.js",
                 "/js/background/background.js"
@@ -58,5 +60,5 @@
     "images/*"
   ],
 
-  "endpointUrl": "localhost:3000"
+  "endpointUrl": "http://localhost:3000"
 }

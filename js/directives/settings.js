@@ -3,12 +3,14 @@ angular.module("app").directive("settings", ["preferencesService", function (pre
         restrict: "E",
         templateUrl: "/html/templates/settings.html",
         link: function (scope, iElement, attr) {
-            preferencesService.get("preferences").then(function (preferences) {
+            preferencesService.get().then(function (preferences) {
                 scope.preferences = preferences;
-            });
+                console.log(scope.preferences);
+            }, function (e) {console.log(e)});
 
-            scope.savePreferences = function () {
-                preferencesService.set("preferences", scope.preferences);
+            scope.preferencesTypes = preferencesService.preferencesTypes;
+             scope.savePreferences = function () {
+                preferencesService.set(scope.preferences);
             }
         }
     }
