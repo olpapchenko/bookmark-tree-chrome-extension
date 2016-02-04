@@ -149,3 +149,18 @@ input[type="checkbox"] {
     -webkit-transition: all .2s;
     transition: all .2s;
 }
+
+.loader {
+    transition: all .2s;
+}
+
+.loader.loaded {
+    height: 45px;
+    opacity: 1;
+}
+
+.loader.not-loaded {
+    height: 0px;
+    opacity: 0;
+}
+

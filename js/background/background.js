@@ -1,16 +1,3 @@
-notificationService = {
-    NOTIFICATONS_URL: "/notifications",
-    NOTIFICATONS_COUNT_URL: "/notifications/count",
-    
-    getNotifications: function () {
-        _this = this;
-        return Promise.resolve($.get(this.NOTIFICATONS_URL));
-    },
-
-    getNewNotificationsCount: function () {
-        return Promise.resolve($.get(this.NOTIFICATONS_COUNT_URL));
-    }
-};
 
 persistanceService = {
     PERSIST_URL: "/bookmarks",
