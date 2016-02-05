@@ -2,12 +2,12 @@ var PREFERENCES_URL = "/preferences";
 
 preferencesService = {
     preferenceTypes: {
-        NOTIFICATION_INTERVAL: 1,
-        EXTENSION_ENABLED: 2,
-        BOOKMARK_LINKS_ENABLED: 3,
-        MARKS_ENABLED: 4,
-        COMMENTS_ENABLED: 5,
-        NOTIFICATIONS_ENABLED: 6,
+        EXTENSION_ENABLED: 1,
+        BOOKMARK_LINKS_ENABLED: 2,
+        MARKS_ENABLED: 3,
+        COMMENTS_ENABLED: 4,
+        NOTIFICATIONS_ENABLED: 5,
+        MARK_COLOR: 6,
         REFRESH_PERIOD: 7
     },
 
