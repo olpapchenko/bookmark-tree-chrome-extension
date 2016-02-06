@@ -1,4 +1,4 @@
-angular.module("app").directive("friends", ["friendsService", function (friendsService) {
+angular.module("app").directive("friends", ["friendsService", "tabsService", function (friendsService, tabsService) {
     return {
         restrict: "E",
         templateUrl: "/html/templates/friends.html",
@@ -10,6 +10,10 @@ angular.module("app").directive("friends", ["friendsService", function (friendsS
             }, function () {
                 scope.showErrorLoad = true;
             });
+
+            scope.addNewFriends = function ()  {
+                tabsService.openNewTab(friendsService.getNewFriendsUrl());
+            }
         }
     }
 }]);
