@@ -20,7 +20,11 @@
                 "/js/vendor/jquery/dist/jquery.min.js",
                 "/js/vendor/underscore/underscore.js",
                 "/js/shared/Utils.js",
+                "/js/background/baseCachedAccessPoint.js",
                 "/js/background/preferencesService.js",
+                "/js/background/friendsService.js",
+                "/js/background/notificationsService.js",
+                "/js/background/bookmarkService.js",
                 "/js/background/storageService.js",
                 "/js/shared/messageTypes.js",
                 "/js/background/background.js"

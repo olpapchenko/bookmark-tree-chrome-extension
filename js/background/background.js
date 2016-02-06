@@ -1,25 +1,11 @@
-
-persistanceService = {
-    PERSIST_URL: "/bookmarks",
-
-    save: function (bookmarkData) {
-        Promise.resolve($.post(this.PERSIST_URL, bookmarkData)).then(function (success) {
-            chrome.tabs.query({active: true}, function (tabs) {
-                var tab = tabs[0];
-                chrome.tabs.sendMessage(tab.id, MESSAGE_TYPES.SAVE_SUCCESS);
-            }).catch(function () {
-                chrome.tabs.sendMessage(tab.id, MESSAGE_TYPES.SAVE_FAIL);
-            })
-        });
-    }
-};
-
 (function () {
-    setInterval(function () {
-        notificationService.getNewNotificationsCount().then(function (count) {
-            chrome.browserAction.setBadgeText(count);
-        })
-    }, 10000);//preferencesService.get(preferencesService.NOTIFICATION_INTERVAL));
+    preferencesService.get().then(function (preferences) {
+        setInterval(function () {
+            notificationsService.getNotificationsCount().then(function (count) {
+                chrome.browserAction.setBadgeText(count);
+            })
+        }, preferences[preferencesService.REFRESH_PERIOD]);
+    }, function (e) {console.error("can not set notifications count badge error: " + JSON.stringify(e));});
 }) ();
 
 chrome.contextMenus.create({"title": "Mark Text", "contexts":["selection"],

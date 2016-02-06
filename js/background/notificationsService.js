@@ -1,13 +1,18 @@
 var NOTIFICATONS_URL = "/notifications",
-    NOTIFICATONS_COUNT_URL = "/notifications/count";
+    NOTIFICATONS_COUNT_URL = "/notifications/count",
+    NOTIFICATIONS_KEY = "notifications";
 
-notificationService = {
+notificationsService = {
 
     getNotifications: function () {
-        return Promise.resolve($.get(this.NOTIFICATONS_URL));
+        return preferencesService.get().then(function (preferences) {
+            return baseCachedAccessPoint.get(NOTIFICATIONS_KEY, NOTIFICATONS_URL, preferences[preferencesService.REFRESH_PERIOD]);
+        });
     },
 
-    getNewNotificationsCount: function () {
-        return Promise.resolve($.get(this.NOTIFICATONS_COUNT_URL));
+    getNotificationsCount: function () {
+        return preferencesService.get().then(function (preferences) {
+            return baseCachedAccessPoint.get(NOTIFICATIONS_KEY, NOTIFICATONS_COUNT_URL, preferences[preferencesService.REFRESH_PERIOD]);
+        });
     }
 };
