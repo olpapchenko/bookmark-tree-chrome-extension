@@ -6,6 +6,8 @@ baseCachedAccessPoint = {
             if(entity == undefined || !entity.lastRefreshDate || new Date().getTime() - entity.lastRefreshDate > timeout) {
                 console.log("retriving from server: " + enpointURL);
                 return Promise.resolve($.get(chrome.runtime.getManifest().endpointUrl + enpointURL)).then(function (entity) {
+                    console.log(entity);
+                    console.log(enpointURL);
                     var keyToEntity = {}
                     keyToEntity[key] = entity;
                     entity.lastRefreshDate = new Date().getTime();
@@ -23,7 +25,7 @@ baseCachedAccessPoint = {
         if(!replace) {
             var promise = this.get(key, endpointUrl, timeout).then(function (oldEntity) {
                 return _.extend(oldEntity, newEntity);
-            })
+            });
         } else {
             var promise = Promise.resolve(newEntity);
         }
@@ -35,5 +37,11 @@ baseCachedAccessPoint = {
         }).then(function (entity) {
             return Promise.resolve($.post(chrome.runtime.getManifest().endpointUrl + endpointUrl, entity));
         });
+    },
+
+    erase: function (key) {
+        var keyToEntity = {};
+        keyToEntity[key] = "";
+        return  storageService.set(keyToEntity);
     }
 }

@@ -14,6 +14,7 @@
 		<script src="/js/controllers/appController.js"></script>
 		<script src="/js/services/tabsService.js"></script>
 		<script src="/js/services/preferencesService.js"></script>
+		<script src="/js/services/userService.js"></script>
 		<script src="/js/services/friendsService.js"></script>
 		<script src="/js/services/bookmarkService.js"></script>
 		<script src="/js/services/notificationsService.js"></script>
@@ -25,12 +26,22 @@
 		<script src="/js/directives/comments.js"></script>
 		<script src="/js/directives/bookmarks.js"></script>
 		<script src="/js/directives/login.js"></script>
+		<script src="/js/directives/logout.js"></script>
 	</head>
 	<body  style="width: 450px;"  ng-controller="appController">
 		<header class="panel-body">
 			<span class="header">Bookmark <span class="accent">Tree</span></span>
-			<login class="pull-right" style="color: white; margin-right: 10px;"></login>
+			<login class="pull-right" style="color: white; margin-right: 10px;"  ng-show="!user" ng-click="performLogin()"></login>
+			<logout class="pull-right" style="color: white; margin-right: 10px;" ng-click="logout" ng-show="user"></logout>
 		</header>
+
+		<div ng-show="showErrorLoad" class="row text-center" style="margin-bottom: 10px;">
+			<h4><small class="error" >Connection error</small></h4>
+		</div>
+
+		<div ng-show="notLoggedError" class="row text-center" style="margin-bottom: 10px;">
+			<h4><small class="error" >You are not logged in!</small></h4>
+		</div>
 
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#home">Home</a></li>

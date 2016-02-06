@@ -22,6 +22,7 @@
                 "/js/shared/Utils.js",
                 "/js/background/baseCachedAccessPoint.js",
                 "/js/background/preferencesService.js",
+                "/js/background/userService.js",
                 "/js/background/friendsService.js",
                 "/js/background/notificationsService.js",
                 "/js/background/bookmarkService.js",
