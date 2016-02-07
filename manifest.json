@@ -63,6 +63,7 @@
   ],
 
   "web_accessible_resources": [
+    "http://*/*",
     "images/*"
   ],
 

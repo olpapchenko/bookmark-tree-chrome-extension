@@ -2,7 +2,8 @@ var LOGIN_PATH = '/#/login',
     LOGOUT_PATH = "/logout",
     PROFILE_PATH = "#profile",
     USER_URL = "/user",
-    USER_KEY = "user";
+    USER_KEY = "user",
+    AVATAR_PREFIX = chrome.runtime.getManifest().endpointUrl  + "/avatars/";
 
 userService = {
     getLoginUrl: function () {
@@ -22,6 +23,9 @@ userService = {
     get: function () {
         return preferencesService.get().then(function (preferences) {
             return baseCachedAccessPoint.get(USER_KEY, USER_URL, preferences[preferencesService.REFRESH_PERIOD]);
-        });
+        }).then(function (user) {
+            user.avatar = AVATAR_PREFIX + user.avatar;
+            return user;
+        });;
     }
 }

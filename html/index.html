@@ -29,19 +29,18 @@
 		<script src="/js/directives/logout.js"></script>
 	</head>
 	<body  style="width: 450px;"  ng-controller="appController">
-		<header class="panel-body">
-			<span class="header">Bookmark <span class="accent">Tree</span></span>
-			<login class="pull-right" style="color: white; margin-right: 10px;"  ng-show="!user" ng-click="performLogin()"></login>
-			<logout class="pull-right" style="color: white; margin-right: 10px;" ng-click="logout" ng-show="user"></logout>
+		<header class="panel-body text-center">
+			<ul class="nav navbar-noncollapse">
+				<li ng-if="user.avatar" class="pointer" ng-click="openProfile()"><img ng-src="{{user.avatar}}" alt="avatar" class="avatar"/></li>
+				<li><span class="header">Bookmark <span class="accent">Tree&nbsp;&nbsp;</span></span></li>
+				<li ng-show="showErrorLoad" ><span class="navbar-text" style="color: #ffffff;"><i class="glyphicon glyphicon-alert"></i>&nbsp;Connection error!</span></li>
+				<li ng-show="notLoggedError" ><span class="navbar-text" style="color: #ffffff;"><i class="glyphicon glyphicon-user"></i>&nbsp;You are not logged in!</span></li>
+				<li class="pull-right">
+					<login class="pull-right" style="color: white; margin-right: 10px;"  ng-show="!user" ng-click="performLogin()"></login>
+					<logout class="pull-right" style="color: white; margin-right: 10px;" ng-click="performLogout()" ng-show="user"></logout>
+				</li>
+			</ul>
 		</header>
-
-		<div ng-show="showErrorLoad" class="row text-center" style="margin-bottom: 10px;">
-			<h4><small class="error" >Connection error</small></h4>
-		</div>
-
-		<div ng-show="notLoggedError" class="row text-center" style="margin-bottom: 10px;">
-			<h4><small class="error" >You are not logged in!</small></h4>
-		</div>
 
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#home">Home</a></li>

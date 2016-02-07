@@ -6,15 +6,14 @@ angular.module("app").service("userService", ["tabsService", function (tabsServi
     }
 
     this.performLogin = function () {
-        console.log("perfrom lign");
-        tabsService.openNewTab(userServiceBackground.getLoginUrl());
+         tabsService.openNewTab(userServiceBackground.getLoginUrl());
+    }
+
+    this.openProfilePage = function () {
+        tabsService.openNewTab(userServiceBackground.getProfilePath());
     }
 
     this.performLogout = function () {
         return userServiceBackground.performLogout();
-    }
-
-    this.getProfilePath = function () {
-        return userServiceBackground.getProfilePath();
     }
 }]);

@@ -3,7 +3,7 @@ baseCachedAccessPoint = {
         return storageService.get(key).then(function (entity) {
             console.log("get entity" + JSON.stringify(entity) + "key: " + key);
             entity = entity[key];
-            if(entity == undefined || !entity.lastRefreshDate || new Date().getTime() - entity.lastRefreshDate > timeout) {
+            if(entity == undefined || !entity.lastRefreshDate || new Date().getTime() - entity.lastRefreshDate > timeout * 1000 * 60 * 10) {
                 console.log("retriving from server: " + enpointURL);
                 return Promise.resolve($.get(chrome.runtime.getManifest().endpointUrl + enpointURL)).then(function (entity) {
                     console.log(entity);
@@ -40,6 +40,7 @@ baseCachedAccessPoint = {
     },
 
     erase: function (key) {
+        console.log("perfom logout");
         var keyToEntity = {};
         keyToEntity[key] = "";
         return  storageService.set(keyToEntity);

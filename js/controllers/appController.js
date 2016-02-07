@@ -13,8 +13,12 @@ angular.module("app",[]).controller("appController", ["$scope", "userService", f
         })
     }
 
-    userService.get().then(function () {
-        $scope.$apply(function (user) {
+    $scope.openProfile = function () {
+        userService.openProfilePage();
+    }
+
+    userService.get().then(function (user) {
+        $scope.$apply(function () {
           $scope.user = user;
         });
     }, function (error) {
