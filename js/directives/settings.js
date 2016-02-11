@@ -3,9 +3,12 @@ angular.module("app").directive("settings", ["preferencesService", function (pre
         restrict: "E",
         templateUrl: "/html/templates/settings.html",
         link: function (scope, iElement, attr) {
+            scope.preferencesTypes = preferencesService.preferencesTypes;
+
             preferencesService.get().then(function (preferences) {
                 scope.$apply(function () {
                     scope.preferences = preferences;
+                    scope.preferences[scope.preferencesTypes.REFRESH_PERIOD].value = Number(scope.preferences[scope.preferencesTypes.REFRESH_PERIOD].value);
                 });
             }, function (e) {
                 console.error(e);
@@ -14,7 +17,6 @@ angular.module("app").directive("settings", ["preferencesService", function (pre
                 });
             });
 
-            scope.preferencesTypes = preferencesService.preferencesTypes;
 
             scope.savePreferences = function () {
                 scope.isSavingInProgress = true;
@@ -24,7 +26,8 @@ angular.module("app").directive("settings", ["preferencesService", function (pre
                         scope.isSavingInProgress = false;
                     });
 
-                }, function () {
+                }, function (e) {
+                    console.error(e);
                     scope.$apply(function () {
                         scope.showError = true;
                         scope.isSavingInProgress = false;

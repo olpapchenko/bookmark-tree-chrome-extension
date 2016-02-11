@@ -5,6 +5,12 @@
   "description": "Bookmark Tree is a bookmark manager. All bookmarks are stored in cloud, so you can access them from anybrowser. Also oyou can write comments and links to another bookmarks. You also can share them with you friends",
   "version": "1.0",
 
+  "icons": {
+    "16": "/images/icon16.png",
+    "48": "/images/icon48.png",
+    "128": "/images/icon128.png"
+  },
+
   "browser_action": {
     "default_icon":  {
       "19": "images/icon19.png", 

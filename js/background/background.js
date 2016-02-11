@@ -3,8 +3,9 @@
         setInterval(function () {
             notificationsService.getNotificationsCount().then(function (count) {
                 chrome.browserAction.setBadgeText({text: (count.size).toString()});
-            })
-        }, preferences[preferencesService.REFRESH_PERIOD] * 1000 * 60 * 10);
+            });
+
+        }, preferences[preferencesService.REFRESH_PERIOD].value * 1000 * 60);
     }, function (e) {console.error("can not set notifications count badge error: " + JSON.stringify(e));});
 }) ();
 

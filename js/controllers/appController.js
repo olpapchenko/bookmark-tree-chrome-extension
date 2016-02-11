@@ -1,7 +1,6 @@
 angular.module("app",[]).controller("appController", ["$scope", "userService", function ($scope, userService) {
 
     $scope.performLogin = function () {
-        console.log("perf log");
         userService.performLogin();
     }
 

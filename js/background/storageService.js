@@ -1,7 +1,7 @@
 storageService = {
     get: function  get(keys) {
         var promise =  new Promise(function (resolve, reject) {
-            chrome.storage.sync.get(keys, resolve);
+            chrome.storage.local.get(keys, resolve);
         }).then(function(serializedObject) {
             var deserializedObject = {};
             for(key in serializedObject) {
@@ -22,9 +22,15 @@ storageService = {
             }
         }
         var promise = new Promise(function (resolve, reject) {
-            chrome.storage.sync.set(jsonObject, resolve);
+            chrome.storage.local.set(jsonObject, resolve);
         });
         return promise;
+    },
+
+    erase: function () {
+        return new Promise(function (resolve, reject) {
+            chrome.storage.local.remove(key, resolve);
+        });
     }
 }
 
