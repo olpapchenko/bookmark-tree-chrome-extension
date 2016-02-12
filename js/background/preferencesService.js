@@ -30,12 +30,10 @@ preferencesService = {
         }).then(function (preferences) {
             var flatPreferences = {};
             preferences.preferences.forEach(function (preference) {
-                flatPreferences[preference.key] = {value: preference.key <=5 ?  Boolean(preference.value) : preference.value, id: preference.id};
+                flatPreferences[preference.key] = {value: preference.key <=5 ?   preference.value === 'true'  : preference.value, id: preference.id};
             });
 
             return flatPreferences;
-        }, function (e) {
-            console.error(e);
         });
     },
 
@@ -51,3 +49,13 @@ preferencesService = {
         });
     }
 }
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type !== "GET_PREFERENCES") {
+        return;
+    }
+    preferencesService.get().then(sendResponse).catch(function (e) {
+        sendResponse({error:  e});
+    });
+    return true;
+});

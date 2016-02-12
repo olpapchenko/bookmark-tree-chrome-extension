@@ -49,6 +49,7 @@
       "/js/content/bookmarkStore.js",
       "/js/shared/messageTypes.js",
       "/js/shared/DOMUtils.js",
+      "/js/content/preferencesService.js",
       "/js/content/removeController.js",
       "/js/content/commentControllerBase.js",
       "/js/content/commentController.js",

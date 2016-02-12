@@ -36,6 +36,7 @@ chrome.runtime.onMessage.addListener(function (message) {
         createEditModeInstructionPopup();
         markCurrentSelection();
         enableMarker(true);
+        console.log("mark mode started");
         document.body.style.cursor = "url(" +  chrome.extension.getURL('/images/mark.png') + ") 0 26, auto";
     }
 

@@ -6,8 +6,16 @@ function getMarkClass(markterId) {
     return "bookmarkTreeMarkId"  + markterId;
 }
 
-function getMarkerStartMarkUp (markerId) {
-    return "<span style='color: red !important; background-color: #ffff00' class = '" + getMarkClass(markerId) + "'>"
+function getMarkerColor () {
+    return preferencesService.get().then(function (preferences) {
+        return preferences[preferencesService.MARK_COLOR].value;
+    });
+}
+
+function getMarkerStartMarkUp () {
+    return getMarkerColor().then(function (color) {
+        return function (markerId) {return "<span style='background-color: " + color + "' class = '" + getMarkClass(markerId) + "'>";}
+    });
 }
 
 function getEndMarkUp() {
@@ -36,72 +44,74 @@ function removeMarkerFromUI(markerClass) {
 function markText (range, markerId) {
     //console.log(range.startContainer);
     //console.log(range.endContainer);
-    var startContainer = getFirstOfTextType(range.startContainer),
-        endContainer =  getLastOfTextType(range.endContainer),
-        startPosition = range.startContainer.nodeType == 3 ? range.startOffset : 0,
-        endPosition = range.startContainer.nodeType == 3 ? range.endOffset : endContainer.length - 1,
-        commonAncestorContainer = $(range.commonAncestorContainer);
+    getMarkerStartMarkUp().then(function (generateStartMarkUp) {
+        var startContainer = getFirstOfTextType(range.startContainer),
+            endContainer =  getLastOfTextType(range.endContainer),
+            startPosition = range.startContainer.nodeType == 3 ? range.startOffset : 0,
+            endPosition = range.startContainer.nodeType == 3 ? range.endOffset : endContainer.length - 1,
+            commonAncestorContainer = $(range.commonAncestorContainer);
 
-    //endPosition += getMarkerStartMarkUp(markerId).length;
+        //endPosition += generateStartMarkUp(markerId).length;
 
-    var startPositionStartContainer = startPosition,
-        baseNodeFound = false;
-
-    forEachTextChildNode(commonAncestorContainer, function (idx, node) {
-        var node = $(node)[0];
-
-        if(startContainer[0] == endContainer[0] || /^\s+$/.test(node.textContent) || node.textContent.length == 0) {
-            return;
-        }
-
-        if(baseNodeFound) {
-            wrapTextNodes(node, getMarkerStartMarkUp(markerId) + getEndMarkUp());
-        }
-
-        if(node == startContainer[0]) {
-            baseNodeFound = true;
-        }
-
-        if(node == endContainer[0]) {
+        var startPositionStartContainer = startPosition,
             baseNodeFound = false;
-        }
-    });
 
-    if(range.startContainer == range.endContainer) {
-        if(endPosition - startPosition == 0) {
-            return;
-        }
-        var endPositionStartContainer = endPosition;
-    } else {
-        endPositionStartContainer = startContainer.text().length;
+        forEachTextChildNode(commonAncestorContainer, function (idx, node) {
+            var node = $(node)[0];
 
-        var textEndEscaped = endContainer.text().escapeTextRange(0, endPosition);
+            if(startContainer[0] == endContainer[0] || /^\s+$/.test(node.textContent) || node.textContent.length == 0) {
+                return;
+            }
+
+            if(baseNodeFound) {
+                wrapTextNodes(node, generateStartMarkUp(markerId) + getEndMarkUp());
+            }
+
+            if(node == startContainer[0]) {
+                baseNodeFound = true;
+            }
+
+            if(node == endContainer[0]) {
+                baseNodeFound = false;
+            }
+        });
+
+        if(range.startContainer == range.endContainer) {
+            if(endPosition - startPosition == 0) {
+                return;
+            }
+            var endPositionStartContainer = endPosition;
+        } else {
+            endPositionStartContainer = startContainer.text().length;
+
+            var textEndEscaped = endContainer.text().escapeTextRange(0, endPosition);
             lengthDelta = textEndEscaped.length - endContainer.text();
             endPosition = lengthDelta == 0 ? endPosition : endPosition + lengthDelta;
 
-        var endElementHtml = textEndEscaped.insertAtPosition(0, getMarkerStartMarkUp(markerId))
-            .insertAtPosition(endPosition + getMarkerStartMarkUp(markerId).length, getEndMarkUp());
-        endContainer.replaceWith(endElementHtml);
-    }
+            var endElementHtml = textEndEscaped.insertAtPosition(0, generateStartMarkUp(markerId))
+                .insertAtPosition(endPosition + generateStartMarkUp(markerId).length, getEndMarkUp());
+            endContainer.replaceWith(endElementHtml);
+        }
 
-    var textStartEscaped = startContainer.text().escapeTextRange(startPositionStartContainer, endPositionStartContainer),
-        lengthDelta = textStartEscaped.length - startContainer.text().length;
+        var textStartEscaped = startContainer.text().escapeTextRange(startPositionStartContainer, endPositionStartContainer),
+            lengthDelta = textStartEscaped.length - startContainer.text().length;
 
-    endPositionStartContainer = lengthDelta == 0 ? endPositionStartContainer : endPositionStartContainer + lengthDelta;
-    endPositionStartContainer += getMarkerStartMarkUp(markerId).length;
-    textStartEscaped = textStartEscaped.escapeTextRange(endPositionStartContainer, textStartEscaped.length);
+        endPositionStartContainer = lengthDelta == 0 ? endPositionStartContainer : endPositionStartContainer + lengthDelta;
+        endPositionStartContainer += generateStartMarkUp(markerId).length;
+        textStartEscaped = textStartEscaped.escapeTextRange(endPositionStartContainer, textStartEscaped.length);
 
-    var startElementHTML = textStartEscaped.insertAtPosition(startPositionStartContainer, getMarkerStartMarkUp(markerId))
-        .insertAtPosition(endPositionStartContainer, getEndMarkUp());
+        var startElementHTML = textStartEscaped.insertAtPosition(startPositionStartContainer, generateStartMarkUp(markerId))
+            .insertAtPosition(endPositionStartContainer, getEndMarkUp());
 
-    startElementHTML = startElementHTML.escapeTextRange(0, startPositionStartContainer);
+        startElementHTML = startElementHTML.escapeTextRange(0, startPositionStartContainer);
 
-    var startContainerMarked = $("<span>" + startElementHTML + "</span>");
-    startContainer.replaceWith(startContainerMarked);
-    addRemoveListener(markerId, $("." + getMarkClass(markerId)));
+        var startContainerMarked = $("<span>" + startElementHTML + "</span>");
+        startContainer.replaceWith(startContainerMarked);
+        addRemoveListener(markerId, $("." + getMarkClass(markerId)));
 
-    createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
-        removeMarkerFromUI(entityClass);
+        createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
+            removeMarkerFromUI(entityClass);
+        });
     });
 }
 
