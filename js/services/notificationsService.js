@@ -1,9 +1,15 @@
 angular.module("app").service("notificationsService", function () {
-   this.getNotifications = function () {
-       return chrome.extension.getBackgroundPage().notificationService.getNotifications();
+   var backgroundNotificationService = chrome.extension.getBackgroundPage().notificationsService;
+
+    this.getNotifications = function () {
+       return backgroundNotificationService.getNotifications();
    }
 
     this.getNotificationsCount = function () {
-        return chrome.extension.getBackgroundPage().notificationsService.getNotificationsCount();
+        return backgroundNotificationService.getNotificationsCount();
+    }
+
+    this.readAll = function () {
+        return backgroundNotificationService.readAll();
     }
 });

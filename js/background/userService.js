@@ -22,7 +22,7 @@ userService = {
 
     get: function () {
         return preferencesService.get().then(function (preferences) {
-            return baseCachedAccessPoint.get(USER_KEY, USER_URL, preferences[preferencesService.REFRESH_PERIOD]);
+            return baseCachedAccessPoint.get(USER_KEY, USER_URL, preferences[preferencesService.REFRESH_PERIOD].value);
         }).then(function (user) {
             user.avatar = AVATAR_PREFIX + user.avatar;
             return user;

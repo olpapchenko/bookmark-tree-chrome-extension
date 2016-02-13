@@ -1,11 +1,22 @@
 <div ng-show="showErrorLoad" class="row text-center" style="margin-bottom: 10px;">
     <h4><small class="error" >Connection error, can not get notifications</small></h4>
 </div>
-<div class="panel panel-default">
-    <div class="panel-heading">Latest notifications</div>
+
+<div ng-show="!(notifications && notifications.length > 0)" class="row text-center" style="margin-bottom: 10px;">
+    <h4><small>You have no notifications yet</small></h4>
+</div>
+
+<div class="panel panel-default" ng-show="notifications && notifications.length > 0">
+
+    <div class="panel-heading">
+        <div class="row">
+            <div class="container">Latest notifications
+                <button class="pull-right btn btn-primary" ng-click="readAll()">Got it</button>
+            </div>
+        </div>
+    </div>
+
     <div class="restrict-height">
-        <div class="panel-body border-bottom"> Notification </div>
-        <div class="panel-body border-bottom"> Panel content </div>
-        <div class="panel-body border-bottom"> Panel content </div>
+        <div class="panel-body border-bottom" ng-repeat="notification in notifications">{{notification.message}} <h5 class="pull-right"><small>{{notification.relativeTime}}</small></h5></div>
     </div>
 </div>

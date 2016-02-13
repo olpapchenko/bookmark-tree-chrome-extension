@@ -8,7 +8,6 @@ preferencesService = {
     REFRESH_PERIOD: 7,
 
     get: function getPreferences () {
-        console.log("preferences");
         return new Promise(function (resolve, reject) {
             chrome.runtime.sendMessage({type: "GET_PREFERENCES"},null , function (message) {
                 if(message.error){

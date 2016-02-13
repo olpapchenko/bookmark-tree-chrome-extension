@@ -1,4 +1,4 @@
-angular.module("app",[]).controller("appController", ["$scope", "userService", function ($scope, userService) {
+angular.module("app",[]).controller("appController", ["$scope", "userService", "notificationsService", function ($scope, userService, notificationsService) {
 
     $scope.performLogin = function () {
         userService.performLogin();
@@ -16,6 +16,9 @@ angular.module("app",[]).controller("appController", ["$scope", "userService", f
         userService.openProfilePage();
     }
 
+    notificationsService.getNotificationsCount().then(function (notificationsCount) {
+        $scope.size = notificationsCount.size;
+    });
     userService.get().then(function (user) {
         $scope.$apply(function () {
           $scope.user = user;

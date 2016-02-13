@@ -30,9 +30,8 @@ preferencesService = {
         }).then(function (preferences) {
             var flatPreferences = {};
             preferences.preferences.forEach(function (preference) {
-                flatPreferences[preference.key] = {value: preference.key <=5 ?   preference.value === 'true'  : preference.value, id: preference.id};
+                flatPreferences[preference.key] = {value: preference.key <=5 ?  String(preference.value) == 'true'  : preference.value, id: preference.id};
             });
-
             return flatPreferences;
         });
     },
