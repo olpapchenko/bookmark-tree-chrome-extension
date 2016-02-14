@@ -25,6 +25,7 @@
                 "/js/vendor/bluebird/js/browser/bluebird.js",
                 "/js/vendor/jquery/dist/jquery.min.js",
                 "/js/vendor/underscore/underscore.js",
+                "/js/shared/underscoreMixins.js",
                 "/js/shared/Utils.js",
                 "/js/background/baseCachedAccessPoint.js",
                 "/js/background/preferencesService.js",

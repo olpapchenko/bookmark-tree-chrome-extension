@@ -17,6 +17,6 @@
     </div>
 
     <div class="restrict-height">
-        <div class="panel-body border-bottom" ng-repeat="notification in notifications">{{notification.message}} <h5 class="pull-right"><small>{{notification.relativeTime}}</small></h5></div>
+        <div class="panel-body border-bottom" ng-repeat="notification in notifications track by notification.id">{{notification.message}} <h5 class="pull-right"><small>{{notification.relativeTime}}</small></h5></div>
     </div>
 </div>

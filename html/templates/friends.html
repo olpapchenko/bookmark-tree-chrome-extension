@@ -13,7 +13,7 @@
 				</span>
             <input type="text" class="form-control" ng-model="friendName" placeholder="Username" aria-describedby="basic-addon1">
         </div>
-        <div class="panel-body border-bottom" ng-repeat="friend in friends | filter:friendName">{{friend.name  | limitTo:20}}<span title="Share" class="glyphicon glyphicon-share-alt pull-right pointer" aria-hidden="true"></span>
+        <div class="panel-body border-bottom" ng-repeat="friend in friends | filter:friendName track by friend.id">{{friend.name  | limitTo:20}}<span title="Share" class="glyphicon glyphicon-share-alt pull-right pointer" aria-hidden="true"></span>
         </div>
     </div>
 </div>

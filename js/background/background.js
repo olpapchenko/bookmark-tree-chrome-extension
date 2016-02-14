@@ -4,13 +4,22 @@ function updateNotificationsBadge(intervalObj, oldRefreshPeriod) {
             return;
         }
         var newRefreshPeriod = freshPreferences[preferencesService.REFRESH_PERIOD].value;
+        console.log(newRefreshPeriod);
         if(oldRefreshPeriod != newRefreshPeriod) {
             clearInterval(intervalObj.intervalId);
             var newIntevalObj = {};
-            newIntevalObj.intervalId = setInterval(function (){updateNotificationsBadge(newIntevalObj, newRefreshPeriod)}, newRefreshPeriod);
+            newIntevalObj.intervalId = setInterval(function (){updateNotificationsBadge(newIntevalObj, newRefreshPeriod)}, newRefreshPeriod * 1000 * 60);
         }
+        console.log("setting badge");
+
+        bookmarkService.get().catch(function (e) {
+            console.error("can not update bookmarks list " + JSON.stringify(e));
+        });
+
         notificationsService.getNotificationsCount().then(function (count) {
             chrome.browserAction.setBadgeText({text: (count.size).toString()});
+        }, function (e) {
+            console.error("cannot set notifications badge " + JSON.stringify(e));
         });
     });
 

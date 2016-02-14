@@ -6,7 +6,7 @@ var BOOKMARK_URL = "/bookmarks",
 bookmarkService = {
     save: function (bookmarkData) {
         preferencesService.get().then(function (preferences) {
-            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD], bookmarkData);
+            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData);
         }).then(function (success) {
             chrome.tabs.query({active: true}, function (tabs) {
                 var tab = tabs[0];
@@ -19,19 +19,19 @@ bookmarkService = {
 
     get: function () {
         return preferencesService.get().then(function (preferences) {
-           return baseCachedAccessPoint.get(BOOKMARK_KEY, BOOKMARK_KEY, preferencesService[preferencesService.REFRESH_PERIOD]);
+           return baseCachedAccessPoint.get(BOOKMARK_KEY, BOOKMARK_KEY, preferences[preferencesService.REFRESH_PERIOD].value);
         });
     },
 
     getRights: function () {
         return preferencesService.get().then(function (preferences) {
-            return baseCachedAccessPoint.get(BOOKMARK_RIGHTS_KEY, BOOKMARK_RIGHTS_URL, preferences[preferencesService.REFRESH_PERIOD]);
+            return baseCachedAccessPoint.get(BOOKMARK_RIGHTS_KEY, BOOKMARK_RIGHTS_URL, preferences[preferencesService.REFRESH_PERIOD].value);
         });
     },
 
     setRights: function (bookmarkRights) {
         return preferencesService.get().then(function (preferences) {
-            return baseCachedAccessPoint.set(BOOKMARK_RIGHTS_KEY, BOOKMARK_RIGHTS_URL, preferences[preferencesService.REFRESH_PERIOD], bookmarkRights);
+            return baseCachedAccessPoint.set(BOOKMARK_RIGHTS_KEY, BOOKMARK_RIGHTS_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkRights);
         });
     }
 }

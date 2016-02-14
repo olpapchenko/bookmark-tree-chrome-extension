@@ -3,7 +3,7 @@ var markModeEnabled = false,
 
 
 function getMarkClass(markterId) {
-    return "bookmarkTreeMarkId"  + markterId;
+    return markterId;
 }
 
 function getMarkerColor () {
@@ -38,7 +38,7 @@ function removeMarkerFromUI(markerClass) {
     $("." + markerClass).each(function () {
         $(this).replaceWith(escapeText(this.textContent));
     });
-    removeMarker(markerClass);
+    Bookmark.removeMarkerById(markerClass);
 }
 
 function markText (range, markerId) {
@@ -130,6 +130,12 @@ function markSelection( ) {
     }
 
     var   range = selection.getRangeAt(0);
+
+    if(range.startOffset == range.endOffset) {
+        return;
+    }
+    console.log(range.startContainer);
+
     var marker = {
         startContainerSelector: selectorGenerator.getSelector(range.startContainer),
         endContainerSelector: selectorGenerator.getSelector(range.endContainer),
@@ -139,8 +145,8 @@ function markSelection( ) {
         id: uuid.v1()
     }
 
-    addMarker(marker);
-
+    Bookmark.addMarker(marker);
+    console.log(Bookmark);
     markText(range, marker.id);
     selection.empty();
 }
