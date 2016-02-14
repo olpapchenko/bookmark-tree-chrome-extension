@@ -4,7 +4,7 @@ var FRIENDS_URL = "/friends",
 friendsService = {
     get: function () {
         return preferencesService.get().then(function (preferences) {
-            return baseCachedAccessPoint.get(FRIENDS_KEY, FRIENDS_URL, preferences[preferencesService.REFRESH_PERIOD]);
+            return baseCachedAccessPoint.get(FRIENDS_KEY, FRIENDS_URL, preferences[preferencesService.REFRESH_PERIOD].value);
         });
     },
 
