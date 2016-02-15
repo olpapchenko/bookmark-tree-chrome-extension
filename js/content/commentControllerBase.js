@@ -15,10 +15,6 @@ var commentProto = {
         return "bookmarkTreeCommentContainer" + id;
     },
 
-    enable: function enableCommentMode(flag) {
-        this.isCommentModeEnabled = flag;
-    },
-
     createCommentContainer: function createCommentContainer(contextNode, commentId) {
         var _this = this,
             commentElement = $(_this.getBodyMarkUp())[0];
@@ -31,9 +27,8 @@ var commentProto = {
         document.body.appendChild(commentElement);
     },
 
-    processSelection: function () {
-        var selection = document.getSelection(),
-            _this = this;
+    processSelection: function (selection) {
+        var _this = this;
 
         if(!selection) {
             return;
@@ -65,17 +60,5 @@ var commentProto = {
 }
 
 function CommentControllerBase() {
-    this.isCommentModeEnabled = false;
     this.selectorGenerator = new CssSelectorGenerator();
-
-    var _this = this;
-
-    document.body.addEventListener("click", function (event) {
-
-        if(!_this.isCommentModeEnabled || !event.target) {
-            return;
-        }
-
-        _this.processSelection();
-    });
 }

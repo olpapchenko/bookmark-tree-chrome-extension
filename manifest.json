@@ -56,6 +56,7 @@
       "/js/content/commentController.js",
       "/js/content/linkController.js",
       "/js/content/markController.js",
+      "/js/content/bookmarkConstructor.js",
       "/js/content/content.js"],
     "css" : ["/css/content.css"]
   }],

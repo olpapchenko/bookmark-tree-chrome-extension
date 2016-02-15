@@ -4,7 +4,6 @@ String.prototype.insertAtPosition =  function insertAtPosition(idx, insertString
 
 String.prototype.escapeTextRange = function (start, end) {
     console.log("text before escape " + this);
-
     return this.slice(0, start) + escapeText(this.slice(start, end)) + this.slice(end);
 }
 
