@@ -27,7 +27,7 @@ storageService = {
         return promise;
     },
 
-    erase: function () {
+    erase: function (key) {
         return new Promise(function (resolve, reject) {
             chrome.storage.local.remove(key, resolve);
         });

@@ -27,5 +27,9 @@ userService = {
             user.avatar = AVATAR_PREFIX + user.avatar;
             return user;
         });;
+    },
+
+    erase: function () {
+        baseCachedAccessPoint.erase(USER_KEY);
     }
 }

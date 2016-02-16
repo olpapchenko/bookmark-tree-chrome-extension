@@ -179,3 +179,14 @@ input[type="checkbox"] {
     margin-right: 10px;
 }
 
+.not-logged-wrapper {
+    padding-top: 130px;
+    background-color: rgba(1,1,1,0.5);
+    color: white;
+    font-size: 30px;
+    z-index: 1000;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+

@@ -8,6 +8,7 @@ angular.module("app",[]).controller("appController", ["$scope", "userService", "
         userService.performLogout().then(function () {
             $scope.$apply(function () {
                 $scope.user = null;
+                chrome.extension.getBackgroundPage().userService.erase();
             });
         })
     }
@@ -19,16 +20,22 @@ angular.module("app",[]).controller("appController", ["$scope", "userService", "
     notificationsService.getNotificationsCount().then(function (notificationsCount) {
         $scope.size = notificationsCount.size;
     });
+
     userService.get().then(function (user) {
         $scope.$apply(function () {
           $scope.user = user;
+            if(!$scope.user) {
+                $scope.notLoggedError = true;
+            }
+            console.log(user);
         });
     }, function (error) {
-        console.log(error);
-        if(error.status == 400) {
-            $scope.notLoggedError = true;
-        } else {
-            $scope.showErrorLoad = true;
-        }
+        $scope.$apply(function () {
+            if(error.status == 400) {
+                $scope.notLoggedError = true;
+            } else {
+                $scope.showErrorLoad = true;
+            }
+        });
     });
 }]);
