@@ -49,19 +49,27 @@ var commentProto = {
         }
     },
 
+    getStartSelector: function (startTextNode) {
+        return this.selectorGenerator.getSelector();
+    },
+
     processSelection: function (selection) {
         if(!selection) {
             return;
         }
 
-        var commentId = uuid.v1(),
+        var entityId = uuid.v1(),
             range = selection.getRangeAt(0);
 
         if(range.startContainer.nodeType != 3) {
             return;
         }
 
-        this.render(range.startContainer, range.startOffset, commentId);
+
+
+        this.persistEntity({selector: this.getStartSelector(range.startContainer), startOffset: range.startOffset, entityId: entityId});
+
+        this.render(range.startContainer, range.startOffset, entityId);
     },
     selectorGenerator: new CssSelectorGenerator()
 }

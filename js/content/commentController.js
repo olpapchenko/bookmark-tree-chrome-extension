@@ -15,6 +15,10 @@ function CommentController() {
     this.renderComment = function (comment) {
         this.renderEntity(comment);
     }
+
+    this.persistEntity = function (comment) {
+        Bookmark.addComment(comment);
+    }
 }
 
 CommentController.prototype = commentProto;

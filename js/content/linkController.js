@@ -12,8 +12,12 @@ function LinkController() {
         return 0;
     },
 
-    this.renderLink = function () {
-        this.render();
+    this.renderLink = function (link) {
+        this.render(link);
+    }
+
+    this.persistEntity = function (link) {
+        Bookmark.addLink(link);
     }
 }
 
