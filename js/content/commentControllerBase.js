@@ -8,7 +8,7 @@ var commentProto = {
     },
 
     getContextNodeId: function getContextNodeId(id) {
-        return "bookmarkTreeCommentContextNode" + id;
+        return id;
     },
 
     getCommentContainerId: function getCommentContainerId(id) {
