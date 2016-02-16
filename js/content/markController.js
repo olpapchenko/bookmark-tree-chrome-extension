@@ -130,11 +130,11 @@ MarkController = function () {
         selection.empty();
     }
 
-    MarkController.prototype.markTextBySelector = function markTextBySelector (selectorObject) {
-        this.markText({startContainer: $(selectorObject.startContainer)[0],
-            endContainer: $(selectorObject.endContainer)[0],
-            startOffset: selectorObject.startOffset,
-            endOffset: selectorObject.endOffset
+    MarkController.prototype.renderMarker = function markTextBySelector (marker) {
+        this.markText({startContainer: $(marker.startContainer)[0],
+            endContainer: $(marker.endContainer)[0],
+            startOffset: marker.startOffset,
+            endOffset: marker.endOffset
         });
     }
 };

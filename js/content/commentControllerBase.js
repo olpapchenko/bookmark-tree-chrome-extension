@@ -27,9 +27,29 @@ var commentProto = {
         document.body.appendChild(commentElement);
     },
 
-    processSelection: function (selection) {
+    render: function (startContainer, startOffset, commentId) {
         var _this = this;
+        var contextContainerHTML = wrapWordUnderIdx(startContainer.textContent, _this.getContextWrapHTMLStart(_this.getContextNodeId(commentId)), _this.getContextWrapHTMLEnd(), startOffset);
+        $(startContainer).replaceWith(contextContainerHTML);
+        _this.createCommentContainer($("#" + _this.getContextNodeId(commentId))[0], _this.getCommentContainerId(commentId));
+        addRemoveListener(commentId, $("#" + _this.getCommentContainerId(commentId)));
 
+        createRemoveSign($("#" + _this.getCommentContainerId(commentId)), commentId,  _this.getCommentContainerId(commentId), function () {
+            $("#" + _this.getCommentContainerId(commentId)).remove();
+            var contextNode = $("#" + _this.getContextNodeId(commentId));
+            contextNode.replaceWith(contextNode.text());
+        });
+    },
+
+    renderEntity: function (entity) {
+        if($(entity.selector)[0]) {
+            this.render($(entity.selector)[0], entity.startOffset, entity.entityId);
+        } else {
+            throw new Error("Some comments can not be matched. Page layout has changed.");
+        }
+    },
+
+    processSelection: function (selection) {
         if(!selection) {
             return;
         }
@@ -41,24 +61,8 @@ var commentProto = {
             return;
         }
 
-        var contextContainerHTML = wrapWordUnderIdx(range.startContainer.textContent, _this.getContextWrapHTMLStart(_this.getContextNodeId(commentId)), _this.getContextWrapHTMLEnd(), range.startOffset);
-        $(range.startContainer).replaceWith(contextContainerHTML);
-
-        var comment = {
-            contextElement: _this.selectorGenerator.getSelector(range.startContainer),
-            id: commentId
-        };
-
-        _this.createCommentContainer($("#" + _this.getContextNodeId(commentId))[0], _this.getCommentContainerId(commentId));
-        addRemoveListener(commentId, $("#" + _this.getCommentContainerId(commentId)));
-        createRemoveSign($("#" + _this.getCommentContainerId(commentId)), commentId,  _this.getCommentContainerId(commentId), function () {
-            $("#" + _this.getCommentContainerId(commentId)).remove();
-            var contextNode = $("#" + _this.getContextNodeId(commentId));
-            contextNode.replaceWith(contextNode.text());
-        });
-    }
+        this.render(range.startContainer, range.startOffset, commentId);
+    },
+    selectorGenerator: new CssSelectorGenerator()
 }
 
-function CommentControllerBase() {
-    this.selectorGenerator = new CssSelectorGenerator();
-}

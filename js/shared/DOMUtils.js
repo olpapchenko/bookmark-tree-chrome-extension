@@ -39,6 +39,7 @@ function wrapTextNodes(node, wrapTemplate) {
     });
 }
 
+//wraps complete words
 function wrapWordUnderIdx(text, wrapTextStart, wrapTextEnd, idx) {
     var startIdx = idx,
         endIdx = idx;

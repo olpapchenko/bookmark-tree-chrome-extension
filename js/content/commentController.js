@@ -1,6 +1,4 @@
 function CommentController() {
-    CommentControllerBase.apply(this, arguments);
-
     this.getBodyMarkUp = function () {
         var COMMENT_MARK_UP = "<div class='commentWrapper'><div class='commentContainer'><textarea name='' id=''  ></textarea></div></div>";
         return COMMENT_MARK_UP;
@@ -14,6 +12,9 @@ function CommentController() {
         return 0;
     }
 
+    this.renderComment = function (comment) {
+        this.renderEntity(comment);
+    }
 }
 
 CommentController.prototype = commentProto;
