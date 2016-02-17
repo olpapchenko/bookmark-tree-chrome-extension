@@ -109,16 +109,16 @@ MarkController = function () {
 
         var range = selection.getRangeAt(0);
 
-        if(range.startOffset == range.endOffset) {
+        if(range.startOffset == range.endOffset || range.startContainer.nodeType != 3 || range.endContainer.nodeType != 3) {
             return;
         }
 
         console.log(range.startContainer);
 
         var marker = {
-            startContainerSelector: selectorGenerator.getSelector(range.startContainer),
-            endContainerSelector: selectorGenerator.getSelector(range.endContainer),
-            commonContainer: selectorGenerator.getSelector(range.commonContainer),
+            startContainerSelector: selectorGenerator.getSelector(range.startContainer.parentNode),
+            endContainerSelector: selectorGenerator.getSelector(range.endContainer.parentNode),
+            commonAncestorContainer: selectorGenerator.getSelector(range.commonAncestorContainer.nodeType == 3 ? range.commonAncestorContainer.parentNode : range.commonAncestorContainer),
             startOffset: range.startOffset,
             endOffset: range.endOffset,
             id: uuid.v1()
@@ -131,15 +131,17 @@ MarkController = function () {
     }
 
     MarkController.prototype.renderMarker = function markTextBySelector (marker) {
-        this.markText({startContainer: $(marker.startContainer)[0],
-            endContainer: $(marker.endContainer)[0],
+            markText({startContainer: $(marker.startContainerSelector)[0].firstChild,
+            endContainer: $(marker.endContainerSelector)[0].childNodes[0],
+            commonAncestorContainer: $(marker.commonAncestorContainer)[0].firstChild,
             startOffset: marker.startOffset,
             endOffset: marker.endOffset
-        });
+        }, marker.id);
     }
 };
 
 markController = new MarkController();
+
 
 
 

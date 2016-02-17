@@ -9,10 +9,13 @@ function Bookmark () {
     }
 
     function removeEntityById(entityName, id) {
-        var index = _this[entityName].indexOf(function (entity) {
+        'use strict'
+        var index = _this[entityName].findIndex(function (entity) {
             return entity.id == id;
         });
-        _this[entityName].splice(index);
+        if(index != -1) {
+            _this[entityName].splice(index);
+        }
     }
 
     Bookmark.prototype.addMarker = function (marker) {

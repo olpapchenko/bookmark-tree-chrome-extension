@@ -8,7 +8,7 @@ var commentProto = {
     },
 
     getContextNodeId: function getContextNodeId(id) {
-        return id;
+        return "bookmarkTreeCommentContextNode" + id;
     },
 
     getCommentContainerId: function getCommentContainerId(id) {
@@ -38,19 +38,20 @@ var commentProto = {
             $("#" + _this.getCommentContainerId(commentId)).remove();
             var contextNode = $("#" + _this.getContextNodeId(commentId));
             contextNode.replaceWith(contextNode.text());
+            _this.removeEntityFromPersistanceStore(commentId);
         });
     },
 
     renderEntity: function (entity) {
         if($(entity.selector)[0]) {
-            this.render($(entity.selector)[0], entity.startOffset, entity.entityId);
+            this.render($(entity.selector)[0].firstChild, entity.startOffset, entity.id);
         } else {
             throw new Error("Some comments can not be matched. Page layout has changed.");
         }
     },
 
     getStartSelector: function (startTextNode) {
-        return this.selectorGenerator.getSelector();
+        return this.selectorGenerator.getSelector(startTextNode.nodeType == 3 ? startTextNode.parentNode: startTextNode);
     },
 
     processSelection: function (selection) {
@@ -67,7 +68,7 @@ var commentProto = {
 
 
 
-        this.persistEntity({selector: this.getStartSelector(range.startContainer), startOffset: range.startOffset, entityId: entityId});
+        this.persistEntity({selector: this.getStartSelector(range.startContainer), startOffset: range.startOffset, id: entityId});
 
         this.render(range.startContainer, range.startOffset, entityId);
     },

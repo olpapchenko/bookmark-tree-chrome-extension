@@ -19,6 +19,10 @@ function CommentController() {
     this.persistEntity = function (comment) {
         Bookmark.addComment(comment);
     }
+
+    this.removeEntityFromPersistanceStore = function (commentId) {
+        Bookmark.removeCommentById(commentId);
+    }
 }
 
 CommentController.prototype = commentProto;

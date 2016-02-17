@@ -19,6 +19,10 @@ function LinkController() {
     this.persistEntity = function (link) {
         Bookmark.addLink(link);
     }
+
+    this.removeEntityFromPersistanceStore = function (linkId) {
+        Bookmark.removeLinkById(linkId);
+    }
 }
 
 LinkController.prototype = commentProto;
