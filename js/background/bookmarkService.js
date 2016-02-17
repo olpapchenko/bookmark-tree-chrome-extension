@@ -35,3 +35,20 @@ bookmarkService = {
         });
     }
 }
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    'use strict'
+    if(message.type !== "GET_BOOKMARK_FOR_URL") {
+        return;
+    }
+
+    bookmarkService.get().then(function (bookmarks) {
+        var bookmark = bookmarks.find(function (bookmark) {
+            return bookmark.url == message.url;
+        });
+        sendResponse(bookmark);
+    }).catch(function (e) {
+        sendResponse({error:  e});
+    });
+    return true;
+});
