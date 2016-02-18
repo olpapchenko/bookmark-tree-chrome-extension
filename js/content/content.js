@@ -37,12 +37,16 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     sendResponse(true);
 });
 
-
-$(document).ready(function () {
+function renderBookmarkForUrl() {
     bookmarksService.getBookmarkForUrl(document.location.href).then(function(bookmark){
         if(bookmark) {
             bookmarkRenderer.renderBookmark(bookmark);
         }
     });
-});
+}
+
+window.onhashchange = renderBookmarkForUrl;
+
+//todo try render bookmark on location change
+$(document).ready(renderBookmarkForUrl);
 

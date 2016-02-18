@@ -48,6 +48,7 @@
 
       "/js/shared/Utils.js",
       "/js/content/bookmarkStore.js",
+      "/js/content/bookmarksService.js",
       "/js/shared/messageTypes.js",
       "/js/shared/DOMUtils.js",
       "/js/content/preferencesService.js",

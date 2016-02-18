@@ -1,4 +1,5 @@
-var BOOKMARK_URL = "/bookmarks",
+var BOOKMARKS_URL = "/bookmarks",
+    BOOKMARK_URL = "/bookmark",
     BOOKMARK_RIGHTS_URL= "/bookmark/share",
     BOOKMARK_KEY = "bookmarks",
     BOOKMARK_RIGHTS_KEY = "bookmark_rights";
@@ -19,7 +20,7 @@ bookmarkService = {
 
     get: function () {
         return preferencesService.get().then(function (preferences) {
-           return baseCachedAccessPoint.get(BOOKMARK_KEY, BOOKMARK_KEY, preferences[preferencesService.REFRESH_PERIOD].value);
+           return baseCachedAccessPoint.get(BOOKMARK_KEY, BOOKMARKS_URL, preferences[preferencesService.REFRESH_PERIOD].value);
         });
     },
 
@@ -41,7 +42,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if(message.type !== "GET_BOOKMARK_FOR_URL") {
         return;
     }
-
+    console.log("get bookmark for url: " + message.url);
     bookmarkService.get().then(function (bookmarks) {
         var bookmark = bookmarks.find(function (bookmark) {
             return bookmark.url == message.url;
