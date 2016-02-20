@@ -1,5 +1,5 @@
 function LinkController() {
-    this.getBodyMarkUp = function () {
+    this.getBodyMarkUp = function (linkId) {
         var LINK_MARK_UP = "<div class='linkWrapper'><div class='commentContainer'><img src=" + chrome.extension.getURL("/images/bookmark.png") + "></div></div>";
         return LINK_MARK_UP;
     }

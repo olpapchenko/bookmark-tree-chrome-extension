@@ -35,7 +35,6 @@
 			<ul class="nav navbar-noncollapse">
 				<li ng-if="user.avatar" class="pointer" ng-click="openProfile()"><img ng-src="{{user.avatar}}" alt="avatar" class="avatar"/></li>
 				<li><span class="header">Bookmark <span class="accent">Tree&nbsp;&nbsp;</span></span></li>
-				<li ng-show="showErrorLoad" ><span class="navbar-text" style="color: #ffffff;"><i class="glyphicon glyphicon-alert"></i>&nbsp;Connection error!</span></li>
 				<li class="pull-right">
 					<login class="pull-right" style="color: white; margin-right: 10px;"  ng-show="!user" ng-click="performLogin()"></login>
 					<logout class="pull-right" style="color: white; margin-right: 10px;" ng-click="performLogout()" ng-show="user"></logout>
@@ -43,8 +42,9 @@
 			</ul>
 		</header>
 
-		<div class="not-logged-wrapper text-center" ng-show="notLoggedError">
-			<span><i class="glyphicon glyphicon-user"></i><br/>You are not logged in</span>
+		<div class="not-logged-wrapper text-center" ng-show="notLoggedError || showErrorLoad">
+			<span ng-show="notLoggedError"><i class="glyphicon glyphicon-user"></i><br/>You are not logged in</span>
+			<span ng-show="showErrorLoad"><i class="glyphicon glyphicon-alert"></i>&nbsp;Connection error!</span>
 		</div>
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#home">Home</a></li>

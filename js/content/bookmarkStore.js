@@ -41,6 +41,12 @@ function Bookmark () {
     Bookmark.prototype.removeLinkById = function (id) {
         removeEntityById(LINKS, id);
     };
+    
+    Bookmark.prototype.construct = function (bookmark) {
+        this.markers = bookmark.markers;
+        this.comments = bookmark.comments;
+        this.links = bookmark.links;
+    }
 
     this[MARKERS] = [];
     this[COMMENTS] = [];

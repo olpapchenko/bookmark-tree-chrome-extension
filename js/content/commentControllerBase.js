@@ -15,11 +15,11 @@ var commentProto = {
         return "bookmarkTreeCommentContainer" + id;
     },
 
-    createCommentContainer: function createCommentContainer(contextNode, commentId) {
+    createCommentContainer: function createCommentContainer(contextNode, entityId) {
         var _this = this,
-            commentElement = $(_this.getBodyMarkUp())[0];
+            commentElement = $(_this.getBodyMarkUp(entityId))[0];
 
-        commentElement.id = commentId;
+        commentElement.id = entityId;
 
         commentElement.style.top = getElementDistance(contextNode, true) - this.getCommentOffsetTop()  + "px";
         commentElement.style.left = getElementDistance(contextNode, false) + this.getCommentOffsetLeft() + "px";
@@ -66,9 +66,7 @@ var commentProto = {
             return;
         }
 
-
-
-        this.persistEntity({selector: this.getStartSelector(range.startContainer), startOffset: range.startOffset, id: entityId});
+        this.persistEntity({selector: this.getStartSelector(range.startContainer), startOffset: range.startOffset}, entityId);
 
         this.render(range.startContainer, range.startOffset, entityId);
     },

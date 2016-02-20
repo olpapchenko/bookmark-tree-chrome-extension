@@ -2,7 +2,7 @@ var selectorGenerator = new CssSelectorGenerator();
 
 MarkController = function () {
     function getMarkClass(markterId) {
-        return markterId;
+        return "bookmarkTreeMarker" + markterId;
     }
 
     function getMarkerColor () {

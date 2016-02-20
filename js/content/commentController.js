@@ -1,6 +1,6 @@
 function CommentController() {
-    this.getBodyMarkUp = function () {
-        var COMMENT_MARK_UP = "<div class='commentWrapper'><div class='commentContainer'><textarea name='' id=''  ></textarea></div></div>";
+    this.getBodyMarkUp = function (commentId) {
+        var COMMENT_MARK_UP = "<div class='commentWrapper'><div class='commentContainer'><textarea name='' id='value" + commentId + "'  ></textarea></div></div>";
         return COMMENT_MARK_UP;
     };
 
@@ -16,7 +16,8 @@ function CommentController() {
         this.renderEntity(comment);
     }
 
-    this.persistEntity = function (comment) {
+    this.persistEntity = function (comment, commentId) {
+        comment.text = $("#value" + commentId).value();
         Bookmark.addComment(comment);
     }
 
