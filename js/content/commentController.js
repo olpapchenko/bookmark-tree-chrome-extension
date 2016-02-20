@@ -16,13 +16,23 @@ function CommentController() {
         this.renderEntity(comment);
     }
 
-    this.persistEntity = function (comment, commentId) {
-        comment.text = $("#value" + commentId).value();
+    this.persistEntity = function (comment) {
+        comment.text = $("#value" + comment.tempId).value;
         Bookmark.addComment(comment);
     }
 
     this.removeEntityFromPersistanceStore = function (commentId) {
         Bookmark.removeCommentById(commentId);
+    }
+
+    this.initializeEntity = function (entity) {
+        if(entity.text) {
+            $("#value" + entity.commentId).value(entity.text);
+        }
+
+        $("#value" + entity.commentId).on("blur", function () {
+            Bookmark.updateCommentText(entity.commentId, event.target.value);
+        });
     }
 }
 

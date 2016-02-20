@@ -13,7 +13,7 @@ MarkController = function () {
 
     function getMarkerStartMarkUp () {
         return getMarkerColor().then(function (color) {
-            return function (markerId) {return "<span style='background-color: " + color + "' class = '" + getMarkClass(markerId) + "'>";}
+            return function (markerId) {return "<span style='background-color: " + color + "' class = '" + markerId + "'>";}
         });
     }
 
@@ -94,9 +94,9 @@ MarkController = function () {
 
             var startContainerMarked = $("<span>" + startElementHTML + "</span>");
             startContainer.replaceWith(startContainerMarked);
-            addRemoveListener(markerId, $("." + getMarkClass(markerId)));
+            addRemoveListener(markerId, $("." + markerId));
 
-            createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
+            createRemoveSign(startContainerMarked.find("." + markerId)[0], markerId, markerId, function (entityClass) {
                 removeMarkerFromUI(entityClass);
             });
         });
@@ -121,7 +121,7 @@ MarkController = function () {
             commonAncestorContainer: selectorGenerator.getSelector(range.commonAncestorContainer.nodeType == 3 ? range.commonAncestorContainer.parentNode : range.commonAncestorContainer),
             startOffset: range.startOffset,
             endOffset: range.endOffset,
-            id: uuid.v1()
+            id: getMarkClass(uuid.v1())
         }
 
         Bookmark.addMarker(marker);

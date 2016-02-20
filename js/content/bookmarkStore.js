@@ -41,6 +41,36 @@ function Bookmark () {
     Bookmark.prototype.removeLinkById = function (id) {
         removeEntityById(LINKS, id);
     };
+
+    Bookmark.prototype.updateCommentText = function (commentId, newValue) {
+        var comment = this[COMMENTS].find(function (comment) {
+            return comment.id == commentId || comment.tempId == commentId;
+        });
+
+        if(comment) {
+            comment.text = newValue;
+        }
+    }
+
+    Bookmark.prototype.updateLinkHeader = function (linkId, newHeader) {
+        var link = this[LINKS].find(function (link) {
+            return link.id == linkId || link.tempId == linkId;
+        });
+
+        if(link) {
+            link.header = newHeader;
+        }
+    }
+
+    Bookmark.prototype.updateLink = function (linkId, newLink) {
+        var link = this[LINKS].find(function (link) {
+            return link.id == linkId || link.tempId == linkId;
+        });
+
+        if(link) {
+            link.link = newLink;
+        }
+    }
     
     Bookmark.prototype.construct = function (bookmark) {
         this.markers = bookmark.markers;

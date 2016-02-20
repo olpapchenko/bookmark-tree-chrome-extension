@@ -53,6 +53,5 @@ function applyBookmarkOnUrl() {
 
 window.onhashchange = applyBookmarkOnUrl;
 
-//todo try render bookmark on location change
 $(document).ready(applyBookmarkOnUrl);
 

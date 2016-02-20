@@ -23,6 +23,10 @@ function LinkController() {
     this.removeEntityFromPersistanceStore = function (linkId) {
         Bookmark.removeLinkById(linkId);
     }
+
+    this.initializeEntity = function (entity) {
+        
+    }
 }
 
 LinkController.prototype = commentProto;

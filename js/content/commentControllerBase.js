@@ -19,7 +19,7 @@ var commentProto = {
         var _this = this,
             commentElement = $(_this.getBodyMarkUp(entityId))[0];
 
-        commentElement.id = entityId;
+        commentElement.id = this.getCommentContainerId(entityId);
 
         commentElement.style.top = getElementDistance(contextNode, true) - this.getCommentOffsetTop()  + "px";
         commentElement.style.left = getElementDistance(contextNode, false) + this.getCommentOffsetLeft() + "px";
@@ -27,19 +27,21 @@ var commentProto = {
         document.body.appendChild(commentElement);
     },
 
-    render: function (startContainer, startOffset, commentId) {
+    render: function (entity) {
         var _this = this;
-        var contextContainerHTML = wrapWordUnderIdx(startContainer.textContent, _this.getContextWrapHTMLStart(_this.getContextNodeId(commentId)), _this.getContextWrapHTMLEnd(), startOffset);
-        $(startContainer).replaceWith(contextContainerHTML);
-        _this.createCommentContainer($("#" + _this.getContextNodeId(commentId))[0], _this.getCommentContainerId(commentId));
-        addRemoveListener(commentId, $("#" + _this.getCommentContainerId(commentId)));
+        var contextContainerHTML = wrapWordUnderIdx(entity.startContainer.textContent, _this.getContextWrapHTMLStart(_this.getContextNodeId(entity.commentId)), _this.getContextWrapHTMLEnd(), entity.startOffset);
+        $(entity.startContainer).replaceWith(contextContainerHTML);
+        _this.createCommentContainer($("#" + _this.getContextNodeId(entity.commentId))[0], entity.commentId);
+        addRemoveListener(entity.commentId, $("#" + _this.getCommentContainerId(entity.commentId)));
 
-        createRemoveSign($("#" + _this.getCommentContainerId(commentId)), commentId,  _this.getCommentContainerId(commentId), function () {
-            $("#" + _this.getCommentContainerId(commentId)).remove();
-            var contextNode = $("#" + _this.getContextNodeId(commentId));
+        createRemoveSign($("#" + _this.getCommentContainerId(entity.commentId)), entity.commentId,  _this.getCommentContainerId(entity.commentId), function () {
+            $("#" + _this.getCommentContainerId(entity.commentId)).remove();
+            var contextNode = $("#" + _this.getContextNodeId(entity.commentId));
             contextNode.replaceWith(contextNode.text());
-            _this.removeEntityFromPersistanceStore(commentId);
+            _this.removeEntityFromPersistanceStore(entity.commentId);
         });
+
+        this.initializeEntity(entity);
     },
 
     renderEntity: function (entity) {
@@ -66,9 +68,9 @@ var commentProto = {
             return;
         }
 
-        this.persistEntity({selector: this.getStartSelector(range.startContainer), startOffset: range.startOffset}, entityId);
+        this.persistEntity({selector: this.getStartSelector(range.startContainer), startOffset: range.startOffset, tempId: entityId});
 
-        this.render(range.startContainer, range.startOffset, entityId);
+        this.render({startContainer: range.startContainer, startOffset: range.startOffset, commentId: entityId});
     },
     selectorGenerator: new CssSelectorGenerator()
 }
