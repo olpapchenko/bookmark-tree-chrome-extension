@@ -13,7 +13,7 @@ MarkController = function () {
 
     function getMarkerStartMarkUp () {
         return getMarkerColor().then(function (color) {
-            return function (markerId) {return "<span style='background-color: " + color + "' class = '" + markerId + "'>";}
+            return function (markerId) {return "<span style='background-color: " + color + "' class = '" + getMarkClass(markerId) + "'>";}
         });
     }
 
@@ -21,11 +21,11 @@ MarkController = function () {
         return "</span>";
     }
 
-    function removeMarkerFromUI(markerClass) {
+    function removeMarkerFromUI(markerClass, markerId) {
         $("." + markerClass).each(function () {
             $(this).replaceWith(escapeText(this.textContent));
         });
-        Bookmark.removeMarkerById(markerClass);
+        Bookmark.removeMarkerById(markerId);
     }
 
     function markText (range, markerId) {
@@ -94,10 +94,10 @@ MarkController = function () {
 
             var startContainerMarked = $("<span>" + startElementHTML + "</span>");
             startContainer.replaceWith(startContainerMarked);
-            addRemoveListener(markerId, $("." + markerId));
+            addRemoveListener(markerId, $("." + getMarkClass(markerId)));
 
-            createRemoveSign(startContainerMarked.find("." + markerId)[0], markerId, markerId, function (entityClass) {
-                removeMarkerFromUI(entityClass);
+            createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
+                removeMarkerFromUI(entityClass, markerId);
             });
         });
     }
@@ -121,7 +121,7 @@ MarkController = function () {
             commonAncestorContainer: selectorGenerator.getSelector(range.commonAncestorContainer.nodeType == 3 ? range.commonAncestorContainer.parentNode : range.commonAncestorContainer),
             startOffset: range.startOffset,
             endOffset: range.endOffset,
-            id: getMarkClass(uuid.v1())
+            id: uuid.v1()
         }
 
         Bookmark.addMarker(marker);
