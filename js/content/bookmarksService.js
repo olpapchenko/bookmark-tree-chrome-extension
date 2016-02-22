@@ -32,3 +32,16 @@ bookmarksService = {
         });
     }
 }
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "GET_BOOKMARK") {
+        sendResponse(Bookmark);
+    }
+});
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "UPDATE_BOOKMARK_NAME") {
+        Bookmark.setName(message.name);
+        sendResponse(true);
+    }
+});

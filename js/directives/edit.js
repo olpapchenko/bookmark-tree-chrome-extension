@@ -30,7 +30,7 @@ angular.module("app").directive("edit", ["bookmarkService", function (bookmarkSe
                             console.log("response");
                             window.close();
                     });
-                })
+                });
             };
 
             scope.comment = function () {
@@ -45,6 +45,18 @@ angular.module("app").directive("edit", ["bookmarkService", function (bookmarkSe
             scope.bookmark = function () {
                 switchMode(MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_START);
             }
+
+            scope.save = function () {
+                bookmarkService.save();
+            }
+
+            bookmarkService.getCurrentBookmark().then(function (bookmark) {
+                scope.bookmark = bookmark;
+            });
+
+            scope.$watch("bookmark.name", function (name) {
+               bookmarkService.updateBookmarkName(name);
+            });
 
             bookmarkService.getByUrl().then(function (bookmark) {
                 console.log(bookmark);

@@ -1,21 +1,39 @@
 angular.module("app").service("bookmarkService", function () {
-   this.get = function () {
-       return chrome.extension.getBackgroundPage().bookmarkService.get();
-   }
+    var backgroundPage = chrome.extension.getBackgroundPage().bookmarkService;
 
-    this.getByUrl = function () {
-        return chrome.extension.getBackgroundPage().bookmarkService.getByUrl();
+    this.get = backgroundPage.get;
+
+    this.getByUrl = backgroundPage.getByUrl;
+
+    this.save = backgroundPage.save;
+
+    this.getRights = backgroundPage.getRights;
+
+    this.setRights = backgroundPage.setRights;
+
+    this.updateBookmarkName = function (name) {
+        return new Promise(function (resolve, reject) {
+            getActiveTab(function (tab) {
+                chrome.tabs.sendMessage(tab[0].id, {type: "UPDATE_BOOKMARK_NAME", name: name}, null, function (res) {
+                    resolve(res);
+                });
+            })
+        })
     }
 
-    this.save = function (bookmark) {
-        return chrome.extension.getBackgroundPage().bookmarkService.save(bookmark);
+    this.getCurrentBookmark = function () {
+        return new Promise (function (resolve, reject) {
+            getActiveTab(function (tab) {
+                chrome.tabs.sendMessage(tab[0].id, {type: "GET_BOOKMARK"}, null, function (bookmark) {
+                    resolve(bookmark);
+                });
+            });
+        });
     }
 
-    this.getRights = function () {
-        return chrome.extension.getBackgroundPage().bookmarkService.getRights();
-    }
-
-    this.setRights = function (rights) {
-        return chrome.extension.getBackgroundPage().bookmarkService.setRights(rights);
+    this.save = function () {
+        return getCurrentBookmark().then(function (bookmark) {
+            console.log(bookmark);
+        });
     }
 });

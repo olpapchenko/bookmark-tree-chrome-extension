@@ -4,6 +4,8 @@ function Bookmark () {
         LINKS = 'links';
     var _this = this;
 
+    this.name = document.title;
+
     function addEntity(entityName, entity) {
         _this[entityName].push(entity);
     }
@@ -16,6 +18,10 @@ function Bookmark () {
         if(index != -1) {
             _this[entityName].splice(index);
         }
+    }
+
+    Bookmark.prototype.setName = function (name) {
+        this.name = name;
     }
 
     Bookmark.prototype.addMarker = function (marker) {
@@ -73,6 +79,7 @@ function Bookmark () {
     }
     
     Bookmark.prototype.construct = function (bookmark) {
+        this.name = bookmark.name
         this.markers = bookmark.markers;
         this.comments = bookmark.comments;
         this.links = bookmark.links;
