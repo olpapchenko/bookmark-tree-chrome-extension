@@ -32,6 +32,7 @@
                 "/js/background/userService.js",
                 "/js/background/friendsService.js",
                 "/js/background/notificationsService.js",
+                "/js/background/branchService.js",
                 "/js/background/bookmarkService.js",
                 "/js/background/storageService.js",
                 "/js/shared/messageTypes.js",
@@ -47,6 +48,7 @@
       "/js/vendor/css-selector-generator/build/css-selector-generator.min.js",
 
       "/js/shared/Utils.js",
+      "/js/content/branchService.js",
       "/js/content/bookmarkStore.js",
       "/js/content/bookmarksService.js",
       "/js/shared/messageTypes.js",

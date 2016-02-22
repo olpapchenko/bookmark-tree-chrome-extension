@@ -1,4 +1,4 @@
-angular.module("app").directive("edit", ["bookmarkService", function (bookmarkService) {
+angular.module("app").directive("edit", ["bookmarkService", "branchService", function (bookmarkService, branchService) {
     return {
         restrict: "E",
         templateUrl: "/html/templates/edit.html",
@@ -50,8 +50,26 @@ angular.module("app").directive("edit", ["bookmarkService", function (bookmarkSe
                 bookmarkService.save();
             }
 
-            bookmarkService.getCurrentBookmark().then(function (bookmark) {
-                scope.bookmark = bookmark;
+            bookmarkService.getCurrentBookmark().then(function(bookmark){
+                scope.$apply(function () {
+                    scope.bookmark = bookmark;
+                });
+                branchService.getBranchById(bookmark.branch_id).then(function (branch) {
+                    scope.$apply(function () {
+                        scope.branch = branch;
+                    })
+                })
+            });
+
+            branchService.all().then(function (branches) {
+                scope.$apply(function () {
+                    console.log(branches)
+                    scope.branches = branches;
+                })
+            });
+
+            scope.$watch("branch.id", function (id) {
+                bookmarkService.updateBranch(id);
             });
 
             scope.$watch("bookmark.name", function (name) {

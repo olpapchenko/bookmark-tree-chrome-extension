@@ -6,6 +6,10 @@ function Bookmark () {
 
     this.name = document.title;
 
+    branchService.getDefault().then(function (defaultBranch) {
+        this.branch_id = defaultBranch.id;
+    })
+
     function addEntity(entityName, entity) {
         _this[entityName].push(entity);
     }
@@ -22,6 +26,10 @@ function Bookmark () {
 
     Bookmark.prototype.setName = function (name) {
         this.name = name;
+    }
+
+    Bookmark.prototype.setBranch = function (branch) {
+        this.branch_id = branch;
     }
 
     Bookmark.prototype.addMarker = function (marker) {
@@ -79,7 +87,8 @@ function Bookmark () {
     }
     
     Bookmark.prototype.construct = function (bookmark) {
-        this.name = bookmark.name
+        this.branch_id = bookmark.branch_id;
+        this.name = bookmark.name;
         this.markers = bookmark.markers;
         this.comments = bookmark.comments;
         this.links = bookmark.links;

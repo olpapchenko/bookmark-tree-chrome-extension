@@ -45,3 +45,10 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         sendResponse(true);
     }
 });
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "UPDATE_BOOKMARK_BRANCH") {
+        Bookmark.setBranch(message.branch_id);
+        sendResponse(true);
+    }
+});

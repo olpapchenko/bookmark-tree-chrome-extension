@@ -17,8 +17,18 @@ angular.module("app").service("bookmarkService", function () {
                 chrome.tabs.sendMessage(tab[0].id, {type: "UPDATE_BOOKMARK_NAME", name: name}, null, function (res) {
                     resolve(res);
                 });
-            })
-        })
+            });
+        });
+    }
+
+    this.updateBranch = function (id) {
+        return new Promise(function (resolve, reject) {
+            getActiveTab(function (tab) {
+                chrome.tabs.sendMessage(tab[0].id, {type: "UPDATE_BOOKMARK_BRANCH", branch_id: id}, null, function (res) {
+                    resolve(res);
+                });
+            });
+        });
     }
 
     this.getCurrentBookmark = function () {
