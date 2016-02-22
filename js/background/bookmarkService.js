@@ -28,6 +28,15 @@ bookmarkService = {
         Promise.resolve($.get(BOOKMARK_URL, {id: id}));
     },
 
+    getByUrl: function (url) {
+        return bookmarkService.get().then(function (bookmarks) {
+            var bookmark = bookmarks.find(function (bookmark) {
+                return bookmark.url == url;
+            });
+            return bookmark;
+        })
+    },
+
     getRights: function () {
         return preferencesService.get().then(function (preferences) {
             return baseCachedAccessPoint.get(BOOKMARK_RIGHTS_KEY, BOOKMARK_RIGHTS_URL, preferences[preferencesService.REFRESH_PERIOD].value);
@@ -46,11 +55,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if(message.type !== "GET_BOOKMARK_FOR_URL") {
         return;
     }
-    console.log("get bookmark for url: " + message.url);
-    bookmarkService.get().then(function (bookmarks) {
-        var bookmark = bookmarks.find(function (bookmark) {
-            return bookmark.url == message.url;
-        });
+
+    bookmarkService.getByUrl(message.url).then(function (bookmark) {
         sendResponse(bookmark);
     }).catch(function (e) {
         sendResponse({error:  e});

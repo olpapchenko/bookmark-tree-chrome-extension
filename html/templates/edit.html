@@ -27,9 +27,11 @@
                 </div>
             </div>
 
-            <div class="row media">
-                <button style="width: 100%; margin-top: 25px;" class="btn btn-primary">Save bookmark</button>
-            </div>
+
         </div>
     </div>
 </div>
+
+<button style="width: 100%;" class="btn btn-primary " ng-click="save()">Save bookmark</button>
+
+<button  ng-show="isBookmarkForUrl" style="width: 100%;" class="btn btn-danger media"><i class="glyphicon glyphicon-remove" ></i> Remove Bookmark </button>

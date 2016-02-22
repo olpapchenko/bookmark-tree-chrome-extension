@@ -3,6 +3,10 @@ angular.module("app").service("bookmarkService", function () {
        return chrome.extension.getBackgroundPage().bookmarkService.get();
    }
 
+    this.getByUrl = function () {
+        return chrome.extension.getBackgroundPage().bookmarkService.getByUrl();
+    }
+
     this.save = function (bookmark) {
         return chrome.extension.getBackgroundPage().bookmarkService.save(bookmark);
     }

@@ -1,4 +1,4 @@
-angular.module("app").directive("edit", function () {
+angular.module("app").directive("edit", ["bookmarkService", function (bookmarkService) {
     return {
         restrict: "E",
         templateUrl: "/html/templates/edit.html",
@@ -45,7 +45,14 @@ angular.module("app").directive("edit", function () {
             scope.bookmark = function () {
                 switchMode(MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_START);
             }
-            
+
+            bookmarkService.getByUrl().then(function (bookmark) {
+                console.log(bookmark);
+                scope.$apply(function () {
+                    scope.isBookmarkForUrl = bookmark;
+                });
+            });
+
         }
     }
-});
+}]);
