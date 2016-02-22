@@ -41,12 +41,12 @@ var commentProto = {
             _this.removeEntityFromPersistanceStore(entity.commentId);
         });
 
-        this.initializeEntity(entity);
+        this.initializeEntity(entity, _this.getCommentContainerId(entity.commentId));
     },
 
     renderEntity: function (entity) {
         if($(entity.selector)[0]) {
-            this.render($(entity.selector)[0].firstChild, entity.startOffset, entity.id);
+            this.render({startContainer: $(entity.selector)[0].firstChild, startOffset: entity.startOffset, uiComment: entity.id });
         } else {
             throw new Error("Some comments can not be matched. Page layout has changed.");
         }

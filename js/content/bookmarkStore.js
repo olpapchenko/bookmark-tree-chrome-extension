@@ -11,7 +11,7 @@ function Bookmark () {
     function removeEntityById(entityName, id) {
         'use strict'
         var index = _this[entityName].findIndex(function (entity) {
-            return entity.id == id;
+            return entity.id == id || entity.tempId == id;
         });
         if(index != -1) {
             _this[entityName].splice(index);
