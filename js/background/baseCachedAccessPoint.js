@@ -15,7 +15,7 @@ baseCachedAccessPoint = {
         });
     },
 
-    set: function (key, endpointUrl, timeout, newEntity, replace) {
+    set: function (key, endpointUrl, timeout, newEntity, replace, persistLocaly) {
         if(!replace) {
             var promise = this.get(key, endpointUrl, timeout).then(function (oldEntity) {
                 return _.extend(oldEntity, newEntity);
@@ -25,10 +25,15 @@ baseCachedAccessPoint = {
         }
 
         return promise.tap(function (entity) {
-            var keyToEntity = {};
-            keyToEntity[key] = {entity: entity, lastRefreshDate: new Date().getTime()};
-            return storageService.set(keyToEntity);
+            if(persistLocaly) {
+                var keyToEntity = {};
+                keyToEntity[key] = {entity: entity, lastRefreshDate: new Date().getTime()};
+                return storageService.set(keyToEntity);
+            } else {
+                return true;
+            }
         }).tap(function (entity) {
+            console.log(entity);
             return Promise.resolve($.ajax({url: chrome.runtime.getManifest().endpointUrl + endpointUrl, type: "POST", data: JSON.stringify(entity), dataType: "text", contentType:"application/json; charset=utf-8"}));
         });
     },

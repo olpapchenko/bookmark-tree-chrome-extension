@@ -5,8 +5,6 @@ angular.module("app").service("bookmarkService", function () {
 
     this.getByUrl = backgroundPage.getByUrl;
 
-    this.save = backgroundPage.save;
-
     this.getRights = backgroundPage.getRights;
 
     this.setRights = backgroundPage.setRights;
@@ -42,8 +40,9 @@ angular.module("app").service("bookmarkService", function () {
     }
 
     this.save = function () {
-        return getCurrentBookmark().then(function (bookmark) {
+        return this.getCurrentBookmark().then(function (bookmark) {
             console.log(bookmark);
+            return backgroundPage.save(bookmark);
         });
     }
 });

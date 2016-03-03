@@ -6,8 +6,9 @@ var BOOKMARKS_URL = "/bookmarks",
 
 bookmarkService = {
     save: function (bookmarkData) {
-        preferencesService.get().then(function (preferences) {
-            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData);
+        bookmarkData.name = bookmarkData.name.slice(0, 50);
+       return  preferencesService.get().then(function (preferences) {
+            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData, true, false);
         }).then(function (success) {
             chrome.tabs.query({active: true}, function (tabs) {
                 var tab = tabs[0];

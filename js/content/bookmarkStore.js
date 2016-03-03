@@ -5,6 +5,7 @@ function Bookmark () {
     var _this = this;
 
     this.name = document.title;
+    this.url = document.location.href;
 
     branchService.getDefault().then(function (defaultBranch) {
         this.branch_id = defaultBranch.id;
