@@ -35,7 +35,7 @@ bookmarksService = {
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if(message.type == "GET_BOOKMARK") {
-        sendResponse(Bookmark);
+        sendResponse(Bookmark.getBookmark());
     }
 });
 

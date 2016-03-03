@@ -86,6 +86,16 @@ function Bookmark () {
             link.link = newLink;
         }
     }
+
+    Bookmark.prototype.getBookmark = function () {
+        return {
+            name: this.name,
+            url: this.url,
+            markers: this.markers.map(function (marker) {return _.omit(marker, "tempId")}),
+            links: this.links.map(function (links) {return _.omit(links, "tempId")}),
+            comments: this.comments.map(function (comment) {return _.omit(comment, "tempId")})
+        }
+    }
     
     Bookmark.prototype.construct = function (bookmark) {
         this.branch_id = bookmark.branch_id;
