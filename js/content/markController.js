@@ -121,12 +121,12 @@ MarkController = function () {
             commonAncestorContainer: selectorGenerator.getSelector(range.commonAncestorContainer.nodeType == 3 ? range.commonAncestorContainer.parentNode : range.commonAncestorContainer),
             startOffset: range.startOffset,
             endOffset: range.endOffset,
-            id: uuid.v1()
+            tempId: uuid.v1()
         }
 
         Bookmark.addMarker(marker);
         console.log(Bookmark);
-        markText(range, marker.id);
+        markText(range, marker.tempId);
         selection.empty();
     }
 
