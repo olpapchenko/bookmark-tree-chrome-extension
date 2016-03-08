@@ -23,13 +23,25 @@
                     <span class="glyphicon glyphicon-comment edit-icons pointer" title="Create comment" ng-click="comment()"></span>
                 </div>
                 <div class="col-4 text-center">
-                    <span class="glyphicon glyphicon-pushpin edit-icons pointer" title="Make link with other bookmark" ng-click="bookmark()"></span>
+                    <span class="glyphicon glyphicon-pushpin edit-icons pointer" title="Make link with other bookmark" ng-click="link()"></span>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+    <div class="col-xs-offset-5 col-xs-7">
+        <loader is-loaded="spinner"></loader>
+    </div>
+</div>
 <button style="width: 100%;" class="btn btn-primary " ng-click="save()">Save bookmark</button>
 
-<button  ng-show="isBookmarkForUrl" style="width: 100%;" class="btn btn-danger media"><i class="glyphicon glyphicon-remove" ></i> Remove Bookmark </button>
+<button  ng-click="remove()"  ng-show="isBookmarkForUrl" style="width: 100%;" class="btn btn-danger media"><i class="glyphicon glyphicon-remove"></i> Remove Bookmark </button>
+
+<div ng-show="showSaveError" class="row text-center" style="margin-bottom: 10px;">
+    <h4><small class="error">Bookmark possibly was not saved due to errors.</small></h4>
+</div>
+
+<div ng-show="showRemoveError" class="row text-center" style="margin-bottom: 10px;">
+    <h4><small class="error">Bookmark was not removed due to errors</small></h4>
+</div>

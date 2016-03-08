@@ -38,16 +38,40 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
             };
             
             scope.mark = function () {
-                console.log("mark");
                 switchMode(MESSAGE_TYPES.MARK_MODE_START);
             };
             
-            scope.bookmark = function () {
+            scope.link = function () {
                 switchMode(MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_START);
             }
 
             scope.save = function () {
-                bookmarkService.save();
+                scope.spinner = true;
+                bookmarkService.save().then(function () {
+                    scope.$apply(function () {
+                        scope.spinner = false;
+                    });
+                }, function () {
+                    scope.$apply(function () {
+                        scope.spinner = false;
+                        scope.showSaveError = true;
+                    });
+                });
+            }
+
+            scope.remove = function () {
+                scope.spinner = true;
+                bookmarkService.remove(scope.bookmark.id).then(function ( ){
+                    scope.$apply(function () {
+                        scope.spinner = false;
+                        scope.isBookmarkForUrl = false;
+                    });
+                }, function (e) {
+                    scope.$apply(function () {
+                        scope.spinner = false;
+                        scope.showRemoveError = true;
+                    });
+                });
             }
 
             bookmarkService.getCurrentBookmark().then(function(bookmark){

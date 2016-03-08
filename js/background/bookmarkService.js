@@ -22,6 +22,10 @@ bookmarkService = {
         });
     },
 
+    remove: function (id) {
+         return Promise.resolve($.post(chrome.runtime.getManifest().endpointUrl + BOOKMARK_URL + "/remove", {id: id}));
+    },
+
     get: function () {
         return preferencesService.get().then(function (preferences) {
            return baseCachedAccessPoint.get(BOOKMARK_KEY, BOOKMARKS_URL, preferences[preferencesService.REFRESH_PERIOD].value);

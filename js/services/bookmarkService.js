@@ -3,6 +3,8 @@ angular.module("app").service("bookmarkService", function () {
 
     this.get = backgroundPage.get;
 
+    this.remove = backgroundPage.remove;
+
     this.getRights = backgroundPage.getRights;
 
     this.setRights = backgroundPage.setRights;

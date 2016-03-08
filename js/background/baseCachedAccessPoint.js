@@ -38,7 +38,12 @@ baseCachedAccessPoint = {
             });
     },
 
-    erase: function (key) {
-        return  storageService.erase(key);
+    erase: function (key, endpointUrl, timeout, callback) {
+        if(callback) {
+            return get(key,  endpointUrl, timeout)
+                .then(callback);
+        } else {
+            return  storageService.erase(key);
+        }
     }
 }
