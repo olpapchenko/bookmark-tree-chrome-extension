@@ -30,21 +30,21 @@ preferencesService = {
         }).then(function (preferences) {
             var flatPreferences = {};
             preferences.preferences.forEach(function (preference) {
-                flatPreferences[preference.key] = {value: preference.key <=5 ?  String(preference.value) == 'true'  : preference.value, id: preference.id};
+                flatPreferences[preference.key] = {value: preference.key < 5 ?  String(preference.value) == 'true'  : preference.value, id: preference.id};
             });
             return flatPreferences;
         });
     },
 
     set: function (flatPreferences, replace) {
-        var preferences = []
+        var preferences = [];
         for(var key in flatPreferences) {
             if(flatPreferences.hasOwnProperty(key)){
                 preferences.push({key: key, value: flatPreferences[key].value, id: flatPreferences[key].id});
             }
         }
         return getTimeout().then(function (timeout) {
-            return baseCachedAccessPoint.set(PREFERENCES_KEY, PREFERENCES_URL, timeout, {preferences: preferences}, replace);
+            return baseCachedAccessPoint.set(PREFERENCES_KEY, PREFERENCES_URL, timeout, {preferences: preferences}, true);
         });
     }
 }
