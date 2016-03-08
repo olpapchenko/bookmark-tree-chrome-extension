@@ -13,9 +13,11 @@ function escapeText(text) {
 
 function filterTextNodes(node) {
     var node = $(node);
+
     if(node[0].nodeType == 3) {
         return node;
     }
+
     return node.contents().filter(function () {return this.nodeType == 3});
 }
 
@@ -57,6 +59,7 @@ function wrapWordUnderIdx(text, wrapTextStart, wrapTextEnd, idx) {
 function getAllTextNodes(node) {
     var nodes = [];
 
+
     forEachTextChildNode(node, function (idx, node) {
         nodes.push(node);
     });
@@ -91,6 +94,5 @@ function findTextNodePosition(parent, textNode) {
 }
 
 function findTextNodeAtPosition(parent, position) {
-    console.log(getAllTextNodes(parent)[position][0]);
     return getAllTextNodes(parent)[position][0];
 }

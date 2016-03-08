@@ -132,6 +132,12 @@ MarkController = function () {
     }
 
     MarkController.prototype.renderMarker = function markTextBySelector (marker) {
+           if(!$(marker.startContainerSelector)[0] || !$(marker.endContainerSelector)[0]) {
+               console.log(marker.startContainerSelector);
+               console.log(marker.endContainerSelector);
+               console.log($(marker.startContainerSelector)[0]);
+               console.log($(marker.endContainerSelector)[0]);
+           }
             markText({startContainer: findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition),
             endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
             commonAncestorContainer: $(marker.commonAncestorContainer)[0].firstChild,
