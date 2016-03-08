@@ -6,12 +6,14 @@ function Bookmark () {
 
     this.name = document.title;
     this.url = document.location.href;
+    this.maxOrder = 0;
 
     branchService.getDefault().then(function (defaultBranch) {
         this.branch_id = defaultBranch.id;
     })
 
     function addEntity(entityName, entity) {
+        entity.order = ++_this.maxOrder;
         _this[entityName].push(entity);
     }
 
@@ -25,8 +27,16 @@ function Bookmark () {
             _this[entityName].splice(index);
             if(this.id) {
                 _this.remove[entityName].push(id);
+                _this.maxOrder--;
             }
         }
+    }
+
+    function getMaxOrderOfEntity() {
+        var entities = _this[MARKERS].concat(_this[COMMENTS]).concat(_this[LINKS]);
+        return entities.reduce(function (max, entity) {
+            return max > entity.order ? max : entity.order;
+        }, 0);
     }
 
     Bookmark.prototype.setName = function (name) {
@@ -109,6 +119,8 @@ function Bookmark () {
         this.markers = bookmark.markers;
         this.comments = bookmark.comments;
         this.links = bookmark.links;
+        this.maxOrder = getMaxOrderOfEntity();
+        console.log(this.maxOrder);
     }
 
     this[MARKERS] = [];

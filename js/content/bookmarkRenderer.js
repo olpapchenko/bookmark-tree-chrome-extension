@@ -1,8 +1,11 @@
  bookmarkRenderer = {
      renderBookmark: function (bookmark) {
-         bookmark.markers.forEach(this.renderMarker);
-         bookmark.comments.forEach(this.renderComment);
-         bookmark.links.forEach(this.renderLink);
+
+         var compare = function (entity1, entity2) {return entity1.order - entity2.order;}
+
+         bookmark.markers.sort(compare).forEach(this.renderMarker);
+         bookmark.comments.sort(compare).forEach(this.renderComment);
+         bookmark.links.sort(compare).forEach(this.renderLink);
      },
 
      renderMarker: function (marker) {

@@ -126,24 +126,24 @@ MarkController = function () {
         }
 
         Bookmark.addMarker(marker);
-        console.log(Bookmark);
         markText(range, marker.tempId);
         selection.empty();
     }
 
+    var time = 300
     MarkController.prototype.renderMarker = function markTextBySelector (marker) {
-           if(!$(marker.startContainerSelector)[0] || !$(marker.endContainerSelector)[0]) {
-               console.log(marker.startContainerSelector);
-               console.log(marker.endContainerSelector);
-               console.log($(marker.startContainerSelector)[0]);
-               console.log($(marker.endContainerSelector)[0]);
-           }
+
+        console.log($(".bookmarkTreeMarker47")[0]);
+        setTimeout(function () {
             markText({startContainer: findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition),
-            endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
-            commonAncestorContainer: $(marker.commonAncestorContainer)[0].firstChild,
-            startOffset: marker.startOffset,
-            endOffset: marker.endOffset
-        }, marker.id);
+                endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
+                commonAncestorContainer: $(marker.commonAncestorContainer)[0].firstChild,
+                startOffset: marker.startOffset,
+                endOffset: marker.endOffset
+            }, marker.id);
+        }, time);
+        time += 300;
+        console.log($(".bookmarkTreeMarker47")[0]);
     }
 };
 
