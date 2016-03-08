@@ -3,11 +3,19 @@ angular.module("app").service("bookmarkService", function () {
 
     this.get = backgroundPage.get;
 
-    this.getByUrl = backgroundPage.getByUrl;
-
     this.getRights = backgroundPage.getRights;
 
     this.setRights = backgroundPage.setRights;
+
+    this.getByUrl = function () {
+        return new Promise(function (resolve, reject) {
+            chrome.tabs.query({active: true}, resolve);
+        }).then(function (tabs) {
+            var tab = tabs[0];
+            return backgroundPage.getByUrl(tab.url);
+        });
+
+    }
 
     this.updateBookmarkName = function (name) {
         return new Promise(function (resolve, reject) {
