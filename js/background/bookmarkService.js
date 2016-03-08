@@ -23,7 +23,18 @@ bookmarkService = {
     },
 
     remove: function (id) {
-         return Promise.resolve($.post(chrome.runtime.getManifest().endpointUrl + BOOKMARK_URL + "/remove", {id: id}));
+        var _this = this;
+         return Promise.resolve($.post(chrome.runtime.getManifest().endpointUrl + BOOKMARK_URL + "/remove", {id: id}))
+             .then(function () {
+                 return _this.get();
+             }).then(function (bookmarks) {
+                 var saveBookmark = bookmarks.filter(function (bookmark) {
+                     return bookmark.id != id;
+                 });
+                 var keyToEntity = {};
+                 keyToEntity[key] = {entity: saveBookmark, lastRefreshDate: new Date().getTime()};
+                 return storageService.set(keyToEntity);
+             });
     },
 
     get: function () {
