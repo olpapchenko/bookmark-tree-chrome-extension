@@ -20,8 +20,12 @@ function Bookmark () {
         var index = _this[entityName].findIndex(function (entity) {
             return entity.id == id || entity.tempId == id;
         });
+
         if(index != -1) {
             _this[entityName].splice(index);
+            if(this.id) {
+                _this.remove[entityName].push(id);
+            }
         }
     }
 
@@ -108,6 +112,11 @@ function Bookmark () {
     this[MARKERS] = [];
     this[COMMENTS] = [];
     this[LINKS] = [];
+    this.remove = {};
+
+    this.remove[MARKERS] = [];
+    this.remove[COMMENTS] = [];
+    this.remove[LINKS] = [];
 }
 
 Bookmark = new Bookmark();

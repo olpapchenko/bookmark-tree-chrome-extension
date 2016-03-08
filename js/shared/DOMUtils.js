@@ -85,4 +85,13 @@ function getElementDistance (elem, top) {
     return location >= 0 ? location : 0;
 };
 
+function findTextNodePosition(parent, textNode) {
+    return getAllTextNodes(parent).findIndex(function (node) {
+        return node[0] == textNode;
+    });
+}
 
+function findTextNodeAtPosition(parent, position) {
+    console.log(getAllTextNodes(parent)[position][0]);
+    return getAllTextNodes(parent)[position][0];
+}

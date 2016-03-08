@@ -8,13 +8,16 @@ bookmarkService = {
     save: function (bookmarkData) {
         bookmarkData.name = bookmarkData.name.slice(0, 50);
        return  preferencesService.get().then(function (preferences) {
-            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData, true, false);
-        }).then(function (success) {
+           return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData, true);
+        })
+       .then(function (success, error) {
             chrome.tabs.query({active: true}, function (tabs) {
                 var tab = tabs[0];
-                chrome.tabs.sendMessage(tab.id, MESSAGE_TYPES.SAVE_SUCCESS);
-            }).catch(function () {
-                chrome.tabs.sendMessage(tab.id, MESSAGE_TYPES.SAVE_FAIL);
+                if(success) {
+                    chrome.tabs.sendMessage(tab.id, MESSAGE_TYPES.SAVE_SUCCESS);
+                } else {
+                    chrome.tabs.sendMessage(tab.id, MESSAGE_TYPES.SAVE_FAIL);
+                }
             });
         });
     },
@@ -26,10 +29,11 @@ bookmarkService = {
     },
 
     getById: function (id) {
-        Promise.resolve($.get(BOOKMARK_URL, {id: id}));
+        return Promise.resolve($.get(chrome.runtime.getManifest().endpointUrl + BOOKMARK_URL, {id: id}));
     },
 
     getByUrl: function (url) {
+        'use strict'
         return bookmarkService.get().then(function (bookmarks) {
             var bookmark = bookmarks.find(function (bookmark) {
                 return bookmark.url == url;

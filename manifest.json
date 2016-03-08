@@ -49,6 +49,7 @@
       "/js/vendor/css-selector-generator/build/css-selector-generator.min.js",
 
       "/js/shared/Utils.js",
+      "/js/content/bookmarkRenderer.js",
       "/js/content/branchService.js",
       "/js/content/bookmarkStore.js",
       "/js/content/bookmarksService.js",

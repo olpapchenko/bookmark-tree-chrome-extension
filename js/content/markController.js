@@ -119,7 +119,9 @@ MarkController = function () {
             startContainerSelector: selectorGenerator.getSelector(range.startContainer.parentNode),
             endContainerSelector: selectorGenerator.getSelector(range.endContainer.parentNode),
             commonAncestorContainer: selectorGenerator.getSelector(range.commonAncestorContainer.nodeType == 3 ? range.commonAncestorContainer.parentNode : range.commonAncestorContainer),
-            startOffset: range.startOffset,
+            startTextNodePosition: findTextNodePosition(range.startContainer.parentNode, range.startContainer),
+            endTextNodePosition: findTextNodePosition(range.endContainer.parentNode, range.endContainer),
+            startOffset:  range.startOffset,
             endOffset: range.endOffset,
             tempId: uuid.v1()
         }
@@ -131,8 +133,8 @@ MarkController = function () {
     }
 
     MarkController.prototype.renderMarker = function markTextBySelector (marker) {
-            markText({startContainer: $(marker.startContainerSelector)[0].firstChild,
-            endContainer: $(marker.endContainerSelector)[0].childNodes[0],
+            markText({startContainer: findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition),
+            endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
             commonAncestorContainer: $(marker.commonAncestorContainer)[0].firstChild,
             startOffset: marker.startOffset,
             endOffset: marker.endOffset
