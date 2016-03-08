@@ -37,7 +37,6 @@ MarkController = function () {
                 startPosition = range.startContainer.nodeType == 3 ? range.startOffset : 0,
                 endPosition = range.startContainer.nodeType == 3 ? range.endOffset : endContainer.length - 1,
                 commonAncestorContainer = $(range.commonAncestorContainer);
-
             //endPosition += generateStartMarkUp(markerId).length;
 
             var startPositionStartContainer = startPosition,

@@ -16,25 +16,26 @@ baseCachedAccessPoint = {
     },
 
     set: function (key, endpointUrl, timeout, newEntity, replace, omitPersistLocal) {
-        if(!replace) {
-            var promise = this.get(key, endpointUrl, timeout).then(function (oldEntity) {
-                return _.extend(oldEntity, newEntity);
+        var _this = this;
+        return Promise.resolve($.ajax({url: chrome.runtime.getManifest().endpointUrl + endpointUrl, type: "POST", data: JSON.stringify(newEntity), dataType: "text", contentType:"application/json; charset=utf-8"}))
+        .then(function (savedEntity) {
+                savedEntity = JSON.parse(savedEntity);
+                if (!replace) {
+                    return _this.get(key, endpointUrl, timeout).then(function (oldEntity) {
+                        return Array.isArray(oldEntity) ? oldEntity.concat(savedEntity) : _.extendOwn(oldEntity, savedEntity);
+                    });
+                } else {
+                    return Promise.resolve(savedEntity);
+                }
+        }).then(function (entity) {
+                if(!omitPersistLocal) {
+                    var keyToEntity = {};
+                    keyToEntity[key] = {entity: entity, lastRefreshDate: new Date().getTime()};
+                    return storageService.set(keyToEntity);
+                } else {
+                    return true;
+                }
             });
-        } else {
-            var promise = Promise.resolve(newEntity);
-        }
-
-        return promise.tap(function (entity) {
-            return Promise.resolve($.ajax({url: chrome.runtime.getManifest().endpointUrl + endpointUrl, type: "POST", data: JSON.stringify(entity), dataType: "text", contentType:"application/json; charset=utf-8"}));
-        }).then(function (savedEntity) {
-            if(!omitPersistLocal) {
-                var keyToEntity = {};
-                keyToEntity[key] = {entity: savedEntity, lastRefreshDate: new Date().getTime()};
-                return storageService.set(keyToEntity);
-            } else {
-                return true;
-            }
-        });
     },
 
     erase: function (key) {

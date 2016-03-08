@@ -22,7 +22,6 @@ function filterTextNodes(node) {
 function forEachTextChildNode(node, callback) {
     var node = $(node);
 
-
     if(node[0].nodeType == 3) {
         callback(0, node);
         return;

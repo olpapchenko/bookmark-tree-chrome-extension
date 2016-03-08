@@ -93,6 +93,7 @@ function Bookmark () {
 
     Bookmark.prototype.getBookmark = function () {
         return {
+            id: this.id,
             name: this.name,
             url: this.url,
             markers: this.markers.map(function (marker) {return _.omit(marker, "tempId")}),
@@ -102,6 +103,7 @@ function Bookmark () {
     }
     
     Bookmark.prototype.construct = function (bookmark) {
+        this.id = bookmark.id;
         this.branch_id = bookmark.branch_id;
         this.name = bookmark.name;
         this.markers = bookmark.markers;
