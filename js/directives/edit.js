@@ -88,7 +88,7 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
                         scope.branch = branches.filter(function (branch) {
                             return branch.default;
                         })[0];
-                        scope.branch = String(scope.branch);
+                        scope.branch = String(scope.branch.id);
                     }
                 })
             });
