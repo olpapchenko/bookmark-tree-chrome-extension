@@ -104,6 +104,7 @@ function Bookmark () {
     Bookmark.prototype.getBookmark = function () {
         return {
             id: this.id,
+            branch_id: this.branch_id,
             name: this.name,
             url: this.url,
             markers: this.markers.map(function (marker) {return _.omit(marker, "tempId")}),
@@ -120,7 +121,7 @@ function Bookmark () {
         this.comments = bookmark.comments;
         this.links = bookmark.links;
         this.maxOrder = getMaxOrderOfEntity();
-        console.log(this.maxOrder);
+        this.branch_id = bookmark.branch_id;
     }
 
     this[MARKERS] = [];

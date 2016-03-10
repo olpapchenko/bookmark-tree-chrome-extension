@@ -8,9 +8,8 @@
 
             <div class="row media">
                 <div>
-                    <select name="" id="" class="form-control">
-                        <option value="1">Default</option>
-                        <option value="1">New bookmark</option>
+                    <select name="" id="" class="form-control" ng-model="branch">
+                        <option ng-repeat="branch in branches" value="{{branch.id}}">{{branch.name}}</option>
                     </select>
                 </div>
             </div>

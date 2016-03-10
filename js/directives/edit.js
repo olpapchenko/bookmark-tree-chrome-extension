@@ -77,22 +77,23 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
             bookmarkService.getCurrentBookmark().then(function(bookmark){
                 scope.$apply(function () {
                     scope.bookmark = bookmark;
+                    scope.branch =  String(bookmark.branch_id);
                 });
-                branchService.getBranchById(bookmark.branch_id).then(function (branch) {
-                    scope.$apply(function () {
-                        scope.branch = branch;
-                    })
-                })
             });
 
             branchService.all().then(function (branches) {
                 scope.$apply(function () {
-                    console.log(branches)
                     scope.branches = branches;
+                     if(!scope.branch) {
+                        scope.branch = branches.filter(function (branch) {
+                            return branch.default;
+                        })[0];
+                        scope.branch = String(scope.branch);
+                    }
                 })
             });
 
-            scope.$watch("branch.id", function (id) {
+            scope.$watch("branch", function (id) {
                 bookmarkService.updateBranch(id);
             });
 
