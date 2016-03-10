@@ -25,11 +25,12 @@ function Bookmark () {
 
         if(index != -1) {
             _this[entityName].splice(index);
-            if(this.id) {
+            if(_this.id) {
                 _this.remove[entityName].push(id);
                 _this.maxOrder--;
             }
         }
+        console.log(_this);
     }
 
     function getMaxOrderOfEntity() {
@@ -109,7 +110,8 @@ function Bookmark () {
             url: this.url,
             markers: this.markers.map(function (marker) {return _.omit(marker, "tempId")}),
             links: this.links.map(function (links) {return _.omit(links, "tempId")}),
-            comments: this.comments.map(function (comment) {return _.omit(comment, "tempId")})
+            comments: this.comments.map(function (comment) {return _.omit(comment, "tempId")}),
+            remove: this.remove
         }
     }
     
