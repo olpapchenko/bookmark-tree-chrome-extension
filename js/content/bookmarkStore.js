@@ -17,7 +17,7 @@ function Bookmark () {
         _this[entityName].push(entity);
     }
 
-    function removeEntityById(entityName, id) {
+    function removeEntityById(entityName, id, isNew) {
         'use strict'
         var index = _this[entityName].findIndex(function (entity) {
             return entity.id == id || entity.tempId == id;
@@ -25,12 +25,11 @@ function Bookmark () {
 
         if(index != -1) {
             _this[entityName].splice(index);
-            if(_this.id ) {
+            _this.maxOrder--;
+            if(_this.id && !isNew) {
                 _this.remove[entityName].push(id);
-                _this.maxOrder--;
             }
         }
-        console.log(_this);
     }
 
     function getMaxOrderOfEntity() {
@@ -60,16 +59,16 @@ function Bookmark () {
         addEntity(COMMENTS, marker);
     }
 
-    Bookmark.prototype.removeMarkerById = function (id) {
-        removeEntityById(MARKERS, id);
+    Bookmark.prototype.removeMarkerById = function (id, isNew) {
+        removeEntityById(MARKERS, id, isNew);
     }
 
-    Bookmark.prototype.removeCommentById = function (id) {
-        removeEntityById(COMMENTS, id);
+    Bookmark.prototype.removeCommentById = function (id, isNew) {
+        removeEntityById(COMMENTS, id, isNew);
     }
 
-    Bookmark.prototype.removeLinkById = function (id) {
-        removeEntityById(LINKS, id);
+    Bookmark.prototype.removeLinkById = function (id, isNew) {
+        removeEntityById(LINKS, id, isNew);
     };
 
     Bookmark.prototype.updateCommentText = function (commentId, newValue) {

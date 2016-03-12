@@ -27,9 +27,8 @@ function LinkController() {
         Bookmark.addLink(link);
     }
 
-    this.removeEntityFromPersistanceStore = function (linkId) {
-        console.log(linkId);
-        Bookmark.removeLinkById(linkId);
+    this.removeEntityFromPersistanceStore = function (linkId, isNew) {
+        Bookmark.removeLinkById(linkId, isNew);
     }
 
     this.initializeEntity = function (entity, classId) {

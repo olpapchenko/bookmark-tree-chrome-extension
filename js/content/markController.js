@@ -25,10 +25,8 @@ MarkController = function () {
         $("." + markerClass).each(function () {
             $(this).replaceWith(escapeText(this.textContent));
         });
-        if(isNewMarker) {
-            return;
-        }
-        Bookmark.removeMarkerById(markerId);
+
+        Bookmark.removeMarkerById(markerId, isNewMarker, isNewMarker);
     }
 
     function markText (range, markerId, isNewMarker) {

@@ -21,17 +21,17 @@ function CommentController() {
         Bookmark.addComment(comment);
     }
 
-    this.removeEntityFromPersistanceStore = function (commentId) {
-        Bookmark.removeCommentById(commentId);
+    this.removeEntityFromPersistanceStore = function (commentId, isNew) {
+        Bookmark.removeCommentById(commentId, isNew);
     }
 
     this.initializeEntity = function (entity) {
         if(entity.text) {
-            $("#value" + entity.commentId).value(entity.text);
+            $("#value" + entity.id).val(entity.text);
         }
 
-        $("#value" + entity.commentId).on("blur", function () {
-            Bookmark.updateCommentText(entity.commentId, event.target.value);
+        $("#value" + entity.id).on("blur", function () {
+            Bookmark.updateCommentText(entity.id, event.target.value);
         });
     }
 }

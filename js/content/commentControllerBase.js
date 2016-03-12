@@ -27,18 +27,18 @@ var commentProto = {
         document.body.appendChild(commentElement);
     },
 
-    render: function (entity) {
+    render: function (entity, isNew) {
         var _this = this;
-        var contextContainerHTML = wrapWordUnderIdx(entity.startContainer.textContent, _this.getContextWrapHTMLStart(_this.getContextNodeId(entity.commentId)), _this.getContextWrapHTMLEnd(), entity.startOffset);
+        var contextContainerHTML = wrapWordUnderIdx(entity.startContainer.textContent, _this.getContextWrapHTMLStart(_this.getContextNodeId(entity.id)), _this.getContextWrapHTMLEnd(), entity.startOffset);
         $(entity.startContainer).replaceWith(contextContainerHTML);
-        _this.createCommentContainer($("#" + _this.getContextNodeId(entity.commentId))[0], entity.commentId);
-        addRemoveListener(entity.commentId, $("#" + _this.getCommentContainerId(entity.commentId)));
+        _this.createCommentContainer($("#" + _this.getContextNodeId(entity.id))[0], entity.id);
+        addRemoveListener(entity.id, $("#" + _this.getCommentContainerId(entity.id)));
 
-        createRemoveSign($("#" + _this.getCommentContainerId(entity.commentId)), entity.commentId,  _this.getCommentContainerId(entity.commentId), function () {
-            $("#" + _this.getCommentContainerId(entity.commentId)).remove();
-            var contextNode = $("#" + _this.getContextNodeId(entity.commentId));
+        createRemoveSign($("#" + _this.getCommentContainerId(entity.id)), entity.id,  _this.getCommentContainerId(entity.id), function () {
+            $("#" + _this.getCommentContainerId(entity.id)).remove();
+            var contextNode = $("#" + _this.getContextNodeId(entity.id));
             contextNode.replaceWith(contextNode.text());
-            _this.removeEntityFromPersistanceStore(entity.commentId);
+            _this.removeEntityFromPersistanceStore(entity.id, isNew);
         });
 
         this.initializeEntity(entity, _this.getCommentContainerId(entity.commentId));
@@ -46,7 +46,7 @@ var commentProto = {
 
     renderEntity: function (entity) {
         if($(entity.selector)[0]) {
-            this.render({startContainer: $(entity.selector)[0].firstChild, startOffset: entity.startOffset, uiComment: entity.id });
+            this.render({id: entity.id, startContainer: findTextNodeAtPosition($(entity.selector)[0], entity.order), startOffset: entity.startOffset, uiComment: entity.id, text: entity.text });
         } else {
             throw new Error("Some comments can not be matched. Page layout has changed.");
         }
@@ -68,9 +68,9 @@ var commentProto = {
             return;
         }
 
-        this.persistEntity({selector: this.getStartSelector(range.startContainer), startOffset: range.startOffset, tempId: entityId});
+        this.persistEntity({selector: this.getStartSelector(range.startContainer.parentNode), startOffset: range.startOffset, tempId: entityId, order: findTextNodePosition(range.startContainer.parentNode, range.startContainer) });
 
-        this.render({startContainer: range.startContainer, startOffset: range.startOffset, commentId: entityId});
+        this.render({startContainer: range.startContainer, startOffset: range.startOffset, id: entityId}, true);
     },
     selectorGenerator: new CssSelectorGenerator()
 }
