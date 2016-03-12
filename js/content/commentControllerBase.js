@@ -45,8 +45,8 @@ var commentProto = {
     },
 
     renderEntity: function (entity) {
-        if($(entity.selector)[0]) {
-            this.render({id: entity.id, startContainer: findTextNodeAtPosition($(entity.selector)[0], entity.order), startOffset: entity.startOffset, uiComment: entity.id, text: entity.text });
+         if($(entity.selector)[0]) {
+            this.render({id: entity.id, startContainer: findTextNodeAtPosition($(entity.selector)[0], entity.textPosition), startOffset: entity.startOffset, uiComment: entity.id, text: entity.text });
         } else {
             throw new Error("Some comments can not be matched. Page layout has changed.");
         }
@@ -68,7 +68,7 @@ var commentProto = {
             return;
         }
 
-        this.persistEntity({selector: this.getStartSelector(range.startContainer.parentNode), startOffset: range.startOffset, tempId: entityId, order: findTextNodePosition(range.startContainer.parentNode, range.startContainer) });
+        this.persistEntity({selector: this.getStartSelector(range.startContainer.parentNode), startOffset: range.startOffset, tempId: entityId, textPosition: findTextNodePosition(range.startContainer.parentNode, range.startContainer) });
 
         this.render({startContainer: range.startContainer, startOffset: range.startOffset, id: entityId}, true);
     },
