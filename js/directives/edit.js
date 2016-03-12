@@ -77,18 +77,20 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
             bookmarkService.getCurrentBookmark().then(function(bookmark){
                 scope.$apply(function () {
                     scope.bookmark = bookmark;
-                    scope.branch =  String(bookmark.branch_id);
+                    scope.branch =  bookmark.branch_id && String(bookmark.branch_id);
                 });
             });
 
             branchService.all().then(function (branches) {
                 scope.$apply(function () {
                     scope.branches = branches;
+                    console.log(scope.branch);
                      if(!scope.branch) {
-                        scope.branch = branches.filter(function (branch) {
+                        var branch = branches.filter(function (branch) {
                             return branch.default;
                         })[0];
-                        scope.branch = String(scope.branch.id);
+                         console.log(branch);
+                        scope.branch = scope.branch || String(branch.id);
                     }
                 })
             });
@@ -102,8 +104,7 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
             });
 
             bookmarkService.getByUrl().then(function (bookmark) {
-                console.log(bookmark);
-                scope.$apply(function () {
+                 scope.$apply(function () {
                     scope.isBookmarkForUrl = bookmark;
                 });
             });
