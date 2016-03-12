@@ -25,7 +25,7 @@ function Bookmark () {
 
         if(index != -1) {
             _this[entityName].splice(index);
-            if(_this.id) {
+            if(_this.id ) {
                 _this.remove[entityName].push(id);
                 _this.maxOrder--;
             }

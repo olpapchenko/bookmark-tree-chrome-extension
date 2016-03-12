@@ -21,14 +21,17 @@ MarkController = function () {
         return "</span>";
     }
 
-    function removeMarkerFromUI(markerClass, markerId) {
+    function removeMarkerFromUI(markerClass, markerId, isNewMarker) {
         $("." + markerClass).each(function () {
             $(this).replaceWith(escapeText(this.textContent));
         });
+        if(isNewMarker) {
+            return;
+        }
         Bookmark.removeMarkerById(markerId);
     }
 
-    function markText (range, markerId) {
+    function markText (range, markerId, isNewMarker) {
         //console.log(range.startContainer);
         //console.log(range.endContainer);
         getMarkerStartMarkUp().then(function (generateStartMarkUp) {
@@ -96,7 +99,7 @@ MarkController = function () {
             addRemoveListener(markerId, $("." + getMarkClass(markerId)));
 
             createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
-                removeMarkerFromUI(entityClass, markerId);
+                removeMarkerFromUI(entityClass, markerId, isNewMarker);
             });
         });
     }
@@ -126,7 +129,7 @@ MarkController = function () {
         }
 
         Bookmark.addMarker(marker);
-        markText(range, marker.tempId);
+        markText(range, marker.tempId, true);
         selection.empty();
     }
 
