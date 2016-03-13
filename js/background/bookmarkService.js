@@ -113,3 +113,17 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     });
     return true;
 });
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+
+    if(message.type !== "REMOVE_BOOKMARK") {
+        return;
+    }
+
+    bookmarkService.remove(message.bookmark.id).then(function (bookmark) {
+        sendResponse(bookmark);
+    }).catch(function (e) {
+        sendResponse({error: e});
+    });
+    return true;
+});

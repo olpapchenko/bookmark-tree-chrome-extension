@@ -3,8 +3,6 @@ angular.module("app").service("bookmarkService", function () {
 
     this.get = backgroundPage.get;
 
-    this.remove = backgroundPage.remove;
-
     this.getRights = backgroundPage.getRights;
 
     this.setRights = backgroundPage.setRights;
@@ -56,6 +54,21 @@ angular.module("app").service("bookmarkService", function () {
         //return this.getCurrentBookmark().then(function (bookmark) {
         //    return backgroundPage.save(bookmark);
         //});
+    }
+
+    this.remove = function () {
+        return new Promise (function (resolve, reject) {
+            chrome.tabs.query({active: true}, function (tabs) {
+                var tab = tabs[0];
+                chrome.tabs.sendMessage(tab.id, {type: "REMOVE_CURRENT_BOOKMARK"}, null, function (message) {
+                    if(message && message.error) {
+                        reject(message.error);
+                    } else {
+                        resolve(message);
+                    }
+                });
+            });
+        });
     }
 
     this.save1 = function () {

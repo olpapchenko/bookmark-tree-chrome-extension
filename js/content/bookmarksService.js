@@ -43,6 +43,19 @@ bookmarksService = {
                 resolve(message);
             });
         })
+    },
+
+    remove: function () {
+        return new Promise(function (resolve, reject) {
+            chrome.runtime.sendMessage({type: "REMOVE_BOOKMARK", bookmark: Bookmark.getBookmark()}, null, function(message)
+            {
+                if(message && message.error) {
+                    reject(message.error);
+                }
+                Bookmark = new BookmarkClass()
+                resolve(message);
+            });
+        })
     }
 }
 
@@ -67,10 +80,18 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 });
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-
     if(message.type == "SAVE_CURRENT_BOOKMARK") {
         bookmarksService.save().then(function () {
            sendResponse(Bookmark.getBookmark());
+        });
+    }
+    return true;
+});
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "REMOVE_CURRENT_BOOKMARK") {
+        bookmarksService.remove().then(function () {
+            sendResponse(Bookmark.getBookmark());
         });
     }
     return true;

@@ -1,4 +1,4 @@
-function Bookmark () {
+function BookmarkClass () {
     var MARKERS = 'markers',
         COMMENTS = 'comments',
         LINKS = 'links';
@@ -39,39 +39,39 @@ function Bookmark () {
         }, 0);
     }
 
-    Bookmark.prototype.setName = function (name) {
+    BookmarkClass.prototype.setName = function (name) {
         this.name = name;
     }
 
-    Bookmark.prototype.setBranch = function (branch) {
+    BookmarkClass.prototype.setBranch = function (branch) {
         this.branch_id = branch;
     }
 
-    Bookmark.prototype.addMarker = function (marker) {
+    BookmarkClass.prototype.addMarker = function (marker) {
         addEntity(MARKERS, marker);
     }
 
-    Bookmark.prototype.addLink = function (marker) {
+    BookmarkClass.prototype.addLink = function (marker) {
         addEntity(LINKS, marker);
     }
 
-    Bookmark.prototype.addComment = function (marker) {
+    BookmarkClass.prototype.addComment = function (marker) {
         addEntity(COMMENTS, marker);
     }
 
-    Bookmark.prototype.removeMarkerById = function (id, isNew) {
+    BookmarkClass.prototype.removeMarkerById = function (id, isNew) {
         removeEntityById(MARKERS, id, isNew);
     }
 
-    Bookmark.prototype.removeCommentById = function (id, isNew) {
+    BookmarkClass.prototype.removeCommentById = function (id, isNew) {
         removeEntityById(COMMENTS, id, isNew);
     }
 
-    Bookmark.prototype.removeLinkById = function (id, isNew) {
+    BookmarkClass.prototype.removeLinkById = function (id, isNew) {
         removeEntityById(LINKS, id, isNew);
     };
 
-    Bookmark.prototype.updateCommentText = function (commentId, newValue) {
+    BookmarkClass.prototype.updateCommentText = function (commentId, newValue) {
         var comment = this[COMMENTS].find(function (comment) {
             return comment.id == commentId || comment.tempId == commentId;
         });
@@ -81,7 +81,7 @@ function Bookmark () {
         }
     }
 
-    Bookmark.prototype.updateLinkHeader = function (linkId, newHeader) {
+    BookmarkClass.prototype.updateLinkHeader = function (linkId, newHeader) {
         var link = this[LINKS].find(function (link) {
             return link.id == linkId || link.tempId == linkId;
         });
@@ -91,7 +91,7 @@ function Bookmark () {
         }
     }
 
-    Bookmark.prototype.updateLink = function (linkId, newLink) {
+    BookmarkClass.prototype.updateLink = function (linkId, newLink) {
         var link = this[LINKS].find(function (link) {
             return link.id == linkId || link.tempId == linkId;
         });
@@ -101,7 +101,7 @@ function Bookmark () {
         }
     }
 
-    Bookmark.prototype.getBookmark = function () {
+    BookmarkClass.prototype.getBookmark = function () {
         return {
             id: this.id,
             branch_id: this.branch_id,
@@ -114,15 +114,15 @@ function Bookmark () {
         }
     }
     
-    Bookmark.prototype.construct = function (bookmark) {
-        this.id = bookmark.id;
-        this.branch_id = bookmark.branch_id;
-        this.name = bookmark.name;
-        this.markers = bookmark.markers;
-        this.comments = bookmark.comments;
-        this.links = bookmark.links;
+    BookmarkClass.prototype.construct = function (BookmarkClass) {
+        this.id = BookmarkClass.id;
+        this.branch_id = BookmarkClass.branch_id;
+        this.name = BookmarkClass.name;
+        this.markers = BookmarkClass.markers;
+        this.comments = BookmarkClass.comments;
+        this.links = BookmarkClass.links;
         this.maxOrder = getMaxOrderOfEntity();
-        this.branch_id = bookmark.branch_id;
+        this.branch_id = BookmarkClass.branch_id;
     }
 
     this[MARKERS] = [];
@@ -135,67 +135,67 @@ function Bookmark () {
     this.remove[LINKS] = [];
 }
 
-Bookmark = new Bookmark();
-//function BookmarkStore () {
+Bookmark = new BookmarkClass();
+//function BookmarkClassStore () {
 //    var _this = this;
 //    var MARKERS = 'markers',
 //        COMMENTS = 'comments',
 //        LINKS = 'links';
 //
 //    function addEntity (entityName, entity) {
-//        var bookmark = _this.getBookmarkByTabIdOrCreate(entity.tabId);
-//        bookmark[entityName].push(entity);
+//        var BookmarkClass = _this.getBookmarkClassByTabIdOrCreate(entity.tabId);
+//        BookmarkClass[entityName].push(entity);
 //    }
 //
 //    function removeEntityById(entityName, entity) {
-//        var bookmark = _this.getBookmarkByTabId(entity.tabId);
-//        bookmark['remove' + _(entityName).capitalize() + 'ById'].apply(bookmark, entity.id);
+//        var BookmarkClass = _this.getBookmarkClassByTabId(entity.tabId);
+//        BookmarkClass['remove' + _(entityName).capitalize() + 'ById'].apply(BookmarkClass, entity.id);
 //    }
 //
-//    this.bookmarks = [];
+//    this.BookmarkClasss = [];
 //
-//    BookmarkStore.prototype.getBookmarkByTabId = function (tabId) {
-//        var indexOf = this.bookmark.indexOf(function (bookmark) {
-//            return bookmark.tabId == tabId;
+//    BookmarkClassStore.prototype.getBookmarkClassByTabId = function (tabId) {
+//        var indexOf = this.BookmarkClass.indexOf(function (BookmarkClass) {
+//            return BookmarkClass.tabId == tabId;
 //        })
 //        if(indexOf == -1) {
 //            return null
 //        } else {
-//            return this.bookmarks[indexOf];
+//            return this.BookmarkClasss[indexOf];
 //        }
 //    }
 //
-//    BookmarkStore.prototype.getBookmarkByTabIdOrCreate = function (tabId) {
-//        var bookmark = this.getBookmarkByTabId(tabId);
-//        if(!bookmark) {
-//            var bookmark = new Bookmark(tabId);
-//            this.bookmarks.push(bookmark);
+//    BookmarkClassStore.prototype.getBookmarkClassByTabIdOrCreate = function (tabId) {
+//        var BookmarkClass = this.getBookmarkClassByTabId(tabId);
+//        if(!BookmarkClass) {
+//            var BookmarkClass = new BookmarkClass(tabId);
+//            this.BookmarkClasss.push(BookmarkClass);
 //        }
 //
-//        return bookmark;
+//        return BookmarkClass;
 //    }
 //
-//    Bookmark.prototype.addMarker = function (marker) {
+//    BookmarkClass.prototype.addMarker = function (marker) {
 //        addEntity(MARKERS, marker);
 //    }
 //
-//    Bookmark.prototype.removeMarkById = function (marker) {
+//    BookmarkClass.prototype.removeMarkById = function (marker) {
 //        removeEntityById(MARKERS, marker);
 //    };
 //
-//    Bookmark.prototype.addBookmarkLink = function (marker) {
+//    BookmarkClass.prototype.addBookmarkClassLink = function (marker) {
 //        addEntity(LINKS, marker);
 //    }
 //
-//    Bookmark.prototype.removeBookmarkLinkById = function (marker) {
+//    BookmarkClass.prototype.removeBookmarkClassLinkById = function (marker) {
 //        removeEntityById(LINKS, marker);
 //    };
 //
-//    Bookmark.prototype.addComment = function (marker) {
+//    BookmarkClass.prototype.addComment = function (marker) {
 //        addEntity(COMMENTS, marker);
 //    }
 //
-//    Bookmark.prototype.removeCommentById = function (marker) {
+//    BookmarkClass.prototype.removeCommentById = function (marker) {
 //        removeEntityById(COMMENTS, marker);
 //    };
 //}
