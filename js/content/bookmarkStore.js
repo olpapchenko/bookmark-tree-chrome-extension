@@ -107,9 +107,9 @@ function BookmarkClass () {
             branch_id: this.branch_id,
             name: this.name,
             url: this.url,
-            markers: this.markers.map(function (marker) {return _.omit(marker, "tempId")}),
-            links: this.links.map(function (links) {return _.omit(links, "tempId")}),
-            comments: this.comments.map(function (comment) {return _.omit(comment, "tempId")}),
+            markers: this.markers.map(function (marker) {return _.omit(marker, "tempId", "type")}),
+            links: this.links.map(function (links) {return _.omit(links, "tempId", "type")}),
+            comments: this.comments.map(function (comment) {return _.omit(comment, "tempId", "type")}),
             remove: this.remove
         }
     }

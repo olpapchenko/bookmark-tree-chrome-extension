@@ -131,20 +131,13 @@ MarkController = function () {
         selection.empty();
     }
 
-    var time = 300
     MarkController.prototype.renderMarker = function markTextBySelector (marker) {
-
-        console.log($(".bookmarkTreeMarker47")[0]);
-        setTimeout(function () {
-            markText({startContainer: findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition),
-                endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
-                commonAncestorContainer: $(marker.commonAncestorContainer)[0].firstChild,
-                startOffset: marker.startOffset,
-                endOffset: marker.endOffset
-            }, marker.id);
-        }, time);
-        time += 300;
-        console.log($(".bookmarkTreeMarker47")[0]);
+        markText({startContainer: findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition),
+            endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
+            commonAncestorContainer: $(marker.commonAncestorContainer)[0].firstChild,
+            startOffset: marker.startOffset,
+            endOffset: marker.endOffset
+        }, marker.id);
     }
 };
 
