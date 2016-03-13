@@ -50,9 +50,26 @@ angular.module("app").service("bookmarkService", function () {
     }
 
     this.save = function () {
-        return this.getCurrentBookmark().then(function (bookmark) {
-            console.log(bookmark);
-            return backgroundPage.save(bookmark);
-        });
+        return this.save1().then(function (message) {
+            console.log(message);
+        })
+        //return this.getCurrentBookmark().then(function (bookmark) {
+        //    return backgroundPage.save(bookmark);
+        //});
+    }
+
+    this.save1 = function () {
+        return new Promise (function (resolve, reject) {
+            chrome.tabs.query({active: true}, function (tabs) {
+                var tab = tabs[0];
+                chrome.tabs.sendMessage(tab.id, {type: "SAVE_CURRENT_BOOKMARK"}, null, function (message) {
+                    if(message && message.error) {
+                        reject(message.error);
+                    } else {
+                        resolve(message);
+                    }
+                });
+            });
+        })
     }
 });

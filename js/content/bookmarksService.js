@@ -30,6 +30,19 @@ bookmarksService = {
                 resolve(message);
             })
         });
+    },
+
+    save: function () {
+        return new Promise(function (resolve, reject) {
+            chrome.runtime.sendMessage({type: "SAVE_BOOKMARK", bookmark: Bookmark.getBookmark()}, null, function(message)
+            {
+                if(message && message.error) {
+                    reject(message.error);
+                }
+                Bookmark.id = message.id;
+                resolve(message);
+            });
+        })
     }
 }
 
@@ -51,4 +64,14 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         Bookmark.setBranch(message.branch_id);
         sendResponse(true);
     }
+});
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+
+    if(message.type == "SAVE_CURRENT_BOOKMARK") {
+        bookmarksService.save().then(function () {
+           sendResponse(Bookmark.getBookmark());
+        });
+    }
+    return true;
 });

@@ -34,7 +34,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if(message.type == MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_END) {
         bookmarkConstructor.endLinkCreationMode();
     }
-    sendResponse(true);
 });
 
 function applyBookmarkOnUrl() {

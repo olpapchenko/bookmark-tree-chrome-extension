@@ -10,7 +10,7 @@ bookmarkService = {
        return  preferencesService.get().then(function (preferences) {
            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData);
         })
-       .then(function (success, error) {
+       .tap(function (success, error) {
             chrome.tabs.query({active: true}, function (tabs) {
                 var tab = tabs[0];
                 if(success) {
@@ -92,6 +92,21 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
 
     bookmarkService.getById(message.id).then(function (bookmark) {
+        sendResponse(bookmark);
+    }).catch(function (e) {
+        sendResponse({error: e});
+    });
+    return true;
+});
+
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+
+    if(message.type !== "SAVE_BOOKMARK") {
+        return;
+    }
+
+    bookmarkService.save(message.bookmark).then(function (bookmark) {
         sendResponse(bookmark);
     }).catch(function (e) {
         sendResponse({error: e});
