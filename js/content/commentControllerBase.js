@@ -46,7 +46,12 @@ var commentProto = {
 
     renderEntity: function (entity) {
          if($(entity.selector)[0]) {
-            this.render({id: entity.id, startContainer: findTextNodeAtPosition($(entity.selector)[0], entity.textPosition), startOffset: entity.startOffset, uiComment: entity.id, text: entity.text });
+             var baseEntity = {
+                 startContainer: findTextNodeAtPosition($(entity.selector)[0], entity.textPosition),
+                 startOffset: entity.startOffset,
+                 uiComment: entity.id}
+             var cleanEntity = _.omit(entity, "startContainer", "startOffset", "uiComment");
+            this.render(_.extend(cleanEntity, baseEntity));
         } else {
             throw new Error("Some comments can not be matched. Page layout has changed.");
         }

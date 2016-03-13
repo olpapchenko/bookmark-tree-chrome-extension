@@ -47,7 +47,7 @@
     opacity: 1;
 }
 
-.linkWrapper .commentContainer:hover .link {
+.linkWrapper .commentContainer:hover .click-link {
     cursor: pointer;
     display: block;
     opacity: 1;
@@ -63,7 +63,7 @@
     opacity: 0;
 }
 
-.commentContainer input, hr, .link {
+.commentContainer input, hr, .click-link {
     transition: all 0.3s ease-out 0.5s;
     display: none;
     opacity: 0;
@@ -232,5 +232,8 @@
 
 .bookmark-tree-control {
    margin-bottom: 10px;
+    height: 23px !important;
+    min-height: 23px !important;
+    padding: 0px !important;
 }
 
