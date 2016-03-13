@@ -2,17 +2,18 @@ function LinkController() {
     this.getBodyMarkUp = function (linkId) {
         var LINK_MARK_UP = "<div class='linkWrapper'><div class='commentContainer'>" +
             "<img src=" + chrome.extension.getURL("/images/bookmark.png") + ">" +
-            "<input type='text' class='link-header'>" +
+            "<input placeholder='Name' type='text' class='link-header bookmark-tree-control'>" +
+            "<input placeholder='Link URL' type='text' class='link bookmark-tree-control'>" +
             "<div class='.completions-container'></div>" +
             "<hr/>"+
-            "<span href='#' class='link'>Link to he </span>"
+            "<span href='#' class='link'>Click me</span>"
             "</div>" +
             "</div>";
         return LINK_MARK_UP;
     }
 
     this.getCommentOffsetTop = function () {
-        return 70;
+        return 120;
     }
 
     this.getCommentOffsetLeft = function () {
