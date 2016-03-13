@@ -25,6 +25,7 @@ function LinkController() {
     }
 
     this.persistEntity = function (link) {
+        link.header = $(this.getCommentContainerId(link.id) + " .link-header").val();
         Bookmark.addLink(link);
     }
 

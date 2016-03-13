@@ -1,4 +1,4 @@
-var selectorGenerator = new CssSelectorGenerator();
+var selectorGenerator = new CssSelectorGenerator({selectors: ['tag', 'nthchild']});
 
 MarkController = function () {
     function getMarkClass(markterId) {

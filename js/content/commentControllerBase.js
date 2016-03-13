@@ -72,6 +72,6 @@ var commentProto = {
 
         this.render({startContainer: range.startContainer, startOffset: range.startOffset, id: entityId}, true);
     },
-    selectorGenerator: new CssSelectorGenerator()
+    selectorGenerator: new CssSelectorGenerator({selectors: ['tag', 'nthchild']})
 }
 
