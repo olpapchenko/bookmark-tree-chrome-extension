@@ -47,15 +47,6 @@ angular.module("app").service("bookmarkService", function () {
         });
     }
 
-    this.save = function () {
-        return this.save1().then(function (message) {
-            console.log(message);
-        })
-        //return this.getCurrentBookmark().then(function (bookmark) {
-        //    return backgroundPage.save(bookmark);
-        //});
-    }
-
     this.remove = function () {
         return new Promise (function (resolve, reject) {
             chrome.tabs.query({active: true}, function (tabs) {
@@ -71,7 +62,7 @@ angular.module("app").service("bookmarkService", function () {
         });
     }
 
-    this.save1 = function () {
+    this.save = function () {
         return new Promise (function (resolve, reject) {
             chrome.tabs.query({active: true}, function (tabs) {
                 var tab = tabs[0];
