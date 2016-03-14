@@ -20,8 +20,8 @@ function LinkController() {
         return 0;
     },
 
-    this.renderLink = function (link) {
-        this.renderEntity(link);
+    this.renderLink = function (link, isOwner) {
+        this.renderEntity(link, isOwner);
     }
 
     this.persistEntity = function (link) {

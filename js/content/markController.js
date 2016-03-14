@@ -29,7 +29,7 @@ MarkController = function () {
         Bookmark.removeMarkerById(markerId, isNewMarker, isNewMarker);
     }
 
-    function markText (range, markerId, isNewMarker) {
+    function markText (range, markerId, isNewMarker, isOwner) {
         //console.log(range.startContainer);
         //console.log(range.endContainer);
         getMarkerStartMarkUp().then(function (generateStartMarkUp) {
@@ -96,9 +96,11 @@ MarkController = function () {
             startContainer.replaceWith(startContainerMarked);
             addRemoveListener(markerId, $("." + getMarkClass(markerId)));
 
-            createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
-                removeMarkerFromUI(entityClass, markerId, isNewMarker);
-            });
+            if(isOwner) {
+                createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
+                    removeMarkerFromUI(entityClass, markerId, isNewMarker);
+                });
+            }
         });
     }
 
@@ -130,13 +132,13 @@ MarkController = function () {
         selection.empty();
     }
 
-    MarkController.prototype.renderMarker = function markTextBySelector (marker) {
+    MarkController.prototype.renderMarker = function markTextBySelector (marker, isOwner) {
         markText({startContainer: findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition),
             endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
             commonAncestorContainer: $(marker.commonAncestorContainer)[0],
             startOffset: marker.startOffset,
             endOffset: marker.endOffset
-        }, marker.id);
+        }, marker.id, false, isOwner);
     }
 };
 

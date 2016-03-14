@@ -27,31 +27,32 @@ var commentProto = {
         document.body.appendChild(commentElement);
     },
 
-    render: function (entity, isNew) {
+    render: function (entity, isNew, isOwner) {
         var _this = this;
         var contextContainerHTML = wrapWordUnderIdx(entity.startContainer.textContent, _this.getContextWrapHTMLStart(_this.getContextNodeId(entity.id)), _this.getContextWrapHTMLEnd(), entity.startOffset);
         $(entity.startContainer).replaceWith(contextContainerHTML);
         _this.createCommentContainer($("#" + _this.getContextNodeId(entity.id))[0], entity.id);
         addRemoveListener(entity.id, $("#" + _this.getCommentContainerId(entity.id)));
 
-        createRemoveSign($("#" + _this.getCommentContainerId(entity.id)), entity.id,  _this.getCommentContainerId(entity.id), function () {
-            $("#" + _this.getCommentContainerId(entity.id)).remove();
-            var contextNode = $("#" + _this.getContextNodeId(entity.id));
-            contextNode.replaceWith(contextNode.text());
-            _this.removeEntityFromPersistanceStore(entity.id, isNew);
-        });
-
+        if(isOwner) {
+            createRemoveSign($("#" + _this.getCommentContainerId(entity.id)), entity.id,  _this.getCommentContainerId(entity.id), function () {
+                $("#" + _this.getCommentContainerId(entity.id)).remove();
+                var contextNode = $("#" + _this.getContextNodeId(entity.id));
+                contextNode.replaceWith(contextNode.text());
+                _this.removeEntityFromPersistanceStore(entity.id, isNew);
+            });
+        }
         this.initializeEntity(entity, _this.getCommentContainerId(entity.commentId));
     },
 
-    renderEntity: function (entity) {
+    renderEntity: function (entity, isOwner) {
          if($(entity.selector)[0]) {
              var baseEntity = {
                  startContainer: findTextNodeAtPosition($(entity.selector)[0], entity.textPosition),
                  startOffset: entity.startOffset,
                  uiComment: entity.id}
              var cleanEntity = _.omit(entity, "startContainer", "startOffset", "uiComment");
-            this.render(_.extend(cleanEntity, baseEntity));
+            this.render(_.extend(cleanEntity, baseEntity), false, isOwner);
         } else {
             throw new Error("Some comments can not be matched. Page layout has changed.");
         }

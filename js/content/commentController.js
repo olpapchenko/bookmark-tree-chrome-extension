@@ -12,8 +12,8 @@ function CommentController() {
         return 0;
     }
 
-    this.renderComment = function (comment) {
-        this.renderEntity(comment);
+    this.renderComment = function (comment, isOwner) {
+        this.renderEntity(comment, isOwner);
     }
 
     this.persistEntity = function (comment) {

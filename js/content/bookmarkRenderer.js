@@ -28,32 +28,32 @@
          allEntities.sort(compare).forEach(function (entity) {
             if(entity.type == "markers")  {
                 setTimeout(function () {
-                    _this.renderMarker(entity);
+                    _this.renderMarker(entity, bookmark.isOwner);
                 }, time);
                 time += 200;
             } else if(entity.type == "comments") {
                 setTimeout(function () {
-                    _this.renderComment(entity);
+                    _this.renderComment(entity, bookmark.isOwner);
                 }, time);
                 time += 200;
             } else if (entity.type == "links") {
                 setTimeout(function () {
-                    _this.renderLink(entity);
+                    _this.renderLink(entity, bookmark.isOwner);
                 }, time);
                 time += 200;
             }
          });
      },
 
-     renderMarker: function (marker) {
-        markController.renderMarker(marker);
+     renderMarker: function (marker, isOwner) {
+        markController.renderMarker(marker, isOwner);
      },
 
-     renderLink: function (link) {
-        linkController.renderLink(link);
+     renderLink: function (link, isOwner) {
+        linkController.renderLink(link, isOwner);
      },
 
-     renderComment: function (comment) {
-        commentController.renderComment(comment);
+     renderComment: function (comment, isOwner) {
+        commentController.renderComment(comment, isOwner);
      }
  }
