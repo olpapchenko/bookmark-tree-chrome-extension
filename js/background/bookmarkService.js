@@ -5,6 +5,10 @@ var BOOKMARKS_URL = "/bookmarks",
     BOOKMARK_RIGHTS_KEY = "bookmark_rights";
 
 bookmarkService = {
+    getMainPath: function () {
+        return chrome.runtime.getManifest().endpointUrl;
+    },
+
     save: function (bookmarkData) {
         bookmarkData.name = bookmarkData.name.slice(0, 50);
        return  preferencesService.get().then(function (preferences) {

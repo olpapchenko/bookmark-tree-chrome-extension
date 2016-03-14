@@ -1,4 +1,4 @@
-angular.module("app",[]).controller("appController", ["$scope", "userService", "notificationsService", function ($scope, userService, notificationsService) {
+angular.module("app",[]).controller("appController", ["$scope", "userService", "notificationsService", "bookmarkService", function ($scope, userService, notificationsService, bookmarkService) {
 
     $scope.performLogin = function () {
         userService.performLogin();
@@ -19,6 +19,12 @@ angular.module("app",[]).controller("appController", ["$scope", "userService", "
 
     notificationsService.getNotificationsCount().then(function (notificationsCount) {
         $scope.size = notificationsCount.size;
+    });
+
+    bookmarkService.getCurrentBookmark().then(function(bookmark){
+        $scope.$apply(function () {
+            $scope.isOwner = bookmark.isOwner;
+        });
     });
 
     userService.get().then(function (user) {

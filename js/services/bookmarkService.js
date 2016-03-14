@@ -1,4 +1,4 @@
-angular.module("app").service("bookmarkService", function () {
+angular.module("app").service("bookmarkService", ["tabsService", function (tabsService) {
     var backgroundPage = chrome.extension.getBackgroundPage().bookmarkService;
 
     this.get = backgroundPage.get;
@@ -6,7 +6,11 @@ angular.module("app").service("bookmarkService", function () {
     this.getRights = backgroundPage.getRights;
 
     this.setRights = backgroundPage.setRights;
-
+    
+    this.openMainPage = function () {
+        tabsService.openNewTab(backgroundPage.getMainPath());
+    }
+    
     this.getByUrl = function () {
         return new Promise(function (resolve, reject) {
             chrome.tabs.query({active: true}, resolve);
@@ -76,4 +80,4 @@ angular.module("app").service("bookmarkService", function () {
             });
         })
     }
-});
+}]);

@@ -22,6 +22,7 @@
 		<script src="/js/services/bookmarkService.js"></script>
 		<script src="/js/services/notificationsService.js"></script>
 		<script src="/js/directives/notifications.js"></script>
+		<script src="/js/directives/openAllBookmarksPage.js"></script>
 		<script src="/js/directives/colorModel.js"></script>
 		<script src="/js/directives/loader.js"></script>
 		<script src="/js/directives/friends.js"></script>
@@ -49,19 +50,19 @@
 			<span ng-show="showErrorLoad"><i class="glyphicon glyphicon-alert"></i>&nbsp;Connection error!</span>
 		</div>
 		<ul class="nav nav-tabs">
-			<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-			<li><a data-toggle="tab" href="#structure">Structure</a></li>
+			<li class="active" ng-show="isOwner"><a data-toggle="tab" href="#home">Home</a></li>
+			<li ng-class="{active: !isOwner}"><a data-toggle="tab"  href="#structure">Structure</a></li>
 			<li><a data-toggle="tab" href="#friends">Social</a></li>
 			<li><a data-toggle="tab" href="#notifications">Notifications &nbsp;<span class="badge" ng-show="size > 0">{{size | limitTo:2}}</span></a></li>
 			<li><a data-toggle="tab" href="#settings">Settings</a></li>
 		</ul>
 
 		<div class="tab-content media container">
-			<div id="home" class="tab-pane fade in active">
+			<div id="home" class="tab-pane fade in active" ng-show="isOwner">
 				<ng-include src="'/html/pages/home.html'"></ng-include>
 			</div>
 
-			<div id="structure" class="tab-pane fade in">
+			<div id="structure" class="tab-pane fade in" ng-class="{active: !isOwner}">
 				<ng-include src="'/html/pages/structure.html'"></ng-include>
 			</div>
 

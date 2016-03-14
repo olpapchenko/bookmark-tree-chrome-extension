@@ -110,19 +110,23 @@ function BookmarkClass () {
             markers: this.markers.map(function (marker) {return _.omit(marker, "tempId", "type")}),
             links: this.links.map(function (links) {return _.omit(links, "tempId", "type")}),
             comments: this.comments.map(function (comment) {return _.omit(comment, "tempId", "type")}),
-            remove: this.remove
+            remove: this.remove,
+            owners: this.owners,
+            isOwner: this.isOwner
         }
     }
     
-    BookmarkClass.prototype.construct = function (BookmarkClass) {
-        this.id = BookmarkClass.id;
-        this.branch_id = BookmarkClass.branch_id;
-        this.name = BookmarkClass.name;
-        this.markers = BookmarkClass.markers;
-        this.comments = BookmarkClass.comments;
-        this.links = BookmarkClass.links;
+    BookmarkClass.prototype.construct = function (bookmark) {
+        this.id = bookmark.id;
+        this.branch_id = bookmark.branch_id;
+        this.name = bookmark.name;
+        this.markers = bookmark.markers;
+        this.comments = bookmark.comments;
+        this.links = bookmark.links;
         this.maxOrder = getMaxOrderOfEntity();
-        this.branch_id = BookmarkClass.branch_id;
+        this.branch_id = bookmark.branch_id;
+        this.isOwner = bookmark.isOwner;
+        this.owners = bookmark.owners;
     }
 
     this[MARKERS] = [];
