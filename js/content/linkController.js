@@ -24,8 +24,8 @@ function LinkController() {
         this.renderEntity(link, isOwner);
     }
 
-    this.persistEntity = function (link) {
-        Bookmark.addLink(link);
+    this.persistEntity = function (link, isOwner) {
+        Bookmark.addLink(link,isOwner);
     }
 
     this.removeEntityFromPersistanceStore = function (linkId, isNew) {

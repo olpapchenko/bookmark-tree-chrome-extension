@@ -81,7 +81,7 @@ var commentProto = {
 
         this.persistEntity({selector: this.getStartSelector(range.startContainer.parentNode), startOffset: range.startOffset, tempId: entityId, textPosition: findTextNodePosition(range.startContainer.parentNode, range.startContainer), isNew: true});
 
-        this.render({startContainer: range.startContainer, startOffset: range.startOffset, id: entityId}, true);
+        this.render({startContainer: range.startContainer, startOffset: range.startOffset, id: entityId}, true, true);
     },
     selectorGenerator: new CssSelectorGenerator({selectors: ['tag', 'nthchild']})
 }

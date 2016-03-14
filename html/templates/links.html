@@ -1,8 +1,6 @@
-<div class="panel panel-default">
+<div class="panel panel-default" ng-show="bookmark && bookmark.links && bookmark.links.length > 0">
     <div class="panel-heading">Bookmark links</div>
     <div class="fixed-height-structure">
-        <div class="panel-body border-bottom"> Notification <i title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
-        <div class="panel-body border-bottom"> Panel content <i title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
-        <div class="panel-body border-bottom"> Panel content <i title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
+        <div class="panel-body border-bottom" ng-repeat="link in bookmark.links"> {{(link.header | limitTo:40) || "Empty link header"}} <i ng-click="(link.id || link.tempId, link.isNew)" ng-show="bookmark.isOwner" title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
     </div>
 </div>

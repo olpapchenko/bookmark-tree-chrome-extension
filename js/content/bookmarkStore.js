@@ -7,6 +7,7 @@ function BookmarkClass () {
     this.name = document.title;
     this.url = document.location.href;
     this.maxOrder = 0;
+    this.isOwner = true;
 
     branchService.getDefault().then(function (defaultBranch) {
         this.branch_id = defaultBranch.id;
