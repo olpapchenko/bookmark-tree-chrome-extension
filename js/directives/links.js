@@ -8,12 +8,20 @@ angular.module("app").directive("links", ["bookmarkService", function (bookmarkS
         link: function ($scope) {
             bookmarkService.getCurrentBookmark().then(function(bookmark){
                 $scope.$apply(function () {
-                    console.log(bookmark);
                     $scope.bookmark = bookmark;
                 });
             });
 
-            $scope.removeLinkById = bookmarkService.removeLinkById;
+            $scope.removeLinkById = function (id) {
+                bookmarkService.removeLinkById(id);
+                setTimeout(function () {
+                    bookmarkService.getCurrentBookmark().then(function(bookmark){
+                        $scope.$apply(function () {
+                            $scope.bookmark = bookmark;
+                        });
+                    });
+                }, 100);
+            }
         }
     }
 }]);

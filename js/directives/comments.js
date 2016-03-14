@@ -10,7 +10,17 @@ angular.module("app").directive("comments",["bookmarkService", function (bookmar
                 });
             });
 
-            $scope.removeCommentById = bookmarkService.removeCommentById;
+            $scope.removeCommentById = function (id) {
+                bookmarkService.removeCommentById(id);
+                setTimeout(function () {
+                    bookmarkService.getCurrentBookmark().then(function(bookmark){
+                        $scope.$apply(function () {
+                            console.log(bookmark);
+                            $scope.bookmark = bookmark;
+                        });
+                    });
+                }, 100);
+            }
         }
     }
 }]);

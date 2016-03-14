@@ -25,7 +25,7 @@ function BookmarkClass () {
         });
 
         if(index != -1) {
-            _this[entityName].splice(index);
+            _this[entityName].splice(index, 1);
             _this.maxOrder--;
             if(_this.id && !isNew) {
                 _this.remove[entityName].push(id);

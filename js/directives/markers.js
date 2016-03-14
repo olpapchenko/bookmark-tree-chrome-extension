@@ -13,7 +13,16 @@ angular.module("app").directive("markers", ["bookmarkService", function (bookmar
                 });
             });
 
-            $scope.removeMarkerById = bookmarkService.removeMarkerById;
+            $scope.removeMarkerById = function (id) {
+                bookmarkService.removeMarkerById(id);
+                setTimeout(function () {
+                    bookmarkService.getCurrentBookmark().then(function(bookmark){
+                        $scope.$apply(function () {
+                            $scope.bookmark = bookmark;
+                        });
+                    });
+                }, 100);
+            }
         }
     }
 }]);
