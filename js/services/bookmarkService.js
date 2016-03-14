@@ -66,6 +66,51 @@ angular.module("app").service("bookmarkService", ["tabsService", function (tabsS
         });
     }
 
+    this.removeMarkerById = function (id, isNew) {
+        return new Promise (function (resolve, reject) {
+            chrome.tabs.query({active: true}, function (tabs) {
+                var tab = tabs[0];
+                chrome.tabs.sendMessage(tab.id, {type: "REMOVE_MARKER_BY_ID", id: id, isNew: isNew}, null, function (message) {
+                    if(message && message.error) {
+                        reject(message.error);
+                    } else {
+                        resolve(message);
+                    }
+                });
+            });
+        })
+    }
+
+    this.removeCommentById = function (id, isNew) {
+        return new Promise (function (resolve, reject) {
+            chrome.tabs.query({active: true}, function (tabs) {
+                var tab = tabs[0];
+                chrome.tabs.sendMessage(tab.id, {type: "REMOVE_COMMENT_BY_ID", id: id, isNew: isNew}, null, function (message) {
+                    if(message && message.error) {
+                        reject(message.error);
+                    } else {
+                        resolve(message);
+                    }
+                });
+            });
+        })
+    }
+
+    this.removeLinkById = function (id, isNew) {
+        return new Promise (function (resolve, reject) {
+            chrome.tabs.query({active: true}, function (tabs) {
+                var tab = tabs[0];
+                chrome.tabs.sendMessage(tab.id, {type: "REMOVE_LINK_BY_ID", id: id, isNew: isNew}, null, function (message) {
+                    if(message && message.error) {
+                        reject(message.error);
+                    } else {
+                        resolve(message);
+                    }
+                });
+            });
+        })
+    }
+
     this.save = function () {
         return new Promise (function (resolve, reject) {
             chrome.tabs.query({active: true}, function (tabs) {

@@ -101,19 +101,26 @@ function BookmarkClass () {
         }
     }
 
-    BookmarkClass.prototype.getBookmark = function () {
-        return {
+    BookmarkClass.prototype.getBookmark = function (forBackEnd) {
+         var marker =  {
             id: this.id,
             branch_id: this.branch_id,
             name: this.name,
             url: this.url,
-            markers: this.markers.map(function (marker) {return _.omit(marker, "tempId", "type")}),
-            links: this.links.map(function (links) {return _.omit(links, "tempId", "type")}),
-            comments: this.comments.map(function (comment) {return _.omit(comment, "tempId", "type")}),
+            markers: this.markers.map(function (marker) {var omit = ["type", "text"]; if(forBackEnd) {omit = omit.concat(["isNew", "tempId"]);} return _.omit(marker, omit)}),
+            links: this.links.map(function (links) {var omit = ["type"]; if(forBackEnd) {omit =omit.concat(["isNew", "tempId"]);} return _.omit(links, omit)}),
+            comments: this.comments.map(function (comments) {var omit = ["type"]; if(forBackEnd) {omit =omit.concat(["isNew", "tempId"]);} return _.omit(comments, omit)}),
             remove: this.remove,
             owners: this.owners,
             isOwner: this.isOwner
+         }
+        if(!forBackEnd) {
+            marker.markers = marker.markers.map(function (marker) {
+                marker.text = findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition).textContent;
+                return marker;
+            });
         }
+        return marker;
     }
     
     BookmarkClass.prototype.construct = function (bookmark) {

@@ -1,8 +1,6 @@
-<div class="panel panel-default">
+<div class="panel panel-default" ng-show="bookmark && bookmark.comments && bookmark.comments.length > 0">
     <div class="panel-heading">Comments</div>
     <div class="fixed-height-structure">
-        <div class="panel-body border-bottom"> Notification <i title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
-        <div class="panel-body border-bottom"> Panel content <i title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
-        <div class="panel-body border-bottom"> Panel content <i title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
+        <div class="panel-body border-bottom" ng-repeat="comment in bookmark.comments"> {{comment.text || "Empty comment"}} <i ng-show="bookmark.isOwner" ng-click="removeCommentById(comment.id || comment.tempId, comment.isNew)" title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
     </div>
  </div>

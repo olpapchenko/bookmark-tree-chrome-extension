@@ -1,7 +1,10 @@
-angular.module("app").directive("comments",["bookmarkService", function (bookmarkService) {
+angular.module("app").directive("markers", ["bookmarkService", function (bookmarkService) {
     return {
         restrict: "E",
-        templateUrl: "/html/templates/comments.html",
+        scope: {
+            bookmarks: "="
+        },
+        templateUrl: "/html/templates/markers.html",
         link: function ($scope) {
             bookmarkService.getCurrentBookmark().then(function(bookmark){
                 $scope.$apply(function () {
@@ -10,7 +13,7 @@ angular.module("app").directive("comments",["bookmarkService", function (bookmar
                 });
             });
 
-            $scope.removeCommentById = bookmarkService.removeCommentById;
+            $scope.removeMarkerById = bookmarkService.removeMarkerById;
         }
     }
 }]);

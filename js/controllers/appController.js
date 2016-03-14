@@ -23,7 +23,7 @@ angular.module("app",[]).controller("appController", ["$scope", "userService", "
 
     bookmarkService.getCurrentBookmark().then(function(bookmark){
         $scope.$apply(function () {
-            $scope.isOwner = bookmark.isOwner;
+            $scope.isOwner = bookmark && bookmark.isOwner;
         });
     });
 

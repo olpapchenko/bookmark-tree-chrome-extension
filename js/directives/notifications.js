@@ -28,6 +28,9 @@ angular.module("app").directive("notifications", ["notificationsService", functi
             }).then(function (notifications) {
                 console.log(notifications);
                 scope.$apply(function () {
+                    if(!notifications) {
+                        return;
+                    }
                     notifications.map(function (notification) {
                         notification.relativeTime = moment(notification.created_at).fromNow();
                        return notification;

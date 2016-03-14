@@ -26,6 +26,14 @@ var commentProto = {
 
         document.body.appendChild(commentElement);
     },
+    removeById: function (id, isNew) {
+        console.log(id);
+        $("#" + this.getCommentContainerId(id)).remove();
+        var contextNode = $("#" + this.getContextNodeId(id));
+        contextNode.replaceWith(contextNode.text());
+        this.removeEntityFromPersistanceStore(id, isNew);
+    },
+
 
     render: function (entity, isNew, isOwner) {
         var _this = this;
@@ -36,10 +44,7 @@ var commentProto = {
 
         if(isOwner) {
             createRemoveSign($("#" + _this.getCommentContainerId(entity.id)), entity.id,  _this.getCommentContainerId(entity.id), function () {
-                $("#" + _this.getCommentContainerId(entity.id)).remove();
-                var contextNode = $("#" + _this.getContextNodeId(entity.id));
-                contextNode.replaceWith(contextNode.text());
-                _this.removeEntityFromPersistanceStore(entity.id, isNew);
+                _this.removeById(entity.id, isNew) ;
             });
         }
         this.initializeEntity(entity, _this.getCommentContainerId(entity.commentId));
@@ -74,7 +79,7 @@ var commentProto = {
             return;
         }
 
-        this.persistEntity({selector: this.getStartSelector(range.startContainer.parentNode), startOffset: range.startOffset, tempId: entityId, textPosition: findTextNodePosition(range.startContainer.parentNode, range.startContainer) });
+        this.persistEntity({selector: this.getStartSelector(range.startContainer.parentNode), startOffset: range.startOffset, tempId: entityId, textPosition: findTextNodePosition(range.startContainer.parentNode, range.startContainer), isNew: true});
 
         this.render({startContainer: range.startContainer, startOffset: range.startOffset, id: entityId}, true);
     },

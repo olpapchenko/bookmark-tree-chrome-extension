@@ -77,7 +77,7 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
             bookmarkService.getCurrentBookmark().then(function(bookmark){
                 scope.$apply(function () {
                     scope.bookmark = bookmark;
-                    scope.branch =  bookmark.branch_id && String(bookmark.branch_id);
+                    scope.branch =  bookmark &&  bookmark.branch_id && String(bookmark.branch_id);
                 });
             });
 

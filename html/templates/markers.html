@@ -1,0 +1,6 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Markers</div>
+    <div class="fixed-height-structure">
+        <div class="panel-body border-bottom" ng-repeat="marker in bookmark.markers"> {{marker.text || "Empty marker"}} <i ng-click="removeMarkerById(marker.id || marker.tempId)" ng-show="bookmark.isOwner" title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
+    </div>
+ </div>

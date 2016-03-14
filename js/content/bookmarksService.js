@@ -34,7 +34,7 @@ bookmarksService = {
 
     save: function () {
         return new Promise(function (resolve, reject) {
-            chrome.runtime.sendMessage({type: "SAVE_BOOKMARK", bookmark: Bookmark.getBookmark()}, null, function(message)
+            chrome.runtime.sendMessage({type: "SAVE_BOOKMARK", bookmark: Bookmark.getBookmark(true)}, null, function(message)
             {
                 if(message && message.error) {
                     reject(message.error);
@@ -93,6 +93,28 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         bookmarksService.remove().then(function () {
             sendResponse(Bookmark.getBookmark());
         });
+    }
+    return true;
+});
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "REMOVE_MARKER_BY_ID") {
+        markController.removeMarkerById(message.id, message.isNew);
+    }
+    return true;
+});
+
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "REMOVE_COMMENT_BY_ID") {
+        commentController.removeById(message.id, message.isNew);
+    }
+    return true;
+});
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "REMOVE_LINK_BY_ID") {
+        linkController.removeById(message.id, message.isNew);
     }
     return true;
 });

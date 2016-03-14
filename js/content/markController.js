@@ -104,6 +104,10 @@ MarkController = function () {
         });
     }
 
+    MarkController.prototype.removeMarkerById = function (id, isNewMarker) {
+        removeMarkerFromUI(getMarkClass(id), id, isNewMarker)
+    }
+
     MarkController.prototype.markSelection = function markSelection(selection) {
         if(!selection || selection.collapsed || selection.rangeCount == 0) {
             return;
