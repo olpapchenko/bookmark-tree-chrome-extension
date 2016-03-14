@@ -113,7 +113,6 @@ MarkController = function () {
             return;
         }
 
-        console.log(range.startContainer);
 
         var marker = {
             startContainerSelector: selectorGenerator.getSelector(range.startContainer.parentNode),
@@ -134,7 +133,7 @@ MarkController = function () {
     MarkController.prototype.renderMarker = function markTextBySelector (marker) {
         markText({startContainer: findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition),
             endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
-            commonAncestorContainer: $(marker.commonAncestorContainer)[0].firstChild,
+            commonAncestorContainer: $(marker.commonAncestorContainer)[0],
             startOffset: marker.startOffset,
             endOffset: marker.endOffset
         }, marker.id);
