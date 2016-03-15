@@ -113,6 +113,7 @@ function BookmarkClass () {
             comments: this.comments.map(function (comments) {var omit = ["type"]; if(forBackEnd) {omit =omit.concat(["isNew", "tempId"]);} return _.omit(comments, omit)}),
             remove: this.remove,
             owners: this.owners,
+            observers: this.observers,
             isOwner: this.isOwner
          }
         if(!forBackEnd) {
@@ -135,6 +136,7 @@ function BookmarkClass () {
         this.branch_id = bookmark.branch_id;
         this.isOwner = bookmark.isOwner;
         this.owners = bookmark.owners;
+        this.observers = bookmark.observers;
     }
 
     this[MARKERS] = [];

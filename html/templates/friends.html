@@ -13,7 +13,15 @@
 				</span>
             <input type="text" class="form-control" ng-model="friendName" placeholder="Username" aria-describedby="basic-addon1">
         </div>
-        <div class="panel-body border-bottom" ng-repeat="friend in friends | filter:friendName track by friend.id">{{friend.name  | limitTo:20}}<span title="Share" class="glyphicon glyphicon-share-alt pull-right pointer" aria-hidden="true"></span>
+        <div class="panel-body border-bottom" ng-repeat="friend in friends | filter:friendName track by friend.id">
+            {{friend.name  | limitTo:20}}
+            <span class="badge bg-important" ng-show="isOwner(friend.id)">owner</span>
+            <span class="badge bg-important" ng-show="isObserver(friend.id)">observer</span>
+            <span ng-show="bookmarkId && currentUserIsOwner">
+                <span ng-show="hasRight(friend.id)" title="Remove right" class="glyphicon glyphicon-remove pull-right pointer" aria-hidden="true" style="margin-left: 10px;" ng-click="removeRight(friend.id)"></span>
+                <span title="Share without ownership" class="glyphicon glyphicon-share pull-right pointer" aria-hidden="true" style="margin-left: 10px;" ng-click="shareWithoutOwnership(friend.id)"></span>
+                <span title="Share with ownership" class="glyphicon glyphicon-share-alt pull-right pointer" aria-hidden="true" ng-click="shareWithOwnership(friend.id)"></span>
+            </span>
         </div>
     </div>
 </div>

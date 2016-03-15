@@ -28,6 +28,7 @@
                 "/js/shared/underscoreMixins.js",
                 "/js/shared/Utils.js",
                 "/js/background/baseCachedAccessPoint.js",
+                "/js/background/rightsService.js",
                 "/js/background/preferencesService.js",
                 "/js/background/userService.js",
                 "/js/background/friendsService.js",
