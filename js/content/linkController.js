@@ -33,6 +33,7 @@ function LinkController() {
     }
 
     this.initializeEntity = function (entity, classId) {
+        'use strict'
         var linkId = this.getCommentContainerId(entity.id);
         var linkHeader = $("#" + linkId + " .link-header");
         var link = $("#" + linkId + " .link");
@@ -40,6 +41,9 @@ function LinkController() {
 
         linkHeader.val(entity.header);
         link.val(entity.link);
+        if(!entity.link.startsWith("http")) {
+            entity.link = "http://" + entity.link;
+        }
         clickLink.attr("href", entity.link);
 
         linkHeader.on("blur", function (event) {
