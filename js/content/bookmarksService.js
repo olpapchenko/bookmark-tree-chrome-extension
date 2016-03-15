@@ -73,6 +73,27 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 });
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "UPDATE_OWNERSHIP") {
+        Bookmark.addOwner(message.owner);
+        sendResponse(true);
+    }
+});
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "UPDATE_OBSERVER") {
+        Bookmark.addObserver(message.observer);
+        sendResponse(true);
+    }
+});
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if(message.type == "REMOVE_RIGHTS") {
+        Bookmark.removeRights(message.user);
+        sendResponse(true);
+    }
+});
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if(message.type == "UPDATE_BOOKMARK_BRANCH") {
         Bookmark.setBranch(message.branch_id);
         sendResponse(true);

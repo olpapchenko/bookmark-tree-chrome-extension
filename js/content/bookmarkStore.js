@@ -40,6 +40,24 @@ function BookmarkClass () {
         }, 0);
     }
 
+    function clearRights(id) {
+        var indexObservers = _this.observers.findIndex(function (observer) {
+            return observer.id == id;
+        });
+
+        var indexOwners = _this.owners.findIndex(function (owner) {
+            return owner.id == id;
+        });
+
+        if(indexObservers >= 0) {
+            _this.observers.splice(indexObservers, 1);
+        }
+
+        if(indexOwners >= 0) {
+            _this.owners.splice(indexOwners, 1);
+        }
+    }
+
     BookmarkClass.prototype.setName = function (name) {
         this.name = name;
     }
@@ -100,6 +118,20 @@ function BookmarkClass () {
         if(link) {
             link.link = newLink;
         }
+    }
+
+    BookmarkClass.prototype.addOwner = function (id) {
+        clearRights(id);
+        this.owners.push({id: id});
+    }
+
+    BookmarkClass.prototype.addObserver = function (id) {
+        clearRights(id);
+        this.observers.push({id: id});
+    }
+
+    BookmarkClass.prototype.removeRights = function (id) {
+        clearRights(id);
     }
 
     BookmarkClass.prototype.getBookmark = function (forBackEnd) {

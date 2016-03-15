@@ -4,6 +4,9 @@
 <div class="form-group">
     <button style="width: 100%;" class="btn btn-primary" ng-click ="addNewFriends()">Add new friends</button>
 </div>
+<div ng-show="showError" class="row text-center" style="margin-bottom: 10px;">
+    <h4><small class="error">Bookmark was not shared, due to errors.</small></h4>
+</div>
 <div class="panel panel-default">
     <div class="panel-heading">My Friends</div>
     <div class="restrict-height">

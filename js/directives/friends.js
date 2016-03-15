@@ -4,6 +4,18 @@ angular.module("app").directive("friends", ["friendsService", "tabsService", "bo
         restrict: "E",
         templateUrl: "/html/templates/friends.html",
         link: function (scope, element, attrs) {
+
+            function initialize( ) {
+                bookmarkService.getCurrentBookmark().then(function(bookmark){
+                    scope.$apply(function () {
+                        scope.owners = bookmark.owners;
+                        scope.observers = bookmark.observers;
+                        scope.bookmarkId = bookmark.id;
+                        scope.currentUserIsOwner = bookmark && bookmark.isOwner;
+                    });
+                });
+            }
+
             friendsService.get().then(function (friends) {
                 scope.$apply(function () {
                    scope.friends = friends;
@@ -16,17 +28,9 @@ angular.module("app").directive("friends", ["friendsService", "tabsService", "bo
                 tabsService.openNewTab(friendsService.getNewFriendsUrl());
             }
 
-            bookmarkService.getCurrentBookmark().then(function(bookmark){
-                scope.$apply(function () {
-                    scope.owners = bookmark.owners;
-                    scope.observers = bookmark.observers;
-                    scope.bookmarkId = bookmark.id;
-                    scope.currentUserIsOwner = bookmark && bookmark.isOwner;
-                });
-            });
+            initialize();
 
             scope.isOwner = function (id) {
-                console.log(scope.owners);
                 return scope.owners && scope.owners.some(function (owner) {
                     return owner.id == id;
                 })
@@ -43,15 +47,27 @@ angular.module("app").directive("friends", ["friendsService", "tabsService", "bo
             }
 
             scope.shareWithOwnership = function (userId) {
-                rightsService.grantOwnership(userId, scope.bookmarkId);
+                rightsService.grantOwnership(userId, scope.bookmarkId).then(function () {
+                    initialize();
+                }).catch(function () {
+                    scope.showShareError = true;
+                });
             }
 
             scope.shareWithoutOwnership = function (userId) {
-                rightsService.grantObserver(userId, scope.bookmarkId);
+                rightsService.grantObserver(userId, scope.bookmarkId).then(function () {
+                    initialize();
+                }).catch(function () {
+                    scope.showShareError = true;
+                });;
             }
             
             scope.removeRight = function (userId) {
-                rightsService.prohibitRights(userId, scope.bookmarkId);
+                rightsService.prohibitRights(userId, scope.bookmarkId).then(function () {
+                    initialize();
+                }).catch(function () {
+                    scope.showError = true;
+                });;
             }
             
             scope.makePublic = function (bookmarkId) {
