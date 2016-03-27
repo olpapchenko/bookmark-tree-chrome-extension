@@ -15,7 +15,7 @@ baseCachedAccessPoint = {
         });
     },
 
-    set: function (key, endpointUrl, timeout, newEntity, replace, omitPersistLocal) {
+    set: function (key, endpointUrl, timeout, newEntity, replace, omitPersistLocal, replaceByPredicate) {
         var _this = this,
             resultSavedEntity;
         return Promise.resolve($.ajax({url: chrome.runtime.getManifest().endpointUrl + endpointUrl, type: "POST", data: JSON.stringify(newEntity), dataType: "text", contentType:"application/json; charset=utf-8"}))
@@ -26,7 +26,16 @@ baseCachedAccessPoint = {
             resultSavedEntity = savedEntity;
             if (!replace) {
                 return _this.get(key, endpointUrl, timeout).then(function (oldEntity) {
-                    return Array.isArray(oldEntity) ? oldEntity.concat(savedEntity) : _.extendOwn(oldEntity, savedEntity);
+                    if(Array.isArray(oldEntity)) {
+                        if(replaceByPredicate) {
+                            oldEntity = oldEntity.map(function (entity) {
+                                return replaceByPredicate(entity, savedEntity) ? savedEntity : entity;
+                            });
+                        }
+                        return oldEntity.concat(savedEntity);
+                    } else {
+                        return _.extendOwn(oldEntity, savedEntity);
+                    }
                 });
             } else {
                 return Promise.resolve(savedEntity);

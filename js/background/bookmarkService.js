@@ -11,9 +11,11 @@ bookmarkService = {
 
     save: function (bookmarkData) {
         bookmarkData.name = bookmarkData.name.slice(0, 50);
-       return  preferencesService.get().then(function (preferences) {
-           return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData);
-        })
+
+       return preferencesService.get().then(function (preferences) {
+           return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData, false, false,
+               function (bookmark, newBookmark) {return bookmark.url == newBookmark.url;});
+       })
        .tap(function (success, error) {
             chrome.tabs.query({active: true}, function (tabs) {
                 var tab = tabs[0];
