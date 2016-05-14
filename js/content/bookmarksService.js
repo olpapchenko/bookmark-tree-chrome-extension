@@ -39,8 +39,7 @@ bookmarksService = {
                 if(message && message.error) {
                     reject(message.error);
                 }
-                Bookmark.id = message.id;
-                resolve(message);
+                location.reload();
             });
         })
     },
