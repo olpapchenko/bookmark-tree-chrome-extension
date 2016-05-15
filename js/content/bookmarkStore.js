@@ -58,6 +58,21 @@ function BookmarkClass () {
         }
     }
 
+    BookmarkClass.prototype.updateMarkerId = function (newMarker) {
+        var markers = this.markers.filter(function (oldMarker) {
+            return markerComparator.equals(newMarker, oldMarker);
+        });
+
+        if(markers.length == 0) {
+            console.log("marker for ID update is not found");
+            return;
+        } else {
+            var marker = markers[0];
+        }
+
+        marker.id = newMarker.id;
+    }
+
     BookmarkClass.prototype.setName = function (name) {
         this.name = name;
     }

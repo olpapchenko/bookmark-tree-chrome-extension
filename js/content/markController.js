@@ -1,6 +1,8 @@
 var selectorGenerator = new CssSelectorGenerator({selectors: ['tag', 'nthchild']});
 
 MarkController = function () {
+    var marker2nodeList = [];
+
     function getMarkClass(markterId) {
         return "bookmarkTreeMarker" + markterId;
     }
@@ -29,7 +31,7 @@ MarkController = function () {
         Bookmark.removeMarkerById(markerId, isNewMarker, isNewMarker);
     }
 
-    function markText (range, markerId, isNewMarker, isOwner) {
+    function markText (range, markerId, isNewMarker, isOwner, marker) {
         //console.log(range.startContainer);
         //console.log(range.endContainer);
         getMarkerStartMarkUp().then(function (generateStartMarkUp) {
@@ -94,6 +96,12 @@ MarkController = function () {
 
             var startContainerMarked = $("<span>" + startElementHTML + "</span>");
             startContainer.replaceWith(startContainerMarked);
+
+            marker2nodeList.push({
+                marker: marker,
+                node: startContainerMarked.find("." + getMarkClass(markerId))
+            });
+
             addRemoveListener(markerId, $("." + getMarkClass(markerId)));
 
             if(isOwner) {
@@ -132,7 +140,7 @@ MarkController = function () {
         }
 
         Bookmark.addMarker(marker);
-        markText(range, marker.tempId, true);
+        markText(range, marker.tempId, true, true, marker);
         selection.empty();
     }
 
@@ -142,8 +150,26 @@ MarkController = function () {
             commonAncestorContainer: $(marker.commonAncestorContainer)[0],
             startOffset: marker.startOffset,
             endOffset: marker.endOffset
-        }, marker.id, false, isOwner);
+        }, marker.id, false, isOwner, marker);
     }
+
+    MarkController.prototype.reconcileMarker = function (newMarker, isOwner) {
+        var markers2node = marker2nodeList.filter(function (oldMarker) {
+            return markerComparator.equals(oldMarker.marker, newMarker);
+        });
+
+        if (markers2node.length == 0) {
+            console.log("Marker for reconciliation not found");
+            return;
+        } else {
+            var marker2node = markers2node[0];
+        }
+
+        $(marker2node.node).removeAttr("class");
+        $(marker2node.node).addClass(getMarkClass(newMarker.id));
+
+        Bookmark.updateMarkerId(newMarker);
+    };
 };
 
 markController = new MarkController();

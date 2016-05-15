@@ -61,6 +61,12 @@
 
      },
 
+     reconcileBookmark: function (bookmark) {
+         bookmark.markers.forEach(function (marker) {
+             markController.reconcileMarker(marker);
+         })
+     },
+
      renderMarker: function (marker, isOwner) {
         markController.renderMarker(marker, isOwner);
      },

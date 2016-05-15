@@ -39,7 +39,9 @@ bookmarksService = {
                 if(message && message.error) {
                     reject(message.error);
                 }
-                location.reload();
+
+                bookmarkRenderer.reconcileBookmark(message);
+                resolve(message);
             });
         })
     },
