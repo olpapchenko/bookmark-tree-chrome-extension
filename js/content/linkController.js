@@ -55,7 +55,7 @@ function LinkController() {
 
         linkHeader.val(entity.header);
         link.val(entity.link);
-        if(!entity.link.startsWith("http")) {
+        if(entity.link && !entity.link.startsWith("http")) {
             entity.link = "http://" + entity.link;
         }
         clickLink.attr("href", entity.link);
