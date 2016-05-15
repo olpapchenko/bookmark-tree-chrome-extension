@@ -29,11 +29,18 @@ var commentProto = {
     },
 
     removeById: function (id, isNew) {
-        console.log(id);
         $("#" + this.getCommentContainerId(id)).remove();
         var contextNode = $("#" + this.getContextNodeId(id));
         contextNode.replaceWith(contextNode.text());
         this.removeEntityFromPersistanceStore(id, isNew);
+    },
+
+    removeAll: function () {
+        $("[id*=bookmarkTreeCommentContainer]").remove();
+        $("[id*=bookmarkTreeCommentContextNode]").each(function () {
+            $(this).replaceWith($(this).text());
+        });
+        $(".removeContainer").remove();
     },
 
     render: function (entity, isNew, isOwner) {

@@ -89,7 +89,7 @@
 
      removeAllFromUI: function () {
          markController.removeAllFromUI();
-         //linkController.removeEntitiesFromUI();
-         //commentComparator.removeEntitiesFromUI();
+         linkController.removeAll();
+         commentController.removeAll();
      }
  }
