@@ -1,4 +1,6 @@
 function LinkController() {
+    var link2NodeList = [];
+
     this.getBodyMarkUp = function (linkId) {
         var LINK_MARK_UP = "<div class='linkWrapper'><div class='commentContainer'>" +
             "<img src=" + chrome.extension.getURL("/images/bookmark.png") + ">" +
@@ -16,6 +18,10 @@ function LinkController() {
         return 120;
     }
 
+    this.getEntity2NodesList = function () {
+        return link2NodeList;
+    }
+
     this.getCommentOffsetLeft = function () {
         return 0;
     },
@@ -30,6 +36,14 @@ function LinkController() {
 
     this.removeEntityFromPersistanceStore = function (linkId, isNew) {
         Bookmark.removeLinkById(linkId, isNew);
+    }
+
+    this.reconcileInnerHtml = function () {
+
+    }
+
+    this.updateEntityAtPersistStore = function (newLink) {
+        Bookmark.updateLinkId(newLink);
     }
 
     this.initializeEntity = function (entity, classId) {

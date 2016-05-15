@@ -64,7 +64,15 @@
      reconcileBookmark: function (bookmark) {
          bookmark.markers.forEach(function (marker) {
              markController.reconcileMarker(marker);
-         })
+         });
+
+         bookmark.comments.forEach(function (comment) {
+             commentController.reconcileEntity(comment);
+         });
+
+         bookmark.links.forEach(function (comment) {
+             linkController.reconcileEntity(comment);
+         });
      },
 
      renderMarker: function (marker, isOwner) {

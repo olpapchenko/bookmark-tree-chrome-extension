@@ -33,6 +33,23 @@ function BookmarkClass () {
         }
     }
 
+    function updateEntityId(entity, newEntity) {
+        var comparator = entity == MARKERS ? markerComparator : commentComparator;
+
+        var entities = _this[entity].filter(function (oldEntity) {
+            return comparator.equals(newEntity, oldEntity);
+        });
+
+        if(entities.length == 0) {
+            console.log("marker for ID update is not found");
+            return;
+        } else {
+            var entity = entities[0];
+        }
+
+        entity.id = newEntity.id;
+    }
+
     function getMaxOrderOfEntity() {
         var entities = _this[MARKERS].concat(_this[COMMENTS]).concat(_this[LINKS]);
         return entities.reduce(function (max, entity) {
@@ -59,19 +76,17 @@ function BookmarkClass () {
     }
 
     BookmarkClass.prototype.updateMarkerId = function (newMarker) {
-        var markers = this.markers.filter(function (oldMarker) {
-            return markerComparator.equals(newMarker, oldMarker);
-        });
-
-        if(markers.length == 0) {
-            console.log("marker for ID update is not found");
-            return;
-        } else {
-            var marker = markers[0];
-        }
-
-        marker.id = newMarker.id;
+        updateEntityId(MARKERS, newMarker);
     }
+
+    BookmarkClass.prototype.updateCommentId = function (newComment) {
+        updateEntityId(COMMENTS, newComment)
+    }
+
+    BookmarkClass.prototype.updateLinkId = function (newLink) {
+        updateEntityId(LINKS, newLink);
+    }
+
 
     BookmarkClass.prototype.setName = function (name) {
         this.name = name;

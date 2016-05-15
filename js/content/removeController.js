@@ -1,11 +1,9 @@
-function addRemoveListener (removeSignId, entityElements) {
+function addRemoveListener (entityElements) {
     entityElements.hover(function () {
-        $("#" + removeSignId).fadeIn();
+        $("#" + $(entityElements).attr("data-id")).fadeIn();
     }, function () {
         setTimeout(function () {
-            if(!$("#" + removeSignId).is(":hover")) {
-                $("#" + removeSignId).fadeOut();
-            }
+            $("#" + $(entityElements).attr("data-id")).fadeOut();
         }, 1000);
     });
 }
@@ -25,15 +23,21 @@ function createRemoveSign(contextContainer, removeSignId, entityClass, removeCal
     removeContainer.style.top = getElementDistance(node[0], true) - 20 + "px";
     removeContainer.style.left = getElementDistance(node[0], false) - 20  + "px";
 
+    $(removeContainer).attr("data-id", removeSignId);
     $(removeContainer).hover(function () {
     }, function () {
         $("#" + removeSignId).fadeOut();
     });
 
     $(removeContainer).on("click", function () {
-        removeCallback(entityClass);
-        $("#" + removeSignId).remove();
+        _this
+        removeCallback(entityClass, $(removeContainer).attr("data-id"));
+
+        //remove sign itself
+        $("#" + $(removeContainer).attr("data-id")).remove();
     });
 
     document.body.appendChild(removeContainer);
+
+    return removeContainer;
 }

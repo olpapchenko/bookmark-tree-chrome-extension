@@ -50,6 +50,7 @@
       "/js/vendor/css-selector-generator/build/css-selector-generator.min.js",
 
       "/js/content/markComparator.js",
+      "/js/content/commentComparator.js",
       "/js/shared/Utils.js",
       "/js/content/bookmarkRenderer.js",
       "/js/content/branchService.js",
