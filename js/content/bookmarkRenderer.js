@@ -85,5 +85,11 @@
 
      renderComment: function (comment, isOwner) {
         commentController.renderComment(comment, isOwner);
+     },
+
+     removeAllFromUI: function () {
+         markController.removeAllFromUI();
+         //linkController.removeEntitiesFromUI();
+         //commentComparator.removeEntitiesFromUI();
      }
  }

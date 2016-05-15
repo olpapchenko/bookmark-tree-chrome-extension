@@ -1,9 +1,10 @@
-function addRemoveListener (entityElements) {
+function addRemoveListener (entityElements, entityId) {
+    var entityId = entityId || $(entityElements).attr("data-id");
     entityElements.hover(function () {
-        $("#" + $(entityElements).attr("data-id")).fadeIn();
+        $("#" + entityId).fadeIn();
     }, function () {
         setTimeout(function () {
-            $("#" + $(entityElements).attr("data-id")).fadeOut();
+            $("#" + entityId).fadeOut();
         }, 1000);
     });
 }

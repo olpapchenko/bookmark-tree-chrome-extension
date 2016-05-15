@@ -41,6 +41,7 @@ bookmarksService = {
                 }
 
                 bookmarkRenderer.reconcileBookmark(message);
+                Bookmark.id = message.id;
                 resolve(message);
             });
         })
@@ -53,6 +54,7 @@ bookmarksService = {
                 if(message && message.error) {
                     reject(message.error);
                 }
+                bookmarkRenderer.removeAllFromUI();
                 Bookmark = new BookmarkClass()
                 resolve(message);
             });

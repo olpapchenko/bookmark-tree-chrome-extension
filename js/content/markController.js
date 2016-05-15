@@ -102,7 +102,7 @@ MarkController = function () {
                 node: startContainerMarked.find("." + getMarkClass(markerId))
             });
 
-            addRemoveListener(markerId, $("." + getMarkClass(markerId)));
+            addRemoveListener($("." + getMarkClass(markerId)), markerId);
 
             if(isOwner) {
                 createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
@@ -170,6 +170,12 @@ MarkController = function () {
 
         Bookmark.updateMarkerId(newMarker);
     };
+
+    MarkController.prototype.removeAllFromUI = function () {
+        $('[class*=bookmarkTreeMarker]').each(function () {
+            $(this).replaceWith(escapeText(this.textContent));
+        });
+    }
 };
 
 markController = new MarkController();
