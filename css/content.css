@@ -189,7 +189,19 @@
     box-shadow:inset 0px 0px 0px 1px rgba(192,192,192,0.5);
 }
 
-.bookmark_tree_instructions {
+.popup_info {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.popup_danger {
+    color: #c81815;
+    background-color: #F3ABA0;
+    border-color: #fa2d1d
+}
+
+.popup {
     transition: all 0.3s ease-out 0.5s;
     z-index: 10000;
     position: fixed;
@@ -200,12 +212,9 @@
     padding: 15px;
     border: 1px solid transparent;
     border-radius: 4px;
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
 }
 
-.bookmark_tree_instructions .removeContainer {
+.popup .removeContainer {
     top: 10px;
     right: 10px;
     height: 10px;

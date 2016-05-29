@@ -55,7 +55,8 @@ bookmarksService = {
                     reject(message.error);
                 }
                 bookmarkRenderer.removeAllFromUI();
-                Bookmark = new BookmarkClass()
+                Bookmark = new BookmarkClass();
+                Bookmark.pageShouldBeReloaded = true;
                 resolve(message);
             });
         })

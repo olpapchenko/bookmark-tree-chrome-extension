@@ -9,6 +9,8 @@ function BookmarkClass () {
     this.maxOrder = 0;
     this.isOwner = true;
 
+    this.pageShouldBeReloaded = false;
+
     branchService.getDefault().then(function (defaultBranch) {
         this.branch_id = defaultBranch.id;
     })

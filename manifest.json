@@ -51,6 +51,7 @@
 
       "/js/content/markComparator.js",
       "/js/content/commentComparator.js",
+      "/js/content/popUpController.js",
       "/js/shared/Utils.js",
       "/js/content/bookmarkRenderer.js",
       "/js/content/branchService.js",

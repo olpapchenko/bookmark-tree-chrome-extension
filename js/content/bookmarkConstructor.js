@@ -1,44 +1,24 @@
 var commentController = new CommentController(),
     linkController = new LinkController(),
-    EDIT_MODE_POPUP_HTML  = "<div class='bookmark_tree_instructions' class='extensionText'>You are at the edit mode, to exit press ESC.</div>";
+    EDIT_MODE_POPUP_HTML  = "<div  class='extensionText'>You are at the edit mode, to exit press ESC.</div>";
+    RELOAD_PAGE_HTML  = "<div  class='extensionText'>Before editing you must reload page.</div>";
 
 bookmarkConstructor = {
         editMode: false,
         createEditModeInstructionPopup: function createEditModeInstructionPopup() {
-            if(this.editMode) {
-                return;
-            }
+            popUpController.createPopup(EDIT_MODE_POPUP_HTML, popUpController.INFO);
+        },
 
-            this.editMode = true;
-
-            var HIDE_POPUP_TIMEOUT = 5000;
-            function hidePopup() {
-                var popups = Array.prototype.slice.apply(document.getElementsByClassName("bookmark_tree_instructions"));
-                popups.forEach(function (popup) {
-                    popup.className += " transperent";
-                });
-            }
-
-            var element = document.createElement("div");
-            element.innerHTML = EDIT_MODE_POPUP_HTML,
-                removeSign = document.createElement("div");
-
-            removeSign.className = "removeContainer";
-            removeSign.style.background = "url('" + chrome.extension.getURL("/images/cross.png") +"') no-repeat";
-            removeSign.style.backgroundSize = "10px";
-
-            removeSign.addEventListener("click", function () {
-                hidePopup();
-            });
-
-            element.childNodes[0].appendChild(removeSign);
-            document.body.appendChild(element);
-            setTimeout(function () {
-                hidePopup();
-            }, HIDE_POPUP_TIMEOUT);
+        createReloadPagePopup: function () {
+            popUpController.createPopup(RELOAD_PAGE_HTML, popUpController.DANGER);
         },
 
         startMarkerCreationMode: function () {
+            if(Bookmark.pageShouldBeReloaded) {
+                this.createReloadPagePopup();
+                return;
+            }
+
             this.markerCreationMode = true;
             this.createEditModeInstructionPopup();
             document.body.style.cursor = "url(" +  chrome.extension.getURL('/images/mark.png') + ") 0 26, auto";
@@ -50,6 +30,10 @@ bookmarkConstructor = {
         },
 
         startLinkCreationMode: function () {
+            if(Bookmark.pageShouldBeReloaded) {
+                this.createReloadPagePopup();
+                return;
+            }
             this.linkCreationMode = true;
             this.createEditModeInstructionPopup();
             document.body.style.cursor = "url(" +  chrome.extension.getURL('/images/bookmark.png') + ") 0 26, auto";
@@ -60,6 +44,10 @@ bookmarkConstructor = {
         },
 
         startCommentCreationMode: function () {
+            if(Bookmark.pageShouldBeReloaded) {
+                this.createReloadPagePopup();
+                return;
+            }
             this.commentCreationMode = true;
             this.createEditModeInstructionPopup();
             document.body.style.cursor = "url(" +  chrome.extension.getURL('/images/comment.png') + ") 0 26, auto";
