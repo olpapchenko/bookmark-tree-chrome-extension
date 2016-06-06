@@ -1,4 +1,6 @@
 bookmarksService = {
+    RELOAD_PAGE_HTML: "<div  class='extensionText'>Before editing you must reload page.</div>",
+
     getBookmarkForUrl: function (url) {
         return new Promise(function (resolve, reject) {
             chrome.runtime.sendMessage({type: "GET_BOOKMARK_FOR_URL", url: url}, null, function (message) {
@@ -33,6 +35,11 @@ bookmarksService = {
     },
 
     save: function () {
+        if(Bookmark.pageShouldBeReloaded) {
+            popUpController.createPopup(RELOAD_PAGE_HTML, popUpController.DANGER);
+            return Promise.reject();
+        }
+
         return new Promise(function (resolve, reject) {
             chrome.runtime.sendMessage({type: "SAVE_BOOKMARK", bookmark: Bookmark.getBookmark(true)}, null, function(message)
             {
