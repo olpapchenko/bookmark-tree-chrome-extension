@@ -47,6 +47,7 @@ bookmarksService = {
                     reject(message.error);
                 }
 
+                //the reconciliation is done to update current rendered bookmark with ids from server.
                 bookmarkRenderer.reconcileBookmark(message);
                 Bookmark.id = message.id;
                 resolve(message);

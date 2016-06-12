@@ -153,6 +153,11 @@ MarkController = function () {
         }, marker.id, false, isOwner, marker);
     }
 
+    /**
+     *
+     * @param newMarker - new marker from the server
+     * @param isOwner - flag that notifies mark controller to render or not remove sign
+     */
     MarkController.prototype.reconcileMarker = function (newMarker, isOwner) {
         var markers2node = marker2nodeList.filter(function (oldMarker) {
             return markerComparator.equals(oldMarker.marker, newMarker);
