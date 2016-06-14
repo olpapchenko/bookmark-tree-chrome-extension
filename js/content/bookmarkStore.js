@@ -20,19 +20,13 @@ function BookmarkClass () {
         _this[entityName].push(entity);
     }
 
-    function removeEntityById(entityName, id, isNew) {
+    function removeEntityById(entityName, id) {
         'use strict'
         var index = _this[entityName].findIndex(function (entity) {
             return entity.id == id || entity.tempId == id;
         });
 
-        if(index != -1) {
-            _this[entityName].splice(index, 1);
-            _this.maxOrder--;
-            if(_this.id && !isNew) {
-                _this.remove[entityName].push(id);
-            }
-        }
+        _this[entityName][index].display = false;
     }
 
     function updateEntityId(entity, newEntity) {
@@ -175,7 +169,6 @@ function BookmarkClass () {
             markers: this.markers.map(function (marker) {var omit = ["type", "text"]; if(forBackEnd) {omit = omit.concat(["isNew", "tempId"]);} return _.omit(marker, omit)}),
             links: this.links.map(function (links) {var omit = ["type"]; if(forBackEnd) {omit =omit.concat(["isNew", "tempId"]);} return _.omit(links, omit)}),
             comments: this.comments.map(function (comments) {var omit = ["type"]; if(forBackEnd) {omit =omit.concat(["isNew", "tempId"]);} return _.omit(comments, omit)}),
-            remove: this.remove,
             owners: this.owners,
             observers: this.observers,
             isOwner: this.isOwner
@@ -206,11 +199,6 @@ function BookmarkClass () {
     this[MARKERS] = [];
     this[COMMENTS] = [];
     this[LINKS] = [];
-    this.remove = {};
-
-    this.remove[MARKERS] = [];
-    this.remove[COMMENTS] = [];
-    this.remove[LINKS] = [];
 }
 
 Bookmark = new BookmarkClass();

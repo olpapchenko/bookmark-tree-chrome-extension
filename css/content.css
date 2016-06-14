@@ -246,3 +246,7 @@
     padding: 0px !important;
 }
 
+.bookmarkTree-hide-comment {
+    background-color: transparent !important;
+}
+

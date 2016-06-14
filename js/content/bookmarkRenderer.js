@@ -1,6 +1,7 @@
  bookmarkRenderer = {
      renderBookmark: function (bookmark) {
          var _this = this;
+         var RENDER_INTERVAL_MS = 40;
 
          preferencesService.get(preferencesService.MARKS_ENABLED).then(function (preference) {
              if(!preference[preferencesService.EXTENSION_ENABLED].value) {
@@ -28,7 +29,7 @@
                      allEntities =  allEntities.concat(res);
                  }
              });
-             var time = 200;
+             var time = 0;
 
              allEntities.sort(compare).forEach(function (entity) {
                  if(entity.type == "markers")  {
@@ -38,7 +39,7 @@
                          }
                          _this.renderMarker(entity, bookmark.isOwner);
                      }, time);
-                     time += 200;
+                     time += RENDER_INTERVAL_MS;
                  } else if(entity.type == "comments") {
                      setTimeout(function () {
                          if(!preference[preferencesService.COMMENTS_ENABLED].value){
@@ -46,7 +47,7 @@
                          }
                          _this.renderComment(entity, bookmark.isOwner);
                      }, time);
-                     time += 200;
+                     time += RENDER_INTERVAL_MS;
                  } else if (entity.type == "links") {
                      setTimeout(function () {
                          if(!preference[preferencesService.BOOKMARK_LINKS_ENABLED].value){
@@ -54,7 +55,7 @@
                          }
                          _this.renderLink(entity, bookmark.isOwner);
                      }, time);
-                     time += 200;
+                     time += RENDER_INTERVAL_MS;
                  }
              });
          });

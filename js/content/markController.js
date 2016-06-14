@@ -3,8 +3,8 @@ var selectorGenerator = new CssSelectorGenerator({selectors: ['tag', 'nthchild']
 MarkController = function () {
     var marker2nodeList = [];
 
-    function getMarkClass(markterId) {
-        return "bookmarkTreeMarker" + markterId;
+    function getMarkClass(markterId, display) {
+        return "bookmarkTreeMarker" + markterId +  (!display ? " bookmarkTree-hide-comment" : "");
     }
 
     function getMarkerColor () {
@@ -13,9 +13,9 @@ MarkController = function () {
         });
     }
 
-    function getMarkerStartMarkUp () {
+    function getMarkerStartMarkUp (display) {
         return getMarkerColor().then(function (color) {
-            return function (markerId) {return "<span style='background-color: " + color + "' class = '" + getMarkClass(markerId) + "'>";}
+            return function (markerId) {return "<span style='background-color: " + color + "' class = '" + getMarkClass(markerId, display) + "'>";}
         });
     }
 
@@ -23,18 +23,20 @@ MarkController = function () {
         return "</span>";
     }
 
-    function removeMarkerFromUI(markerClass, markerId, isNewMarker) {
+    function removeMarkerFromUI(markerClass, markerId) {
         $("." + markerClass).each(function () {
-            $(this).replaceWith(escapeText(this.textContent));
+            $(this).addClass("bookmarkTree-hide-comment");
         });
 
-        Bookmark.removeMarkerById(markerId, isNewMarker, isNewMarker);
+        hideRemoveSign(markerId);
+
+        Bookmark.removeMarkerById(markerId);
     }
 
-    function markText (range, markerId, isNewMarker, isOwner, marker) {
+    function markText (range, markerId, isOwner, marker) {
         //console.log(range.startContainer);
         //console.log(range.endContainer);
-        getMarkerStartMarkUp().then(function (generateStartMarkUp) {
+        getMarkerStartMarkUp(marker.display).then(function (generateStartMarkUp) {
             var startContainer = getFirstOfTextType(range.startContainer),
                 endContainer =  getLastOfTextType(range.endContainer),
                 startPosition = range.startContainer.nodeType == 3 ? range.startOffset : 0,
@@ -99,21 +101,23 @@ MarkController = function () {
 
             marker2nodeList.push({
                 marker: marker,
-                node: startContainerMarked.find("." + getMarkClass(markerId))
+                node: startContainerMarked.find("." + getMarkClass(markerId, true))
             });
 
-            addRemoveListener($("." + getMarkClass(markerId)), markerId);
+            if(marker.display) {
+                addRemoveListener($("." + getMarkClass(markerId, true)), markerId);
 
-            if(isOwner) {
-                createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId))[0], markerId, getMarkClass(markerId), function (entityClass) {
-                    removeMarkerFromUI(entityClass, markerId, isNewMarker);
-                });
+                if(isOwner) {
+                    createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId, true))[0], markerId, getMarkClass(markerId, true), function (entityClass) {
+                        removeMarkerFromUI(entityClass, markerId);
+                    });
+                }
             }
         });
     }
 
-    MarkController.prototype.removeMarkerById = function (id, isNewMarker) {
-        removeMarkerFromUI(getMarkClass(id), id, isNewMarker)
+    MarkController.prototype.removeMarkerById = function (id) {
+        removeMarkerFromUI(getMarkClass(id, true), id)
     }
 
     MarkController.prototype.markSelection = function markSelection(selection) {
@@ -136,11 +140,12 @@ MarkController = function () {
             endTextNodePosition: findTextNodePosition(range.endContainer.parentNode, range.endContainer),
             startOffset:  range.startOffset,
             endOffset: range.endOffset,
-            tempId: uuid.v1()
+            tempId: uuid.v1(),
+            display: true
         }
 
         Bookmark.addMarker(marker);
-        markText(range, marker.tempId, true, true, marker);
+        markText(range, marker.tempId, true, marker);
         selection.empty();
     }
 
@@ -150,7 +155,7 @@ MarkController = function () {
             commonAncestorContainer: $(marker.commonAncestorContainer)[0],
             startOffset: marker.startOffset,
             endOffset: marker.endOffset
-        }, marker.id, false, isOwner, marker);
+        }, marker.id, isOwner, marker);
     }
 
     /**
@@ -171,7 +176,7 @@ MarkController = function () {
         }
 
         $(marker2node.node).removeAttr("class");
-        $(marker2node.node).addClass(getMarkClass(newMarker.id));
+        $(marker2node.node).addClass(getMarkClass(newMarker.id, newMarker.display));
 
         Bookmark.updateMarkerId(newMarker);
     };
