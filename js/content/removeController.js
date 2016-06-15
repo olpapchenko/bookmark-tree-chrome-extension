@@ -9,6 +9,10 @@ function addRemoveListener (entityElements, entityId) {
     });
 }
 
+function hideRemoveSign(id) {
+    $("#" + id).css({display: "none"});
+}
+
 function createRemoveSign(contextContainer, removeSignId, entityClass, removeCallback) {
     var node = $(contextContainer);
 
