@@ -27,8 +27,8 @@ function CommentController() {
         Bookmark.addComment(comment);
     }
 
-    this.removeEntityFromPersistanceStore = function (commentId, isNew) {
-        Bookmark.removeCommentById(commentId, isNew);
+    this.removeEntityFromPersistanceStore = function (commentId) {
+        Bookmark.removeCommentById(commentId);
     }
 
     this.initializeEntity = function (entity) {

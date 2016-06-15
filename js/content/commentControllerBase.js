@@ -28,11 +28,10 @@ var commentProto = {
         return commentElement;
     },
 
-    removeById: function (id, isNew) {
+    removeById: function (id) {
         $("#" + this.getCommentContainerId(id)).remove();
         var contextNode = $("#" + this.getContextNodeId(id));
-        contextNode.replaceWith(contextNode.text());
-        this.removeEntityFromPersistanceStore(id, isNew);
+        this.removeEntityFromPersistanceStore(id);
     },
 
     removeAll: function () {
@@ -43,16 +42,21 @@ var commentProto = {
         $(".removeContainer").remove();
     },
 
-    render: function (entity, isNew, isOwner) {
+    render: function (entity, isOwner) {
         var _this = this;
         var contextContainerHTML = wrapWordUnderIdx(entity.startContainer.textContent, _this.getContextWrapHTMLStart(_this.getContextNodeId(entity.id)), _this.getContextWrapHTMLEnd(), entity.startOffset);
         $(entity.startContainer).replaceWith(contextContainerHTML);
+
+        if(!entity.display) {
+            return;
+        }
+
         var commentContainer = _this.createCommentContainer($("#" + _this.getContextNodeId(entity.id))[0], entity.id);
         addRemoveListener($("#" + _this.getCommentContainerId(entity.id)));
 
         if(isOwner) {
             var removeContainer  = createRemoveSign($("#" + _this.getCommentContainerId(entity.id)), entity.id,  _this.getCommentContainerId(entity.id), function (entityClass, entityId) {
-                _this.removeById(entityId, isNew) ;
+                _this.removeById(entityId) ;
             });
         }
         this.initializeEntity(entity, _this.getCommentContainerId(entity.commentId));
@@ -92,7 +96,6 @@ var commentProto = {
             var comment2Node = comments2node[0];
         }
 
-
         $(comment2Node.container).attr("id", _this.getCommentContainerId(newComment.id));
         $(comment2Node.container).attr("data-id", newComment.id);
 
@@ -121,9 +124,9 @@ var commentProto = {
             return;
         }
 
-        this.persistEntity({selector: this.getStartSelector(range.startContainer.parentNode), startOffset: range.startOffset, tempId: entityId, textPosition: findTextNodePosition(range.startContainer.parentNode, range.startContainer), isNew: true});
+        this.persistEntity({selector: this.getStartSelector(range.startContainer.parentNode), startOffset: range.startOffset, tempId: entityId, textPosition: findTextNodePosition(range.startContainer.parentNode, range.startContainer), isNew: true, display: true});
 
-        this.render({startContainer: range.startContainer, startOffset: range.startOffset, id: entityId, selector: this.getStartSelector(range.startContainer.parentNode)}, true, true);
+        this.render({startContainer: range.startContainer, startOffset: range.startOffset, id: entityId, selector: this.getStartSelector(range.startContainer.parentNode), display: true}, true);
     },
     selectorGenerator: new CssSelectorGenerator({selectors: ['tag', 'nthchild']})
 }

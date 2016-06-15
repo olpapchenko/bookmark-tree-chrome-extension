@@ -104,16 +104,16 @@ function BookmarkClass () {
         addEntity(COMMENTS, marker);
     }
 
-    BookmarkClass.prototype.removeMarkerById = function (id, isNew) {
-        removeEntityById(MARKERS, id, isNew);
+    BookmarkClass.prototype.removeMarkerById = function (id) {
+        removeEntityById(MARKERS, id);
     }
 
-    BookmarkClass.prototype.removeCommentById = function (id, isNew) {
-        removeEntityById(COMMENTS, id, isNew);
+    BookmarkClass.prototype.removeCommentById = function (id) {
+        removeEntityById(COMMENTS, id);
     }
 
-    BookmarkClass.prototype.removeLinkById = function (id, isNew) {
-        removeEntityById(LINKS, id, isNew);
+    BookmarkClass.prototype.removeLinkById = function (id) {
+        removeEntityById(LINKS, id);
     };
 
     BookmarkClass.prototype.updateCommentText = function (commentId, newValue) {

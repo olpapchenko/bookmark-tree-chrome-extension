@@ -31,11 +31,11 @@ function LinkController() {
     }
 
     this.persistEntity = function (link, isOwner) {
-        Bookmark.addLink(link,isOwner);
+        Bookmark.addLink(link, isOwner);
     }
 
-    this.removeEntityFromPersistanceStore = function (linkId, isNew) {
-        Bookmark.removeLinkById(linkId, isNew);
+    this.removeEntityFromPersistanceStore = function (linkId) {
+        Bookmark.removeLinkById(linkId);
     }
 
     this.reconcileInnerHtml = function () {
