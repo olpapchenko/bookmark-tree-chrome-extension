@@ -2,7 +2,19 @@ function CommentController() {
     var comment2NodeList = [];
 
     this.getBodyMarkUp = function (commentId) {
-        var COMMENT_MARK_UP = "<div class='commentWrapper'><div class='commentContainer'><textarea name='' id='value" + commentId + "'  ></textarea></div></div>";
+        var COMMENT_MARK_UP = `<div class='commentWrapper'>
+                                    <div class='commentContainer'>
+                                    <textarea name='' id='value" + commentId + "'  >
+                                    </textarea>
+                                    </div>
+                                <style>
+                                    .commentWrapper  {
+                                        position: absolute;
+                                        width: 240px;
+                                        height: 120px;
+                                    }
+                                    ${this.getStyles()}
+                                </style></div>`;
         return COMMENT_MARK_UP;
     };
 
