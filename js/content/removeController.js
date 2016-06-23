@@ -13,12 +13,14 @@ function hideRemoveSign(id) {
     $("#" + id).css({display: "none"});
 }
 
-function createRemoveSign(contextContainer, removeSignId, topOffset, rightOffset, removeCallback) {
+function createRemoveSign(contextContainer, removeSignId, topOffset, rightOffset, hoverContainer, removeCallback) {
     var node = $(contextContainer);
 
     if(!node) {
         return;
     }
+
+    addRemoveListener(hoverContainer, removeSignId);
 
     var removeContainer = document.createElement("div");
     removeContainer.className = "removeContainer";

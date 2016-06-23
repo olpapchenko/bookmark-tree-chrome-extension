@@ -105,10 +105,12 @@ MarkController = function () {
             });
 
             if(marker.display) {
-                addRemoveListener($("." + getMarkClass(markerId, true)), markerId);
-
                 if(isOwner) {
-                    createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId, true))[0], markerId, -20, -20, function (markerId) {
+                    createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId, true))[0],
+                        markerId,
+                        -20,
+                        -20,
+                        $("." + getMarkClass(markerId, true)), function (markerId) {
                         removeMarkerFromUI(markerId);
                     });
                 }

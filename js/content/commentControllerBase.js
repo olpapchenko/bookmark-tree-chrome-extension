@@ -58,13 +58,13 @@ var commentProto = {
         }
 
         var commentContainer = _this.createCommentContainer($("#" + _this.getContextNodeId(entity.id))[0], entity.id);
-        addRemoveListener($(commentContainer), entity.id);
 
         if(isOwner) {
             var removeContainer  = createRemoveSign($("#" + _this.getContextNodeId(entity.id)),
                 entity.id,
                 this.getRemoveSignOffsetTop(),
                 this.getRemoveSignOffsetRight(),
+                $(commentContainer),
                 function (entityId) {
                     _this.removeById(entityId) ;
             });
