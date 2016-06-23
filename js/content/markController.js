@@ -129,7 +129,7 @@ MarkController = function () {
 
         var range = selection.getRangeAt(0);
 
-        if(range.startOffset == range.endOffset || range.startContainer.nodeType != 3 || range.endContainer.nodeType != 3) {
+        if((range.startContainer == range.endContainer && range.startOffset == range.endOffset) || range.startContainer.nodeType != 3 || range.endContainer.nodeType != 3) {
             return;
         }
 
