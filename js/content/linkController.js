@@ -57,6 +57,14 @@ function LinkController() {
         return LINK_MARK_UP;
     }
 
+    this.getRemoveSignOffsetTop = function () {
+        return -120;
+    }
+
+    this.getRemoveSignOffsetRight = function () {
+        return -25;
+    }
+
     this.getCommentOffsetTop = function () {
         return 120;
     }

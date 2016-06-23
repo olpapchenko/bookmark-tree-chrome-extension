@@ -37,7 +37,6 @@ var commentProto = {
 
     removeById: function (id) {
         $("#" + this.getCommentContainerId(id)).remove();
-        var contextNode = $("#" + this.getContextNodeId(id));
         this.removeEntityFromPersistanceStore(id);
     },
 
@@ -59,11 +58,15 @@ var commentProto = {
         }
 
         var commentContainer = _this.createCommentContainer($("#" + _this.getContextNodeId(entity.id))[0], entity.id);
-        addRemoveListener($("#" + _this.getCommentContainerId(entity.id)));
+        addRemoveListener($(commentContainer), entity.id);
 
         if(isOwner) {
-            var removeContainer  = createRemoveSign($("#" + _this.getCommentContainerId(entity.id)), entity.id,  _this.getCommentContainerId(entity.id), function (entityClass, entityId) {
-                _this.removeById(entityId) ;
+            var removeContainer  = createRemoveSign($("#" + _this.getContextNodeId(entity.id)),
+                entity.id,
+                this.getRemoveSignOffsetTop(),
+                this.getRemoveSignOffsetRight(),
+                function (entityId) {
+                    _this.removeById(entityId) ;
             });
         }
         this.initializeEntity(entity, _this.getCommentContainerId(entity.commentId));

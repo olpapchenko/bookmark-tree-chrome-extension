@@ -30,6 +30,14 @@ function CommentController() {
         return 0;
     }
 
+    this.getRemoveSignOffsetTop = function () {
+        return -140;
+    }
+
+    this.getRemoveSignOffsetRight = function () {
+        return -25;
+    }
+
     this.renderComment = function (comment, isOwner) {
         this.renderEntity(comment, isOwner);
     }

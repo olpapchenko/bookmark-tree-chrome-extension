@@ -23,8 +23,8 @@ MarkController = function () {
         return "</span>";
     }
 
-    function removeMarkerFromUI(markerClass, markerId) {
-        $("." + markerClass).each(function () {
+    function removeMarkerFromUI(markerId) {
+        $("." + getMarkClass(markerId, true)).each(function () {
             $(this).addClass("bookmarkTree-hide-comment");
         });
 
@@ -108,8 +108,8 @@ MarkController = function () {
                 addRemoveListener($("." + getMarkClass(markerId, true)), markerId);
 
                 if(isOwner) {
-                    createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId, true))[0], markerId, getMarkClass(markerId, true), function (entityClass) {
-                        removeMarkerFromUI(entityClass, markerId);
+                    createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId, true))[0], markerId, -20, -20, function (markerId) {
+                        removeMarkerFromUI(markerId);
                     });
                 }
             }
