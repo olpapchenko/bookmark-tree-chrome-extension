@@ -119,7 +119,7 @@ MarkController = function () {
     }
 
     MarkController.prototype.removeMarkerById = function (id) {
-        removeMarkerFromUI(getMarkClass(id, true), id)
+        removeMarkerFromUI(id);
     }
 
     MarkController.prototype.markSelection = function markSelection(selection) {

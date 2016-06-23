@@ -1,6 +1,13 @@
 <div class="panel panel-default"  ng-show="comments && comments.length > 0">
     <div class="panel-heading">Comments</div>
     <div class="fixed-height-structure">
-        <div class="panel-body border-bottom" ng-repeat="comment in comments"> {{(comment.text | limitTo:40) || "Empty comment"}} <i ng-show="bookmark.isOwner" ng-click="removeCommentById(comment.id || comment.tempId, comment.isNew)" title="remove" class="pull-right glyphicon glyphicon-remove pointer"></i></div>
+        <div class="panel-body border-bottom" ng-repeat="comment in comments"> {{(comment.text | limitTo:40) || "Empty comment"}}
+            <i ng-show="bookmark.isOwner"
+               ng-click="removeCommentById(comment.id || comment.tempId, comment.isNew)"
+               title="remove"
+               class="pull-right glyphicon glyphicon-remove pointer">
+
+            </i>
+        </div>
     </div>
  </div>
