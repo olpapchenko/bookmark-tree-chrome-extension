@@ -10,7 +10,7 @@ function addRemoveListener (entityElements, entityId) {
 }
 
 function hideRemoveSign(id) {
-    $("#" + id).css({display: "none"});
+    $("#" + id).remove();
 }
 
 function createRemoveSign(contextContainer, removeSignId, topOffset, rightOffset, hoverContainer, removeCallback) {
