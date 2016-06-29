@@ -52,11 +52,15 @@ function CommentController() {
     }
 
     this.initializeEntity = function (entity, ctxContainer) {
+        var textarea = $(ctxContainer).find("#value" + entity.id);
+
         if(entity.text) {
-            $(ctxContainer).find("#value" + entity.id).val(entity.text);
+            textarea.val(entity.text);
         }
 
-        $(ctxContainer).find("#value" + entity.id).on("keypress", function () {
+        moveCursorToBeginingOnClick(textarea);
+
+        textarea.on("keypress", function () {
             Bookmark.updateCommentText(entity.id, event.target.value);
         });
     }
@@ -67,6 +71,16 @@ function CommentController() {
 
     this.updateEntityAtPersistStore = function (newComment) {
         Bookmark.updateCommentId(newComment);
+    }
+
+    function moveCursorToBeginingOnClick(input) {
+        $(input).click(function (e) {
+            if(e.target.value.trim()) {
+                return;
+            }
+            e.target.focus();
+            e.target.setSelectionRange(0, 0);
+        });
     }
 }
 
