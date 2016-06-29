@@ -4,7 +4,7 @@ function CommentController() {
     this.getBodyMarkUp = function (commentId) {
         var COMMENT_MARK_UP = `<div class='commentWrapper'>
                                     <div class='commentContainer'>
-                                    <textarea name='' id='value" + commentId + "'  >
+                                    <textarea name='' id='value${commentId}'  >
                                     </textarea>
                                     </div>
                                 <style>
@@ -51,12 +51,12 @@ function CommentController() {
         Bookmark.removeCommentById(commentId);
     }
 
-    this.initializeEntity = function (entity) {
+    this.initializeEntity = function (entity, ctxContainer) {
         if(entity.text) {
-            $("#value" + entity.id).val(entity.text);
+            $(ctxContainer).find("#value" + entity.id).val(entity.text);
         }
 
-        $("#value" + entity.id).on("blur", function () {
+        $(ctxContainer).find("#value" + entity.id).on("keypress", function () {
             Bookmark.updateCommentText(entity.id, event.target.value);
         });
     }

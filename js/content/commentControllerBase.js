@@ -69,7 +69,7 @@ var commentProto = {
                     _this.removeById(entityId) ;
             });
         }
-        this.initializeEntity(entity, _this.getCommentContainerId(entity.commentId));
+        this.initializeEntity(entity, commentContainer);
 
         this.getEntity2NodesList().push({
             container: commentContainer,
@@ -233,14 +233,13 @@ var commentProto = {
                     overflow: auto;
                 }
 
-                .commentContainer:hover textarea {
+                .commentContainer textarea {
                     display: block;
                     font-size: 15px;
                     background: transparent;
                     margin-left: 2px;
                     margin-top: 5px;
                     border: none;
-                    overflow: hidden;
                     resize: none;
                     width: 98%;
                     height: 75%;
