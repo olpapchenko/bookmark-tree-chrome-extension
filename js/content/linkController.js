@@ -4,7 +4,7 @@ function LinkController() {
     this.getBodyMarkUp = function (linkId) {
         var LINK_MARK_UP = `
                             <div class='linkWrapper'><div class='commentContainer'>
-                                <img src=" + chrome.extension.getURL("/images/bookmark.png") + ">
+                                <img src="${chrome.extension.getURL("/images/bookmark.png")}">
                                 <input placeholder='Name' type='text' class='link-header bookmark-tree-control'>
                                 <input placeholder='Link URL' type='text' class='link bookmark-tree-control'>
                                 <div class='.completions-container'></div>
@@ -29,8 +29,6 @@ function LinkController() {
                                     margin-left: 30%;
                                     margin-top: 15%;
                                 }
-
-
 
                                 .linkWrapper .commentContainer:hover input {
                                     display: block;
@@ -97,12 +95,12 @@ function LinkController() {
         Bookmark.updateLinkId(newLink);
     }
 
-    this.initializeEntity = function (entity, classId) {
+    this.initializeEntity = function (entity, ctxContainer) {
         'use strict'
         var linkId = this.getCommentContainerId(entity.id);
-        var linkHeader = $("#" + linkId + " .link-header");
-        var link = $("#" + linkId + " .link");
-        var clickLink = $("#" + linkId + " a");
+        var linkHeader = $(ctxContainer).find(".link-header");
+        var link = $(ctxContainer).find(".link");
+        var clickLink = $(ctxContainer).find("a");
 
         linkHeader.val(entity.header);
         link.val(entity.link);
