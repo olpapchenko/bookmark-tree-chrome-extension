@@ -2,16 +2,84 @@ function LinkController() {
     var link2NodeList = [];
 
     this.getBodyMarkUp = function (linkId) {
-        var LINK_MARK_UP = "<div class='linkWrapper'><div class='commentContainer'>" +
-            "<img src=" + chrome.extension.getURL("/images/bookmark.png") + ">" +
-            "<input placeholder='Name' type='text' class='link-header bookmark-tree-control'>" +
-            "<input placeholder='Link URL' type='text' class='link bookmark-tree-control'>" +
-            "<div class='.completions-container'></div>" +
-            "<hr/>"+
-            "<a href='#' target='_blank' class='click-link'>Click me</a>"
-            "</div>" +
-            "</div>";
+        var LINK_MARK_UP = `
+                            <div class='linkWrapper'><div class='commentContainer'>
+                                <img src="${chrome.extension.getURL("/images/bookmark.png")}">
+                                <input placeholder='Name' type='text' class='link-header bookmark-tree-control'>
+                                <input placeholder='Link URL' type='text' class='link bookmark-tree-control'>
+                                <div class='.completions-container'></div>
+                                <hr/>
+                                <a href='#' target='_blank' class='click-link'>Link</a>
+                                </div>
+                            <style>
+                                .linkWrapper {
+                                    position: absolute;
+                                    width: 230px;
+                                    height: 100px;
+                                }
+
+                                .linkWrapper .commentContainer {
+                                    height: 30%;
+                                    width: 25%;
+                                }
+
+                                .linkWrapper .commentContainer img {
+                                    opacity: 1;
+                                    transition: all 0.3s ease-out 0.5s;
+                                    margin-left: 30%;
+                                    margin-top: 10%;
+                                }
+
+                                .linkWrapper .commentContainer input {
+                                    transition: 0s all;
+                                    margin-top: 5px;
+                                    padding: 4px;
+                                    width: 96%;
+                                }
+
+                                .linkWrapper .commentContainer:hover input {
+                                    transition-delay: 0.5s;
+                                    display: block;
+                                    opacity: 1;
+                                }
+
+                                .linkWrapper .commentContainer:hover .click-link {
+                                    cursor: pointer;
+                                    display: block;
+                                    opacity: 1;
+                                }
+
+                                .linkWrapper .commentContainer:hover hr {
+                                    display: block;
+                                    opacity: 1;
+                                }
+
+                                .linkWrapper .commentContainer:hover img {
+                                    transition-delay: 0.5s;
+                                    position: absolute;
+                                    opacity: 0;
+                                }
+                                .linkWrapper a {
+                                    transition: 0.5s all;
+                                    opacity: 0;
+                                }
+
+                                .linkWrapper .commentContainer:hover a {
+                                    transition-delay: 0.5s;
+                                    opacity: 1;
+                                    display: inline-block;
+                                }
+                                ${this.getStyles()}
+                            </style></div>`;
         return LINK_MARK_UP;
+    }
+
+    this.getRemoveSignOffsetTop = function () {
+        return -120;
+    }
+
+    this.getRemoveSignOffsetRight = function () {
+        return -25;
     }
 
     this.getCommentOffsetTop = function () {
@@ -46,12 +114,12 @@ function LinkController() {
         Bookmark.updateLinkId(newLink);
     }
 
-    this.initializeEntity = function (entity, classId) {
+    this.initializeEntity = function (entity, ctxContainer) {
         'use strict'
         var linkId = this.getCommentContainerId(entity.id);
-        var linkHeader = $("#" + linkId + " .link-header");
-        var link = $("#" + linkId + " .link");
-        var clickLink = $("#" + linkId + " a");
+        var linkHeader = $(ctxContainer).find(".link-header");
+        var link = $(ctxContainer).find(".link");
+        var clickLink = $(ctxContainer).find("a");
 
         linkHeader.val(entity.header);
         link.val(entity.link);

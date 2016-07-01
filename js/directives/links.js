@@ -9,6 +9,9 @@ angular.module("app").directive("links", ["bookmarkService", function (bookmarkS
             bookmarkService.getCurrentBookmark().then(function(bookmark){
                 $scope.$apply(function () {
                     $scope.bookmark = bookmark;
+                    $scope.links = bookmark.links.filter(function (link) {
+                        return link.display;
+                    });
                 });
             });
 
@@ -18,6 +21,9 @@ angular.module("app").directive("links", ["bookmarkService", function (bookmarkS
                     bookmarkService.getCurrentBookmark().then(function(bookmark){
                         $scope.$apply(function () {
                             $scope.bookmark = bookmark;
+                            $scope.links = bookmark.links.filter(function (link) {
+                                return link.display;
+                            });
                         });
                     });
                 }, 100);

@@ -1,7 +1,7 @@
  bookmarkRenderer = {
      renderBookmark: function (bookmark) {
          var _this = this;
-         var RENDER_INTERVAL_MS = 40;
+         var RENDER_INTERVAL_MS = 150;
 
          preferencesService.get(preferencesService.MARKS_ENABLED).then(function (preference) {
              if(!preference[preferencesService.EXTENSION_ENABLED].value) {

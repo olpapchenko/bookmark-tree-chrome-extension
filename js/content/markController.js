@@ -23,8 +23,8 @@ MarkController = function () {
         return "</span>";
     }
 
-    function removeMarkerFromUI(markerClass, markerId) {
-        $("." + markerClass).each(function () {
+    function removeMarkerFromUI(markerId) {
+        $("." + getMarkClass(markerId, true)).each(function () {
             $(this).addClass("bookmarkTree-hide-comment");
         });
 
@@ -105,11 +105,13 @@ MarkController = function () {
             });
 
             if(marker.display) {
-                addRemoveListener($("." + getMarkClass(markerId, true)), markerId);
-
                 if(isOwner) {
-                    createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId, true))[0], markerId, getMarkClass(markerId, true), function (entityClass) {
-                        removeMarkerFromUI(entityClass, markerId);
+                    createRemoveSign(startContainerMarked.find("." + getMarkClass(markerId, true))[0],
+                        markerId,
+                        -20,
+                        -20,
+                        $("." + getMarkClass(markerId, true)), function (markerId) {
+                        removeMarkerFromUI(markerId);
                     });
                 }
             }
@@ -117,7 +119,7 @@ MarkController = function () {
     }
 
     MarkController.prototype.removeMarkerById = function (id) {
-        removeMarkerFromUI(getMarkClass(id, true), id)
+        removeMarkerFromUI(id);
     }
 
     MarkController.prototype.markSelection = function markSelection(selection) {
@@ -127,7 +129,7 @@ MarkController = function () {
 
         var range = selection.getRangeAt(0);
 
-        if(range.startOffset == range.endOffset || range.startContainer.nodeType != 3 || range.endContainer.nodeType != 3) {
+        if((range.startContainer == range.endContainer && range.startOffset == range.endOffset) || range.startContainer.nodeType != 3 || range.endContainer.nodeType != 3) {
             return;
         }
 

@@ -10,23 +10,25 @@ function addRemoveListener (entityElements, entityId) {
 }
 
 function hideRemoveSign(id) {
-    $("#" + id).css({display: "none"});
+    $("#" + id).remove();
 }
 
-function createRemoveSign(contextContainer, removeSignId, entityClass, removeCallback) {
+function createRemoveSign(contextContainer, removeSignId, topOffset, rightOffset, hoverContainer, removeCallback) {
     var node = $(contextContainer);
 
     if(!node) {
         return;
     }
 
+    addRemoveListener(hoverContainer, removeSignId);
+
     var removeContainer = document.createElement("div");
     removeContainer.className = "removeContainer";
 
     removeContainer.id = removeSignId;
     removeContainer.style.background = "url('" + chrome.extension.getURL("/images/cross.png") +"') no-repeat";
-    removeContainer.style.top = getElementDistance(node[0], true) - 20 + "px";
-    removeContainer.style.left = getElementDistance(node[0], false) - 20  + "px";
+    removeContainer.style.top = topOffset + getElementDistance(node[0], true)   + "px";
+    removeContainer.style.left = rightOffset + getElementDistance(node[0], false)   + "px";
 
     $(removeContainer).attr("data-id", removeSignId);
     $(removeContainer).hover(function () {
@@ -36,7 +38,7 @@ function createRemoveSign(contextContainer, removeSignId, entityClass, removeCal
 
     $(removeContainer).on("click", function () {
         _this
-        removeCallback(entityClass, $(removeContainer).attr("data-id"));
+        removeCallback($(removeContainer).attr("data-id"));
 
         //remove sign itself
         $("#" + $(removeContainer).attr("data-id")).remove();

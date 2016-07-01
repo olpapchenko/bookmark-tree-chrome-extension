@@ -2,7 +2,19 @@ function CommentController() {
     var comment2NodeList = [];
 
     this.getBodyMarkUp = function (commentId) {
-        var COMMENT_MARK_UP = "<div class='commentWrapper'><div class='commentContainer'><textarea name='' id='value" + commentId + "'  ></textarea></div></div>";
+        var COMMENT_MARK_UP = `<div class='commentWrapper'>
+                                    <div class='commentContainer'>
+                                    <textarea name='' id='value${commentId}'  >
+                                    </textarea>
+                                    </div>
+                                <style>
+                                    .commentWrapper  {
+                                        position: absolute;
+                                        width: 240px;
+                                        height: 120px;
+                                    }
+                                    ${this.getStyles()}
+                                </style></div>`;
         return COMMENT_MARK_UP;
     };
 
@@ -18,6 +30,14 @@ function CommentController() {
         return 0;
     }
 
+    this.getRemoveSignOffsetTop = function () {
+        return -140;
+    }
+
+    this.getRemoveSignOffsetRight = function () {
+        return -25;
+    }
+
     this.renderComment = function (comment, isOwner) {
         this.renderEntity(comment, isOwner);
     }
@@ -31,12 +51,16 @@ function CommentController() {
         Bookmark.removeCommentById(commentId);
     }
 
-    this.initializeEntity = function (entity) {
+    this.initializeEntity = function (entity, ctxContainer) {
+        var textarea = $(ctxContainer).find("#value" + entity.id);
+
         if(entity.text) {
-            $("#value" + entity.id).val(entity.text);
+            textarea.val(entity.text);
         }
 
-        $("#value" + entity.id).on("blur", function () {
+        moveCursorToBeginingOnClick(textarea);
+
+        textarea.on("keypress", function () {
             Bookmark.updateCommentText(entity.id, event.target.value);
         });
     }
@@ -47,6 +71,16 @@ function CommentController() {
 
     this.updateEntityAtPersistStore = function (newComment) {
         Bookmark.updateCommentId(newComment);
+    }
+
+    function moveCursorToBeginingOnClick(input) {
+        $(input).click(function (e) {
+            if(e.target.value.trim()) {
+                return;
+            }
+            e.target.focus();
+            e.target.setSelectionRange(0, 0);
+        });
     }
 }
 

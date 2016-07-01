@@ -10,6 +10,9 @@ angular.module("app").directive("markers", ["bookmarkService", function (bookmar
                 $scope.$apply(function () {
                     console.log(bookmark);
                     $scope.bookmark = bookmark;
+                    $scope.markers = bookmark.markers.filter(function (marker) {
+                        return marker.display;
+                    });
                 });
             });
 
@@ -19,6 +22,9 @@ angular.module("app").directive("markers", ["bookmarkService", function (bookmar
                     bookmarkService.getCurrentBookmark().then(function(bookmark){
                         $scope.$apply(function () {
                             $scope.bookmark = bookmark;
+                            $scope.markers = bookmark.markers.filter(function (marker) {
+                                return marker.display;
+                            });
                         });
                     });
                 }, 100);
