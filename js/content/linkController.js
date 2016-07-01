@@ -9,7 +9,7 @@ function LinkController() {
                                 <input placeholder='Link URL' type='text' class='link bookmark-tree-control'>
                                 <div class='.completions-container'></div>
                                 <hr/>
-                                <a href='#' target='_blank' class='click-link'>Click me</a>
+                                <a href='#' target='_blank' class='click-link'>Link</a>
                                 </div>
                             <style>
                                 .linkWrapper {
@@ -27,10 +27,18 @@ function LinkController() {
                                     opacity: 1;
                                     transition: all 0.3s ease-out 0.5s;
                                     margin-left: 30%;
-                                    margin-top: 15%;
+                                    margin-top: 10%;
+                                }
+
+                                .linkWrapper .commentContainer input {
+                                    transition: 0s all;
+                                    margin-top: 5px;
+                                    padding: 4px;
+                                    width: 96%;
                                 }
 
                                 .linkWrapper .commentContainer:hover input {
+                                    transition-delay: 0.5s;
                                     display: block;
                                     opacity: 1;
                                 }
@@ -47,8 +55,19 @@ function LinkController() {
                                 }
 
                                 .linkWrapper .commentContainer:hover img {
-                                    display: none;
+                                    transition-delay: 0.5s;
+                                    position: absolute;
                                     opacity: 0;
+                                }
+                                .linkWrapper a {
+                                    transition: 0.5s all;
+                                    opacity: 0;
+                                }
+
+                                .linkWrapper .commentContainer:hover a {
+                                    transition-delay: 0.5s;
+                                    opacity: 1;
+                                    display: inline-block;
                                 }
                                 ${this.getStyles()}
                             </style></div>`;

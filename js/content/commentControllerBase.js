@@ -147,7 +147,6 @@ var commentProto = {
 
                 .commentContainer input, hr, .click-link {
                     transition: all 0.3s ease-out 0.5s;
-                    display: none;
                     opacity: 0;
                     font-family: Arial, sans-serif;
                     font-size: 14px;
