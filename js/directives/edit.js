@@ -50,6 +50,7 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
                 bookmarkService.save().then(function () {
                     scope.$apply(function () {
                         scope.spinner = false;
+                        scope.isBookmarkForUrl = true;
                     });
                 }, function () {
                     scope.$apply(function () {
