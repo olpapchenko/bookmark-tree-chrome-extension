@@ -86,7 +86,7 @@ var commentProto = {
                  startOffset: entity.startOffset,
                  uiComment: entity.id}
              var cleanEntity = _.omit(entity, "startContainer", "startOffset", "uiComment");
-            this.render(_.extend(cleanEntity, baseEntity), false, isOwner);
+            this.render(_.extend(cleanEntity, baseEntity), isOwner);
         } else {
             throw new Error("Some comments can not be matched. Page layout has changed.");
         }
