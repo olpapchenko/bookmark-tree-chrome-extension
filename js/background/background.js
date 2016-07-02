@@ -1,3 +1,5 @@
+var MESSAGE_IMAGE = "/images/icon128.png";
+
 function updateNotificationsBadge(intervalObj, oldRefreshPeriod) {
     preferencesService.get().then(function (freshPreferences) {
         if(!freshPreferences[preferencesService.NOTIFICATIONS_ENABLED] || !freshPreferences[preferencesService.EXTENSION_ENABLED]) {
@@ -16,13 +18,21 @@ function updateNotificationsBadge(intervalObj, oldRefreshPeriod) {
             console.error("can not update bookmarks list " + JSON.stringify(e));
         });
 
-        notificationsService.getNotificationsCount().then(function (count) {
-            chrome.browserAction.setBadgeText({text: (count.size).toString()});
+        notificationsService.getNotifications().then(function (notifications) {
+            notifications.forEach(function (notification) {
+                chrome.notifications.create(new Date(),
+                    {title: "Bookmark tree notification", type: "basic", message: notification.message, iconUrl: MESSAGE_IMAGE})
+            });
+
         }, function (e) {
             console.error("cannot set notifications badge " + JSON.stringify(e));
         });
     });
 
+}
+
+function updateExtensionBadge(text) {
+    chrome.browserAction.setBadgeText({text: text.toString()});
 }
 
 (function () {
@@ -55,4 +65,15 @@ chrome.contextMenus.create({"title": "Create link", "contexts":["selection"],
         })
 }});
 
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+
+    if(message.type !== "SET_BADGE") {
+        return;
+    }
+
+    updateExtensionBadge(message.text);
+
+    return true;
+});
 

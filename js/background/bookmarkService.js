@@ -4,6 +4,10 @@ var BOOKMARKS_URL = "/bookmarks",
     BOOKMARK_KEY = "bookmarks",
     BOOKMARK_RIGHTS_KEY = "bookmark_rights";
 
+
+var MARKERS = 'markers',
+    COMMENTS = 'comments',
+    LINKS = 'links';
 bookmarkService = {
     getMainPath: function () {
         return chrome.runtime.getManifest().endpointUrl;
@@ -49,6 +53,18 @@ bookmarkService = {
         });
     },
 
+    getAllEntitiesCount: function getAllEntitiesCount(bookmark) {
+        return this.getDisplayebleEntities(MARKERS, bookmark).length +
+            this.getDisplayebleEntities(LINKS, bookmark).length +
+            this.getDisplayebleEntities(COMMENTS, bookmark).length
+    },
+
+    getDisplayebleEntities: function getDisplayebleEntities(entityName, bookmark) {
+        return bookmark[entityName].filter(function (entity) {
+            return entity.display;
+        })
+    },
+
     getById: function (id) {
         return Promise.resolve($.get(chrome.runtime.getManifest().endpointUrl + BOOKMARK_URL, {id: id}));
     },
@@ -83,6 +99,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
 
     bookmarkService.getByUrl(message.url).then(function (bookmark) {
+        if(!bookmark) {
+            updateExtensionBadge(0);
+        } else {
+            updateExtensionBadge(bookmarkService.getAllEntitiesCount(bookmark));
+        }
+
         sendResponse(bookmark);
     }).catch(function (e) {
         sendResponse({error:  e});
@@ -133,3 +155,5 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     });
     return true;
 });
+
+

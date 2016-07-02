@@ -18,6 +18,23 @@ function BookmarkClass () {
     function addEntity(entityName, entity) {
         entity.order = ++_this.maxOrder;
         _this[entityName].push(entity);
+        chrome.runtime.sendMessage({type: "SET_BADGE", text: getAllEntitiesCount()}, null, function (message) {
+            if(message && message.error){
+                console.log(message.error);
+            }
+        });
+    }
+
+    function getAllEntitiesCount() {
+        return getDisplayebleEntities(MARKERS).length +
+            getDisplayebleEntities(LINKS).length +
+            getDisplayebleEntities(COMMENTS).length
+    }
+
+    function getDisplayebleEntities(entityName) {
+        return _this[entityName].filter(function (entity) {
+            return entity.display;
+        })
     }
 
     function removeEntityById(entityName, id) {
@@ -25,8 +42,13 @@ function BookmarkClass () {
         var index = _this[entityName].findIndex(function (entity) {
             return entity.id == id || entity.tempId == id;
         });
-
         _this[entityName][index].display = false;
+
+        chrome.runtime.sendMessage({type: "SET_BADGE", text: getAllEntitiesCount()}, null, function (message) {
+            if(message && message.error){
+                console.log(message.error);
+            }
+        });
     }
 
     function updateEntityId(entity, newEntity) {
