@@ -81,7 +81,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 chrome.tabs.onActivated.addListener(function(activeInfo) {
     return new Promise (function (resolve, reject) {
             chrome.tabs.sendMessage(activeInfo.tabId, {type: "GET_BOOKMARK"}, null, function (bookmark) {
-                updateExtensionBadge(bookmarkService.getAllEntitiesCount(bookmark));
+                var text = bookmarkService.getAllEntitiesCount(bookmark);
+                text = bookmark.persisted && text == 0 ? "+" : text;
+                updateExtensionBadge(text);
             });
     });
 });

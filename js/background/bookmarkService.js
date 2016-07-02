@@ -101,9 +101,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
     bookmarkService.getByUrl(message.url).then(function (bookmark) {
         if(!bookmark) {
-            updateExtensionBadge(0);
+            updateExtensionBadge("0");
         } else {
-            updateExtensionBadge(bookmarkService.getAllEntitiesCount(bookmark));
+            var text = bookmarkService.getAllEntitiesCount(bookmark);
+            text = bookmark && text == 0 ? "+" : text;
+            updateExtensionBadge(text);
         }
 
         sendResponse(bookmark);
@@ -136,6 +138,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
 
     bookmarkService.save(message.bookmark).then(function (bookmark) {
+        var text = bookmarkService.getAllEntitiesCount(bookmark);
+        text = text == 0 ? "+" : text;
+        updateExtensionBadge(text);
         sendResponse(bookmark);
     }).catch(function (e) {
         sendResponse({error: e});
@@ -151,6 +156,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
     bookmarkService.remove(message.bookmark.id).then(function (bookmark) {
         sendResponse(bookmark);
+        updateExtensionBadge("0");
     }).catch(function (e) {
         sendResponse({error: e});
     });

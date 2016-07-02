@@ -18,7 +18,8 @@ function BookmarkClass () {
     function addEntity(entityName, entity) {
         entity.order = ++_this.maxOrder;
         _this[entityName].push(entity);
-        chrome.runtime.sendMessage({type: "SET_BADGE", text: getAllEntitiesCount()}, null, function (message) {
+
+        chrome.runtime.sendMessage({type: "SET_BADGE", text: text}, null, function (message) {
             if(message && message.error){
                 console.log(message.error);
             }
@@ -44,7 +45,10 @@ function BookmarkClass () {
         });
         _this[entityName][index].display = false;
 
-        chrome.runtime.sendMessage({type: "SET_BADGE", text: getAllEntitiesCount()}, null, function (message) {
+        var text = getAllEntitiesCount();
+        text = _this.persisted && text == 0 ? "+" : text;
+
+        chrome.runtime.sendMessage({type: "SET_BADGE", text: text}, null, function (message) {
             if(message && message.error){
                 console.log(message.error);
             }
@@ -183,7 +187,8 @@ function BookmarkClass () {
     }
 
     BookmarkClass.prototype.getBookmark = function (forBackEnd) {
-         var marker =  {
+         var bookmark =  {
+            persisted: this.persisted,
             id: this.id,
             branch_id: this.branch_id,
             name: this.name,
@@ -196,15 +201,16 @@ function BookmarkClass () {
             isOwner: this.isOwner
          }
         if(!forBackEnd) {
-            marker.markers = marker.markers.map(function (marker) {
+            bookmark.markers = bookmark.markers.map(function (marker) {
                 marker.text = findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition).textContent;
                 return marker;
             });
         }
-        return marker;
+        return bookmark;
     }
     
     BookmarkClass.prototype.construct = function (bookmark) {
+        this.persisted = true;
         this.id = bookmark.id;
         this.branch_id = bookmark.branch_id;
         this.name = bookmark.name;
