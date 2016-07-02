@@ -19,7 +19,7 @@ function BookmarkClass () {
         entity.order = ++_this.maxOrder;
         _this[entityName].push(entity);
 
-        chrome.runtime.sendMessage({type: "SET_BADGE", text: text}, null, function (message) {
+        chrome.runtime.sendMessage({type: "SET_BADGE", text: getAllEntitiesCount()}, null, function (message) {
             if(message && message.error){
                 console.log(message.error);
             }

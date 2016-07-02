@@ -10,7 +10,6 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
                         {type: MESSAGE_TYPES.COMMENT_MODE_START == activeMode ? MESSAGE_TYPES.COMMENT_MODE_START : MESSAGE_TYPES.COMMENT_MODE_END},
                         null,
                         function () {
-                            console.log("response");
                             window.close();
                         }
                     );
@@ -19,7 +18,6 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
                         {type: MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_START == activeMode ? MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_START : MESSAGE_TYPES.BOOKMARK_TREE_BUILDER_END},
                         null,
                         function () {
-                            console.log("response");
                             window.close();
                     });
 
@@ -27,9 +25,12 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
                         {type: MESSAGE_TYPES.MARK_MODE_START == activeMode ? MESSAGE_TYPES.MARK_MODE_START : MESSAGE_TYPES.MARK_MODE_END},
                         null,
                         function () {
-                            console.log("response");
                             window.close();
                     });
+
+                    setTimeout(function () {
+                        window.close();
+                    }, 50);
                 });
             };
 
@@ -48,6 +49,7 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
             scope.save = function () {
                 scope.spinner = true;
                 bookmarkService.save().then(function () {
+                    window.close();
                     scope.$apply(function () {
                         scope.spinner = false;
                         scope.isBookmarkForUrl = true;
@@ -64,6 +66,7 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
                 scope.spinner = true;
                 bookmarkService.remove(scope.bookmark.id).then(function ( ){
                     scope.$apply(function () {
+                        window.close();
                         scope.spinner = false;
                         scope.isBookmarkForUrl = false;
                     });
