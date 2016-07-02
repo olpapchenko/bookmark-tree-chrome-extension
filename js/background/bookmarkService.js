@@ -54,9 +54,10 @@ bookmarkService = {
     },
 
     getAllEntitiesCount: function getAllEntitiesCount(bookmark) {
-        return this.getDisplayebleEntities(MARKERS, bookmark).length +
+        return bookmark ? this.getDisplayebleEntities(MARKERS, bookmark).length +
             this.getDisplayebleEntities(LINKS, bookmark).length +
             this.getDisplayebleEntities(COMMENTS, bookmark).length
+            :0;
     },
 
     getDisplayebleEntities: function getDisplayebleEntities(entityName, bookmark) {
