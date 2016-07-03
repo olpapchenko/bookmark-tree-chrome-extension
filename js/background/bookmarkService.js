@@ -3,7 +3,7 @@ var BOOKMARKS_URL = "/bookmarks",
     BOOKMARK_RIGHTS_URL= "/bookmark/share",
     BOOKMARK_KEY = "bookmarks",
     BOOKMARK_RIGHTS_KEY = "bookmark_rights";
-
+    SCREENSHOT_URL = "/uploads/screenshot";
 
 var MARKERS = 'markers',
     COMMENTS = 'comments',
@@ -14,11 +14,17 @@ bookmarkService = {
     },
 
     save: function (bookmarkData) {
+        var _this = this;
         bookmarkData.name = bookmarkData.name.slice(0, 50);
 
        return preferencesService.get().then(function (preferences) {
            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData, false, false,
                function (bookmark, newBookmark) {return bookmark.url == newBookmark.url;});
+       })
+       .tap(function (savedEntity) {
+             imageUtils.captureScreen().then(function (imageDataUrl) {
+                 return _this.saveScreen(imageDataUrl, savedEntity.id);
+             });
        })
        .tap(function (success, error) {
             chrome.tabs.query({active: true}, function (tabs) {
@@ -30,6 +36,22 @@ bookmarkService = {
                 }
             });
         });
+    },
+
+    saveScreen: function (dataUrl, id) {
+        var blob = imageUtils.dataURItoBlob(dataUrl);
+        var formData = new FormData();
+        formData.append("id", id);
+        formData.append("screen", blob, "screen.jpg");
+
+        return Promise.resolve(
+            $.ajax({
+                url: chrome.runtime.getManifest().endpointUrl + SCREENSHOT_URL,
+                data: formData,
+                processData: false,
+                contentType: false,
+                type: 'POST'
+            }));
     },
 
     remove: function (id) {
@@ -137,13 +159,17 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         return;
     }
 
-    bookmarkService.save(message.bookmark).then(function (bookmark) {
-        var text = bookmarkService.getAllEntitiesCount(bookmark);
-        text = text == 0 ? "+" : text;
-        updateExtensionBadge(text);
-        sendResponse(bookmark);
-    }).catch(function (e) {
-        sendResponse({error: e});
+    imageUtils.captureScreen().then(function (imageDataUrl) {
+        return imageUtils.dataURItoBlob(imageDataUrl);
+    }).then(function () {
+        bookmarkService.save(message.bookmark).then(function (bookmark) {
+            var text = bookmarkService.getAllEntitiesCount(bookmark);
+            text = text == 0 ? "+" : text;
+            updateExtensionBadge(text);
+            sendResponse(bookmark);
+        }).catch(function (e) {
+            sendResponse({error: e});
+        });
     });
     return true;
 });
