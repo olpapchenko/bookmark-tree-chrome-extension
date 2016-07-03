@@ -21,8 +21,8 @@ bookmarkService = {
            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData, false, false,
                function (bookmark, newBookmark) {return bookmark.url == newBookmark.url;});
        })
-       .then(function (savedEntity) {
-             imageUtils.captureScreen().then(function (imageDataUrl) {
+       .tap(function (savedEntity) {
+             return imageUtils.captureScreen().then(function (imageDataUrl) {
                  return _this.saveScreen(imageDataUrl, savedEntity.id);
              });
        })
@@ -83,7 +83,7 @@ bookmarkService = {
     },
 
     getDisplayebleEntities: function getDisplayebleEntities(entityName, bookmark) {
-        return bookmark[entityName].filter(function (entity) {
+        return !bookmark[entityName] ? [] : bookmark[entityName].filter(function (entity) {
             return entity.display;
         })
     },
