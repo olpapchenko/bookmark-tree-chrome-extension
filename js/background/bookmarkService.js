@@ -21,7 +21,7 @@ bookmarkService = {
            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData, false, false,
                function (bookmark, newBookmark) {return bookmark.url == newBookmark.url;});
        })
-       .tap(function (savedEntity) {
+       .then(function (savedEntity) {
              imageUtils.captureScreen().then(function (imageDataUrl) {
                  return _this.saveScreen(imageDataUrl, savedEntity.id);
              });
