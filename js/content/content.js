@@ -1,3 +1,5 @@
+var BOOKMARK_LOAD_ERROR = "<div class='extensionText'>Bookmark is not loaded, possibly it was removed</div>"
+
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if(message.type == MESSAGE_TYPES.MARK_MODE_START) {
         bookmarkConstructor.startMarkerCreationMode();
@@ -47,6 +49,8 @@ function applyBookmarkOnUrl() {
             Bookmark.construct(bookmark);
             bookmarkRenderer.renderBookmark(bookmark);
         }
+    }, function () {
+        popUpController.createPopup(BOOKMARK_LOAD_ERROR, popUpController.DANGER);
     });
 }
 

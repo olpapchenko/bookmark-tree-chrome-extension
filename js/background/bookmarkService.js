@@ -62,19 +62,40 @@ bookmarkService = {
             }));
     },
 
-    remove: function (id) {
+    remove: function (id, localy) {
         var _this = this;
-         return Promise.resolve($.post(chrome.runtime.getManifest().endpointUrl + BOOKMARK_URL + "/remove", {id: id}))
+
+        function removeFromLocalCache () {
+            return _this.get()
+            .then(function (bookmarks) {
+                var saveBookmark = bookmarks.filter(function (bookmark) {
+                    return bookmark.id != id;
+                });
+                var keyToEntity = {};
+                keyToEntity[key] = {entity: saveBookmark, lastRefreshDate: new Date().getTime()};
+                return storageService.set(keyToEntity);
+            });
+        }
+
+        if(localy) {
+            return removeFromLocalCache();
+        }
+
+        return Promise.resolve($.post(chrome.runtime.getManifest().endpointUrl + BOOKMARK_URL + "/remove", {id: id}))
              .then(function () {
-                 return _this.get();
-             }).then(function (bookmarks) {
-                 var saveBookmark = bookmarks.filter(function (bookmark) {
-                     return bookmark.id != id;
-                 });
-                 var keyToEntity = {};
-                 keyToEntity[key] = {entity: saveBookmark, lastRefreshDate: new Date().getTime()};
-                 return storageService.set(keyToEntity);
+                 removeFromLocalCache();
              });
+    },
+
+    removeByUrl: function (url, localy) {
+        'use strict'
+        var _this = this;
+      return this.get().then(function (bookmarks) {
+          var bookmark = bookmarks.find(function (bookmark) {
+              return bookmark.url == url;
+          });
+          return  _this.remove(bookmark.id, localy);
+      });
     },
 
     get: function () {
@@ -140,6 +161,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
         sendResponse(bookmark);
     }).catch(function (e) {
+        updateExtensionBadge("0");
+        bookmarkService.removeByUrl(message.url, true);
         sendResponse({error:  e});
     });
     return true;
@@ -155,6 +178,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     bookmarkService.getById(message.id).then(function (bookmark) {
         sendResponse(bookmark);
     }).catch(function (e) {
+        updateExtensionBadge("0");
+        bookmarkService.remove(message.id, true);
         sendResponse({error: e});
     });
     return true;
