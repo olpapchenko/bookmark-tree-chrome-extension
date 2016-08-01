@@ -40,6 +40,7 @@ angular.module("app",[]).controller("appController", ["$scope", "userService", "
             if(error.status == 400) {
                 $scope.notLoggedError = true;
             } else {
+                console.log(error);
                 $scope.showErrorLoad = true;
             }
         });

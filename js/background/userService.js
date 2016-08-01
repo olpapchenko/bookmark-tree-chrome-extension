@@ -3,7 +3,8 @@ var LOGIN_PATH = '/#/login',
     PROFILE_PATH = "#profile",
     USER_URL = "/user",
     USER_KEY = "user",
-    AVATAR_PREFIX = chrome.runtime.getManifest().endpointUrl  + "/avatars/";
+    AVATAR_PREFIX = chrome.runtime.getManifest().endpointUrl  + "/avatars/",
+    DEFAULT_AVATAR = chrome.runtime.getManifest().endpointUrl + "/images/user-moderate.png";
 
 userService = {
     getLoginUrl: function () {
@@ -21,12 +22,25 @@ userService = {
     },
 
     get: function () {
+        var _this = this;
         return preferencesService.get().then(function (preferences) {
             return baseCachedAccessPoint.get(USER_KEY, USER_URL, preferences[preferencesService.REFRESH_PERIOD].value);
         }).then(function (user) {
-            user.avatar = AVATAR_PREFIX + user.avatar;
+            user.avatar = _this.getAvatarPath(user.avatar);
             return user;
         });;
+    },
+
+    getAvatarPath: function (path) {
+        if(path) {
+            if(path.indexOf("http") ==  0) {
+                return path;
+            } else {
+                return AVATAR_PREFIX + path;
+            }
+        } else {
+            return DEFAULT_AVATAR;
+        }
     },
 
     erase: function () {
