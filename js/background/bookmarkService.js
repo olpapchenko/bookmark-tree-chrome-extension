@@ -27,10 +27,10 @@ bookmarkService = {
              });
        })
        .then(function (savedEntity) {
-               bookmarkData.screenshot = savedEntity.id;
-               bookmarkData.id = savedEntity.id;
+                bookmarkData.screenshot = savedEntity.id;
+
               return preferencesService.get().then(function (preferences) {
-                   return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData, false, false,
+                   return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, savedEntity, false, false,
                        function (bookmark, newBookmark) {return bookmark.url == newBookmark.url;});
                })
        })
