@@ -60,7 +60,7 @@ function CommentController() {
 
         moveCursorToBeginingOnClick(textarea);
 
-        textarea.on("keypress", function () {
+        textarea.on("change", function () {
             Bookmark.updateCommentText(entity.id, event.target.value);
         });
     }
