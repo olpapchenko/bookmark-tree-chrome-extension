@@ -51,12 +51,13 @@ function applyBookmarkOnUrl() {
             try {
                 bookmarkRenderer.renderBookmark(bookmark);
             } catch(e) {
-                console.error(e);
                 popUpController.createPopup(NOT_MAPPED_ENTITIES, popUpController.DANGER)
             }
         }
-    }, function () {
-        popUpController.createPopup(BOOKMARK_LOAD_ERROR, popUpController.DANGER);
+    }, function (e) {
+        if(e.status != 400) {
+            popUpController.createPopup(BOOKMARK_LOAD_ERROR, popUpController.DANGER);
+        }
     });
 }
 
