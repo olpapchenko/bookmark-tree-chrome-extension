@@ -1,4 +1,5 @@
-var BOOKMARK_LOAD_ERROR = "<div class='extensionText'>Bookmark is not loaded, possibly it was removed</div>"
+var BOOKMARK_LOAD_ERROR = "<div class='extensionText'>Bookmark is not loaded, possibly it was removed</div>",
+    NOT_MAPPED_ENTITIES = "<div class='extensionText'>Web page changed since last loading, some entities may be not displayed</div>";
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if(message.type == MESSAGE_TYPES.MARK_MODE_START) {
@@ -47,7 +48,12 @@ function applyBookmarkOnUrl() {
     }).then(function (bookmark) {
         if(bookmark) {
             Bookmark.construct(bookmark);
-            bookmarkRenderer.renderBookmark(bookmark);
+            try {
+                bookmarkRenderer.renderBookmark(bookmark);
+            } catch(e) {
+                console.error(e);
+                popUpController.createPopup(NOT_MAPPED_ENTITIES, popUpController.DANGER)
+            }
         }
     }, function () {
         popUpController.createPopup(BOOKMARK_LOAD_ERROR, popUpController.DANGER);

@@ -82,7 +82,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
     return new Promise (function (resolve, reject) {
             chrome.tabs.sendMessage(activeInfo.tabId, {type: "GET_BOOKMARK"}, null, function (bookmark) {
                 var text = bookmarkService.getAllEntitiesCount(bookmark);
-                text = bookmark.persisted && text == 0 ? "+" : text;
+                text = bookmark && bookmark.persisted && text == 0 ? "+" : text;
                 updateExtensionBadge(text);
             });
     });
