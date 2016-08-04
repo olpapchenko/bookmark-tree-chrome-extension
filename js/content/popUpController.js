@@ -38,6 +38,11 @@ popUpController = {
 
     getStyles: function () {
         return `<style>
+            .extensionText {
+                font-family: Arial;
+                font-weight: normal;
+                font-size: 13px;
+            }
             .removeContainer {
                 position: absolute;
                 height: 25px;
