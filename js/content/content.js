@@ -55,7 +55,7 @@ function applyBookmarkOnUrl() {
             }
         }
     }, function (e) {
-        if(e.status != 400) {
+        if(e.data == "Bookmark does not exist") {
             popUpController.createPopup(BOOKMARK_LOAD_ERROR, popUpController.DANGER);
         }
     });
