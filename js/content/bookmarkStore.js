@@ -202,7 +202,11 @@ function BookmarkClass () {
          }
         if(!forBackEnd) {
             bookmark.markers = bookmark.markers.map(function (marker) {
-                marker.text = findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition).textContent;
+                try {
+                    marker.text = findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition).textContent;
+                } catch (e) {
+                    marker.text = "Not matched marker";
+                }
                 return marker;
             });
         }

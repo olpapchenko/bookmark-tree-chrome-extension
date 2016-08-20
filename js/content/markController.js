@@ -142,6 +142,7 @@ MarkController = function () {
             endTextNodePosition: findTextNodePosition(range.endContainer.parentNode, range.endContainer),
             startOffset:  range.startOffset,
             endOffset: range.endOffset,
+            md5: getMD5OfNode(range.startContainer.parentNode),
             tempId: uuid.v1(),
             display: true
         }
@@ -152,6 +153,8 @@ MarkController = function () {
     }
 
     MarkController.prototype.renderMarker = function markTextBySelector (marker, isOwner) {
+        testMD5Sum(marker);
+
         markText({startContainer: findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition),
             endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
             commonAncestorContainer: $(marker.commonAncestorContainer)[0],
@@ -187,6 +190,13 @@ MarkController = function () {
         $('[class*=bookmarkTreeMarker]').each(function () {
             $(this).replaceWith(escapeText(this.textContent));
         });
+    }
+
+    function testMD5Sum(marker) {
+        var actualMD5 = getMD5OfNode($(marker.startContainerSelector)[0]);
+        if(actualMD5 != marker.md5) {
+            throw "MD5 hash changed";
+        }
     }
 };
 

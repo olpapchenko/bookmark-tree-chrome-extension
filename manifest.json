@@ -45,6 +45,7 @@
   "content_scripts"  : [{
     "matches": ["http://*/*", "https://*/*"],
     "js" : [
+      "/js/vendor/js-md5/build/md5.min.js",
       "/js/vendor/jquery/dist/jquery.min.js",
       "/js/vendor/underscore/underscore-min.js",
       "/js/vendor/node-uuid/uuid.js",

@@ -95,3 +95,7 @@ function findTextNodePosition(parent, textNode) {
 function findTextNodeAtPosition(parent, position) {
     return getAllTextNodes(parent)[position][0];
 }
+
+function getMD5OfNode (node) {
+    return md5(node.textContent);
+}
