@@ -153,7 +153,9 @@ MarkController = function () {
     }
 
     MarkController.prototype.renderMarker = function markTextBySelector (marker, isOwner) {
-        testMD5Sum(marker);
+        if(!testMD5SumOfNode($(marker.startContainerSelector)[0], marker.md5)) {
+            throw "Marker MD5 sum is different";
+        }
 
         markText({startContainer: findTextNodeAtPosition($(marker.startContainerSelector)[0], marker.startTextNodePosition),
             endContainer: findTextNodeAtPosition($(marker.endContainerSelector)[0], marker.endTextNodePosition),
@@ -190,13 +192,6 @@ MarkController = function () {
         $('[class*=bookmarkTreeMarker]').each(function () {
             $(this).replaceWith(escapeText(this.textContent));
         });
-    }
-
-    function testMD5Sum(marker) {
-        var actualMD5 = getMD5OfNode($(marker.startContainerSelector)[0]);
-        if(actualMD5 != marker.md5) {
-            throw "MD5 hash changed";
-        }
     }
 };
 

@@ -97,5 +97,19 @@ function findTextNodeAtPosition(parent, position) {
 }
 
 function getMD5OfNode (node) {
-    return md5(node.textContent);
+    function normilizeText(text) {
+        if(!text) {
+            return text;
+        }
+
+       text = text.replace(/\s+/gi, "");
+       return text.toLowerCase();
+    }
+    console.log(normilizeText(node.textContent));
+    return md5(normilizeText(node.textContent));
+}
+
+function testMD5SumOfNode(node, expectedMD5) {
+    var actualMD5 = getMD5OfNode(node);
+    return expectedMD5 == actualMD5;
 }

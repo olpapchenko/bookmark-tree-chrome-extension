@@ -80,6 +80,10 @@ var commentProto = {
     },
 
     renderEntity: function (entity, isOwner) {
+         if(!testMD5SumOfNode($(entity.selector)[0], entity.md5)) {
+            throw "Base comment context node MD5 sum is different";
+         }
+
          if($(entity.selector)[0]) {
              var baseEntity = {
                  startContainer: findTextNodeAtPosition($(entity.selector)[0], entity.textPosition),
@@ -134,7 +138,15 @@ var commentProto = {
             return;
         }
 
-        this.persistEntity({selector: this.getStartSelector(range.startContainer.parentNode), startOffset: range.startOffset, tempId: entityId, textPosition: findTextNodePosition(range.startContainer.parentNode, range.startContainer), isNew: true, display: true});
+        this.persistEntity({
+            selector: this.getStartSelector(range.startContainer.parentNode),
+            startOffset: range.startOffset,
+            tempId: entityId,
+            textPosition: findTextNodePosition(range.startContainer.parentNode, range.startContainer),
+            isNew: true,
+            display: true,
+            md5: getMD5OfNode(range.startContainer.parentNode)
+        });
 
         this.render({startContainer: range.startContainer, startOffset: range.startOffset, id: entityId, selector: this.getStartSelector(range.startContainer.parentNode), display: true}, true);
     },
