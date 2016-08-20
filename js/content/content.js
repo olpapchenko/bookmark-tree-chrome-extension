@@ -48,11 +48,9 @@ function applyBookmarkOnUrl() {
     }).then(function (bookmark) {
         if(bookmark) {
             Bookmark.construct(bookmark);
-            try {
-                bookmarkRenderer.renderBookmark(bookmark);
-            } catch(e) {
+            bookmarkRenderer.renderBookmark(bookmark).catch(function () {
                 popUpController.createPopup(NOT_MAPPED_ENTITIES, popUpController.DANGER)
-            }
+            });
         }
     }, function (e) {
         if(e.data == "Bookmark does not exist") {

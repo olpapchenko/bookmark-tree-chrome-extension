@@ -3,7 +3,7 @@
          var _this = this;
          var RENDER_INTERVAL_MS = 150;
 
-         preferencesService.get(preferencesService.MARKS_ENABLED).then(function (preference) {
+        return preferencesService.get(preferencesService.MARKS_ENABLED).then(function (preference) {
              if(!preference[preferencesService.EXTENSION_ENABLED].value) {
                  return;
              }
@@ -30,36 +30,53 @@
                  }
              });
              var time = 0;
+             var renderPromises = [];
 
              allEntities.sort(compare).forEach(function (entity) {
-                 if(entity.type == "markers")  {
-                     setTimeout(function () {
-                         if(!preference[preferencesService.MARKS_ENABLED].value){
-                             return;
-                         }
-                         _this.renderMarker(entity, bookmark.isOwner);
-                     }, time);
+                     var promise = new Promise(function(resolve, reject) {
+                         setTimeout(function () {
+                             if(entity.type == "markers") {
+                                 if(!preference[preferencesService.MARKS_ENABLED].value){
+                                     resolve();
+                                     return;
+                                 }
+                                 try {
+                                     return _this.renderMarker(entity, bookmark.isOwner);
+                                 } catch(e) {
+                                     reject(e);
+                                     return;
+                                 }
+                                 resolve();
+                             } else if (entity.type == "comments") {
+                                 if(!preference[preferencesService.COMMENTS_ENABLED].value){
+                                     return;
+                                 }
+                                 try {
+                                     _this.renderComment(entity, bookmark.isOwner);
+                                 } catch(e) {
+                                     reject(e);
+                                     return;
+                                 }
+                                 resolve();
+                             } else if (entity.type == "links") {
+                                 if(!preference[preferencesService.BOOKMARK_LINKS_ENABLED].value){
+                                     return;
+                                 }
+                                 try {
+                                     _this.renderLink(entity, bookmark.isOwner);
+                                 } catch(e) {
+                                     reject(e);
+                                     return;
+                                 }
+                                 resolve();
+                             }
+                         }, time);
+                     });
+                     renderPromises.push(promise);
                      time += RENDER_INTERVAL_MS;
-                 } else if(entity.type == "comments") {
-                     setTimeout(function () {
-                         if(!preference[preferencesService.COMMENTS_ENABLED].value){
-                             return;
-                         }
-                         _this.renderComment(entity, bookmark.isOwner);
-                     }, time);
-                     time += RENDER_INTERVAL_MS;
-                 } else if (entity.type == "links") {
-                     setTimeout(function () {
-                         if(!preference[preferencesService.BOOKMARK_LINKS_ENABLED].value){
-                             return;
-                         }
-                         _this.renderLink(entity, bookmark.isOwner);
-                     }, time);
-                     time += RENDER_INTERVAL_MS;
-                 }
              });
+            return Promise.all(renderPromises);
          });
-
      },
 
      reconcileBookmark: function (bookmark) {
@@ -77,7 +94,7 @@
      },
 
      renderMarker: function (marker, isOwner) {
-        markController.renderMarker(marker, isOwner);
+       return markController.renderMarker(marker, isOwner);
      },
 
      renderLink: function (link, isOwner) {
