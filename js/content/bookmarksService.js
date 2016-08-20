@@ -45,6 +45,7 @@ bookmarksService = {
             {
                 if(message && message.error) {
                     reject(message.error);
+                    return;
                 }
 
                 //the reconciliation is done to update current rendered bookmark with ids from server.
@@ -116,6 +117,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if(message.type == "SAVE_CURRENT_BOOKMARK") {
         bookmarksService.save().then(function () {
            sendResponse(Bookmark.getBookmark());
+        }).catch(function () {
+            sendResponse({error: "Error saving bookmark"});
         });
     }
     return true;
@@ -125,6 +128,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if(message.type == "REMOVE_CURRENT_BOOKMARK") {
         bookmarksService.remove().then(function () {
             sendResponse(Bookmark.getBookmark());
+        }).catch(function () {
+            sendResponse({error: "Error removing bookmark"});
         });
     }
     return true;

@@ -33,13 +33,13 @@
         <loader is-loaded="spinner"></loader>
     </div>
 </div>
-<button style="width: 100%;" class="btn btn-primary " ng-click="save()">Save bookmark</button>
-
-<button  ng-click="remove()"  ng-show="isBookmarkForUrl" style="width: 100%;" class="btn btn-danger media"><i class="glyphicon glyphicon-remove"></i> Remove Bookmark </button>
 
 <div ng-show="showSaveError" class="row text-center" style="margin-bottom: 10px;">
     <h4><small class="error">Bookmark possibly was not saved due to errors.</small></h4>
 </div>
+
+<button style="width: 100%;" class="btn btn-primary " ng-click="save()">Save bookmark</button>
+<button  ng-click="remove()"  ng-show="isBookmarkForUrl" style="width: 100%;" class="btn btn-danger media"><i class="glyphicon glyphicon-remove"></i> Remove Bookmark </button>
 
 <div ng-show="showRemoveError" class="row text-center" style="margin-bottom: 10px;">
     <h4><small class="error">Bookmark was not removed due to errors</small></h4>
