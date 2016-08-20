@@ -105,7 +105,6 @@ function getMD5OfNode (node) {
        text = text.replace(/\s+/gi, "");
        return text.toLowerCase();
     }
-    console.log(normilizeText(node.textContent));
     return md5(normilizeText(node.textContent));
 }
 
