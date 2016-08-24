@@ -28,7 +28,7 @@ bookmarkService = {
        })
        .then(function (savedEntity) {
                savedEntity.screenshot = savedEntity.id;
-
+               savedEntity.branch_id = savedEntity.branches[0].id;
               return preferencesService.get().then(function (preferences) {
                    return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, savedEntity, false, false,
                        function (bookmark, newBookmark) {return bookmark.url == newBookmark.url;});
