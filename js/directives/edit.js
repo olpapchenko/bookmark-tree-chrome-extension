@@ -1,4 +1,4 @@
-angular.module("app").directive("edit", ["bookmarkService", "branchService", function (bookmarkService, branchService) {
+angular.module("app").directive("edit", ["bookmarkService", "branchService", "$timeout", function (bookmarkService, branchService, $timeout) {
     return {
         restrict: "E",
         templateUrl: "/html/templates/edit.html",
@@ -86,17 +86,15 @@ angular.module("app").directive("edit", ["bookmarkService", "branchService", fun
             });
 
             branchService.all().then(function (branches) {
-                scope.$apply(function () {
+                $timeout(function () {
                     scope.branches = branches;
-                    console.log(scope.branch);
                      if(!scope.branch) {
                         var branch = branches.filter(function (branch) {
                             return branch.default;
                         })[0];
-                         console.log(branch);
-                        scope.branch = scope.branch || String(branch.id);
+                        scope.branch = (scope.branch || branch) && String(branch.id);
                     }
-                })
+                }, 0)
             });
 
             scope.$watch("branch", function (id) {

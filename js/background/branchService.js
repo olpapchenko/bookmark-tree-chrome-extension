@@ -3,9 +3,7 @@ var BRANCH_KEY = "BRANCHES",
 
 branchService = {
     all: function () {
-        return preferencesService.get().then(function (preferences) {
-            return baseCachedAccessPoint.get(BRANCH_KEY, BRANCHES_URL, preferences[preferencesService.REFRESH_PERIOD].value);
-        });
+        return Promise.resolve($.get(chrome.runtime.getManifest().endpointUrl + BRANCHES_URL));
     },
 
     getBranchById: function (id) {
