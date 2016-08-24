@@ -9,6 +9,9 @@ angular.module("app").directive("links", ["bookmarkService", function (bookmarkS
             bookmarkService.getCurrentBookmark().then(function(bookmark){
                 $scope.$apply(function () {
                     $scope.bookmark = bookmark;
+                    if(!bookmark && !bookmark.links) {
+                        return;
+                    }
                     $scope.links = bookmark.links.filter(function (link) {
                         return link.display;
                     });
