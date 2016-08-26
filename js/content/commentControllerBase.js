@@ -1,6 +1,6 @@
 var commentProto = {
     getContextWrapHTMLStart: function getContextWrapHTMLStart(commentId) {
-        return "<span id='" + commentId  + "'>"
+        return "<span id='" + commentId  + "' style='display: inline; margin: 0; padding: 0; opacity: 1; position: static;'>"
     },
 
     getContextWrapHTMLEnd: function getContextWrapHTMLEnd() {
