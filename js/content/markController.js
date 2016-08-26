@@ -15,7 +15,7 @@ MarkController = function () {
 
     function getMarkerStartMarkUp (display) {
         return getMarkerColor().then(function (color) {
-            return function (markerId) {return "<span style='background-color: " + color + "' class = '" + getMarkClass(markerId, display) + "'>";}
+            return function (markerId) {return "<span style='background-color: " + color + "; display: inline; margin: 0; padding: 0; opacity: 1' class = '" + getMarkClass(markerId, display) + "'>";}
         });
     }
 

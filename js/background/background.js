@@ -1,8 +1,9 @@
 var MESSAGE_IMAGE = "/images/icon128.png";
+var shownNotifications = [];
 
 function updateNotificationsBadge(intervalObj, oldRefreshPeriod) {
-    preferencesService.get().then(function (freshPreferences) {
-        if(!freshPreferences[preferencesService.NOTIFICATIONS_ENABLED] || !freshPreferences[preferencesService.EXTENSION_ENABLED]) {
+    return preferencesService.get().then(function (freshPreferences) {
+        if(!freshPreferences[preferencesService.NOTIFICATIONS_ENABLED].value || !freshPreferences[preferencesService.EXTENSION_ENABLED].value) {
             return;
         }
         var newRefreshPeriod = freshPreferences[preferencesService.REFRESH_PERIOD].value;
@@ -12,7 +13,7 @@ function updateNotificationsBadge(intervalObj, oldRefreshPeriod) {
             var newIntevalObj = {};
             newIntevalObj.intervalId = setInterval(function (){updateNotificationsBadge(newIntevalObj, newRefreshPeriod)}, newRefreshPeriod * 1000 * 60);
         }
-        console.log("setting badge");
+        console.log("creating notification");
 
         bookmarkService.get().catch(function (e) {
             console.error("can not update bookmarks list " + JSON.stringify(e));
@@ -20,7 +21,11 @@ function updateNotificationsBadge(intervalObj, oldRefreshPeriod) {
 
         notificationsService.getNotifications().then(function (notifications) {
             notifications.forEach(function (notification) {
-                chrome.notifications.create(new Date(),
+                if(shownNotifications.indexOf(notification.id) != -1) {
+                    return;
+                }
+                shownNotifications.push(notification.id);
+                chrome.notifications.create(String(new Date()),
                     {title: "Bookmark tree notification", type: "basic", message: notification.message, iconUrl: MESSAGE_IMAGE})
             });
 
