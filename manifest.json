@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Bookmark Tree",
+  "name": "Bookmark Tree - Web annotations",
   "description": "Bookmark Tree is a bookmark manager. You can annotate your bookmark pages and share them with friends!",
-  "version": "1.1",
+  "version": "1.2",
 
   "icons": {
     "16": "/images/icon16.png",
@@ -17,7 +17,7 @@
       "38": "images/icon38.png"
     },
     "default_popup": "html/index.html",
-    "default_title": "Bookmark tree"
+    "default_title": "Bookmark Tree - Web annotations"
   },
 
   "background": {
@@ -80,7 +80,7 @@
     "bookmarks",
     "contextMenus",
     "notifications",
-    "http://localhost:3000"
+    "http://bookmarktrees.com"
   ],
 
   "web_accessible_resources": [
@@ -88,5 +88,5 @@
     "images/*"
   ],
 
-  "endpointUrl": "http://localhost:3000"
+  "endpointUrl": "http://bookmarktrees.com"
 }
