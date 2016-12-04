@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/images/icon19.png" />
+    <link rel="stylesheet" href="/css/welcome.css"/>
+    <link  rel="stylesheet" href="/js/vendor/funkyrobot-angular-slidescroll/angular-slidescroll.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
+
+    <script src="/js/vendor/angular/angular.min.js"></script>
+    <script src="/js/vendor/funkyrobot-angular-slidescroll/angular-slidescroll.js"></script>
+    <script src="/js/welcome/main.js"></script>
+    <title>Welcome!</title>
+</head>
+<body ng-app="welcome" ng-controller="main">
+    <slidescroll>
+        <slide>
+            <div class="container">
+                <div class="content">
+                    <h1>Welcome</h1>
+                    <h1>to Bookmark Tree chrome extension</h1>
+                    <img src="/images/icon128.png" alt="bookmark tree"/>
+                    <div id="arrow" ng-click="down()"></div>
+                </div>
+            </div>
+        </slide>
+        <slide>
+            <div class="content-container">
+                <div>
+                    <div class="column welcome-text"><b>Bookmark tree chrome extension</b> - gives you ability
+                    to make you bookmarks live. With the help of this extension you can easily annotate any text content,
+                    add comments or add link to other source. After that bookmark becomes more than just a bookmark -
+                    it contains the snapshot of your thoughts.
+                    </br>
+                    After saving bookmarks are available from you any devica at any time</div>
+                    <div class="column"><img class="welcome-image" src="/images/welcome_sketch.jpeg" alt="sketch"/></div>
+                </div>
+                <div class="row">
+                    <div class="column"><img class="welcome-image" src="/images/welcome_collaboration.JPG" alt="share"/></div>
+                    <div class="column welcome-text">With <b>Bookmark tree chrome extension</b> you can share you bookmarks. Grant write
+                    or just view to you friends. You can easily collaborate on bookmark. After user performes modification on
+                    shared bookmark - you will get notification. Thus this is easy to tracks changes.</div>
+                </div>
+
+            </div>
+        </slide>
+        <slide>three</slide>
+    </slidescroll>
+</body>
+</html>

@@ -38,7 +38,9 @@
                 "/js/background/bookmarkService.js",
                 "/js/background/storageService.js",
                 "/js/shared/messageTypes.js",
-                "/js/background/background.js"
+
+                "/js/background/background.js",
+                "/js/background/onInstall.js"
                 ]
   },
 
