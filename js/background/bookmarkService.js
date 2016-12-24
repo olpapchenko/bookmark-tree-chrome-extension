@@ -21,19 +21,6 @@ bookmarkService = {
            return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, bookmarkData, false, false,
                function (bookmark, newBookmark) {return bookmark.url == newBookmark.url;});
        })
-       .tap(function (savedEntity) {
-             return imageUtils.captureScreen().then(function (imageDataUrl) {
-                 return _this.saveScreen(imageDataUrl, savedEntity.id);
-             });
-       })
-       .then(function (savedEntity) {
-               savedEntity.screenshot = savedEntity.id;
-               savedEntity.branch_id = savedEntity.branches[0].id;
-              return preferencesService.get().then(function (preferences) {
-                   return baseCachedAccessPoint.set(BOOKMARK_KEY, BOOKMARK_URL, preferences[preferencesService.REFRESH_PERIOD].value, savedEntity, false, false,
-                       function (bookmark, newBookmark) {return bookmark.url == newBookmark.url;});
-               })
-       })
        .tap(function (success, error) {
             chrome.tabs.query({active: true}, function (tabs) {
                 var tab = tabs[0];
@@ -153,10 +140,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     bookmarkService.getByUrl(message.url).then(function (bookmark) {
         if(!bookmark) {
             updateExtensionBadge("0");
-        } else {
-            var text = bookmarkService.getAllEntitiesCount(bookmark);
-            text = bookmark && text == 0 ? "+" : text;
-            updateExtensionBadge(text);
         }
 
         sendResponse(bookmark);

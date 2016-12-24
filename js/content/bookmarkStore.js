@@ -226,6 +226,12 @@ function BookmarkClass () {
         this.isOwner = bookmark.isOwner;
         this.owners = bookmark.owners;
         this.observers = bookmark.observers;
+
+        chrome.runtime.sendMessage({type: "SET_BADGE", text: getAllEntitiesCount()}, null, function (message) {
+            if(message && message.error){
+                console.log(message.error);
+            }
+        });
     }
 
     this[MARKERS] = [];
