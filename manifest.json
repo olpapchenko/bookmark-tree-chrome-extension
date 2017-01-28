@@ -3,7 +3,7 @@
 
   "name": "Bookmark Tree - Web annotations",
   "description": "Bookmark Tree is a bookmark manager. You can annotate your bookmark pages and share them with friends!",
-  "version": "1.2",
+  "version": "1.2.1",
 
   "icons": {
     "16": "/images/icon16.png",
